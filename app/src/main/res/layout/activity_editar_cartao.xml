@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="br.com.consultai.activities.EditarActivity">
+    xmlns:fancy="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,61 +34,121 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
 
-            <Button
-                android:id="@+id/selec_dom"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+            <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                android:id="@+id/btn_domingo"
+                android:layout_width="20dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:background="@drawable/unchecked0" />
+                android:textOn="D"
+                android:textOff="D"
+                android:elevation="4dp"
+                app:checkedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary"
+                app:uncheckedColor="@color/colorPrimary"
+                app:borderWidth="2dp"
+                app:checkedTextColor="@android:color/white"
+                app:radius="12dp"/>
 
-            <Button
-                android:id="@+id/selec_seg"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+            <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                android:id="@+id/btn_segunda"
+                android:layout_width="20dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:background="@drawable/unchecked1" />
+                android:textOn="S"
+                android:textOff="S"
+                android:elevation="4dp"
+                android:layout_marginLeft="4dp"
+                app:checkedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary"
+                app:uncheckedColor="@color/colorPrimary"
+                app:borderWidth="2dp"
+                app:checkedTextColor="@android:color/white"
+                app:radius="12dp"/>
 
-            <Button
-                android:id="@+id/selec_ter"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+            <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                android:id="@+id/btn_terca"
+                android:layout_width="20dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:background="@drawable/unchecked2" />
+                android:textOn="T"
+                android:textOff="T"
+                android:elevation="4dp"
+                android:layout_marginLeft="4dp"
+                app:checkedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary"
+                app:uncheckedColor="@color/colorPrimary"
+                app:borderWidth="2dp"
+                app:checkedTextColor="@android:color/white"
+                app:radius="12dp"/>
 
-            <Button
-                android:id="@+id/selec_qua"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+            <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                android:id="@+id/btn_quarta"
+                android:layout_width="20dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:background="@drawable/unchecked3" />
+                android:textOn="Q"
+                android:textOff="Q"
+                android:elevation="4dp"
+                android:layout_marginLeft="4dp"
+                app:checkedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary"
+                app:uncheckedColor="@color/colorPrimary"
+                app:borderWidth="2dp"
+                app:checkedTextColor="@android:color/white"
+                app:radius="12dp"/>
 
-            <Button
-                android:id="@+id/selec_qui"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+            <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                android:id="@+id/btn_quinta"
+                android:layout_width="20dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:background="@drawable/unchecked4" />
+                android:textOn="Q"
+                android:textOff="Q"
+                android:elevation="4dp"
+                android:layout_marginLeft="4dp"
+                app:checkedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary"
+                app:uncheckedColor="@color/colorPrimary"
+                app:borderWidth="2dp"
+                app:checkedTextColor="@android:color/white"
+                app:radius="12dp"/>
 
-            <Button
-                android:id="@+id/selec_sex"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+            <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                android:id="@+id/btn_sexta"
+                android:layout_width="20dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:background="@drawable/unchecked5" />
+                android:textOn="S"
+                android:textOff="S"
+                android:elevation="4dp"
+                android:layout_marginLeft="4dp"
+                app:checkedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary"
+                app:uncheckedColor="@color/colorPrimary"
+                app:borderWidth="2dp"
+                app:checkedTextColor="@android:color/white"
+                app:radius="12dp"/>
 
-            <Button
-                android:id="@+id/selec_sab"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+            <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                android:id="@+id/btn_sabado"
+                android:layout_width="20dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:background="@drawable/unchecked5" />
-
+                android:layout_marginLeft="4dp"
+                android:textOn="S"
+                android:textOff="S"
+                android:elevation="4dp"
+                app:checkedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary"
+                app:uncheckedColor="@color/colorPrimary"
+                app:borderWidth="2dp"
+                app:checkedTextColor="@android:color/white"
+                app:radius="12dp"/>
         </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -109,6 +170,7 @@
                             android:id="@+id/txt_ida"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
                             android:text="IDA"
@@ -118,6 +180,8 @@
                             android:id="@+id/tp_1"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
+                            android:layout_centerHorizontal="true"
+                            android:onClick="handlerSetTimeRoutineIda"
                             android:layout_below="@+id/txt_ida"
                             android:layout_margin="10dp"
                             app:srcCompat="@drawable/relogio" />
@@ -145,6 +209,7 @@
                                 android:id="@+id/txt_uso"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
                                 android:text="Como vai ser o uso na ida?"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -152,13 +217,13 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:gravity="center"
                                 android:layout_below="@+id/txt_uso">
 
                                 <RadioGroup
                                     android:id="@+id/rgroup_ida"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-
                                     android:orientation="horizontal">
 
                                     <RadioButton
@@ -211,6 +276,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
+                            android:layout_centerHorizontal="true"
                             android:text="VOLTA"
                             android:textStyle="bold" />
 
@@ -218,7 +284,9 @@
                             android:id="@+id/tp_2"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
+                            android:onClick="handlerSetTimeRoutineVolta"
                             android:layout_below="@+id/txt_volta"
+                            android:layout_centerHorizontal="true"
                             android:layout_margin="10dp"
                             app:srcCompat="@drawable/relogio" />
 
@@ -246,6 +314,7 @@
                                 android:id="@+id/txt_uso2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
                                 android:text="Como vai ser o uso na volta?"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -253,13 +322,13 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:gravity="center"
                                 android:layout_below="@+id/txt_uso2">
 
                                 <RadioGroup
                                     android:id="@+id/rgroup_volta"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-
                                     android:orientation="horizontal">
 
                                     <RadioButton
@@ -306,7 +375,7 @@
         android:layout_margin="10dp">
 
         <info.hoang8f.widget.FButton
-            android:id="@+id/btnExcluir"
+            android:id="@+id/btn_cancelar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
@@ -314,20 +383,20 @@
             android:layout_below="@+id/layoutHrs"
             android:layout_toLeftOf="@+id/btn_editar"
             android:text="Cancelar"
+            android:onClick="handlerBackToMainActivity"
             app:cornerRadius="36dp"
             app:fButtonColor="@color/white"
             app:shadowColor="@android:color/darker_gray"
             app:shadowEnabled="true" />
 
         <info.hoang8f.widget.FButton
-            android:id="@+id/btnSalvar"
             android:layout_below="@+id/layout_dias"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:layout_centerHorizontal="true"
-            android:onClick="handlerToMainActivity"
+            android:onClick="handlerNewRoutine"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:text="Salvar"
@@ -336,8 +405,5 @@
             app:fButtonColor="@color/colorPrimary"
             app:shadowColor="@android:color/darker_gray"
             app:shadowEnabled="true" />
-
-
     </LinearLayout>
-
 </RelativeLayout>

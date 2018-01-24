@@ -34,6 +34,7 @@ dependencies {
         exclude module: 'support-compat'
     }
 
+    compile 'me.rishabhkhanna:CustomToggle:1.0.0'
     compile 'com.github.medyo:fancybuttons:1.8.4'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.android.support:cardview-v7:26.1.0'

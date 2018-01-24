@@ -14,6 +14,7 @@ import br.com.consultaiv2.activities.MainActivity;
 import br.com.consultaiv2.activities.RegisterActivity;
 import br.com.consultaiv2.application.CustomApplication;
 import br.com.consultaiv2.dto.AuthResponse;
+import br.com.consultaiv2.dto.RegisterResponse;
 import br.com.consultaiv2.model.Usuario;
 import br.com.consultaiv2.retrofit.RetrofitInit;
 import br.com.consultaiv2.util.InputValidator;
@@ -58,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void logUser(Usuario usuario){
-        Call<AuthResponse> call = new RetrofitInit().getUsuarioService().auth(usuario);
+        Call<AuthResponse> call = new RetrofitInit(this).getUsuarioService().auth(usuario);
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
@@ -127,5 +128,9 @@ public class LoginActivity extends AppCompatActivity {
         }else{
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
+    }
+
+    public void handlerToRegisterActivity(View v){
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 }

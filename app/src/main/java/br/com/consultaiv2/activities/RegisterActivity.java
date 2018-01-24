@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import br.com.consultaiv2.LoginActivity;
 import br.com.consultaiv2.R;
 import br.com.consultaiv2.dto.StatusResponse;
+import br.com.consultaiv2.model.BilheteUnico;
 import br.com.consultaiv2.model.Usuario;
 import br.com.consultaiv2.retrofit.RetrofitInit;
 import br.com.consultaiv2.util.InputValidator;
@@ -37,6 +39,18 @@ public class RegisterActivity extends AppCompatActivity {
 
     @BindView(R.id.et_confirmar_senha)
     MaterialEditText mConfirmaSenha;
+
+    @BindView(R.id.et_apelido)
+    MaterialEditText mApelidoBilhete;
+
+    @BindView(R.id.et_numero_bilhete)
+    MaterialEditText mNumeroBilhete;
+
+    @BindView(R.id.et_saldo)
+    MaterialEditText mSaldoBilhete;
+
+    @BindView(R.id.cb_estudante)
+    CheckBox mEstudante;
 
     @BindView(R.id.sp_sexo)
     Spinner mSexo;
@@ -86,13 +100,20 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        BilheteUnico bilheteUnico = new BilheteUnico();
+        bilheteUnico.setApelido(mApelidoBilhete.getText().toString());
+        bilheteUnico.setSaldo(Double.parseDouble(mSaldoBilhete.getText().toString()));
+        bilheteUnico.setNumero(mNumeroBilhete.getText().toString());
+        bilheteUnico.setEstudante(mEstudante.isChecked());
+
         Usuario usuario = new Usuario();
+        usuario.setBilheteUnico(bilheteUnico);
         usuario.setNome(nome);
         usuario.setEmail(email);
         usuario.setSenha(senha);
         usuario.setSexo((String)(mSexo.getSelectedItem()).toString().substring(0,1).toUpperCase());
 
-        Call<StatusResponse> call = new RetrofitInit().getUsuarioService().register(usuario);
+        Call<StatusResponse> call = new RetrofitInit(this).getUsuarioService().register(usuario);
         call.enqueue(new Callback<StatusResponse>() {
             @Override
             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
