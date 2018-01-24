@@ -23,7 +23,7 @@
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main" />
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.EditarCartaoActivity"></activity>
+        <activity android:name=".activities.EditarCartaoActivity" />
     </application>
 
 </manifest>

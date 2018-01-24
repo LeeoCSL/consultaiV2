@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -41,6 +42,22 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.sp_sexo)
     Spinner mSexo;
 
+    @BindView(R.id.et_nasc)
+    MaterialEditText mNascimento;
+
+    @BindView(R.id.et_cpf)
+    MaterialEditText mCPF;
+
+    @BindView(R.id.et_cel)
+    MaterialEditText mCelular;
+
+    private Usuario usuario = new Usuario();
+
+    RelativeLayout rel1, rel2;
+
+     String email = "";
+     String senha = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,17 +65,22 @@ public class RegisterActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        rel1 = (RelativeLayout) findViewById(R.id.rel1);
+        rel2 = (RelativeLayout) findViewById(R.id.rel2);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"Masculino", "Feminino"});
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mSexo.setAdapter(adapter);
 
+
+
     }
 
     private void validateDataFromInput(){
         String nome = mNome.getText().toString();
-        final String email = mEmail.getText().toString();
-        final String senha = mSenha.getText().toString();
+        email = mEmail.getText().toString();
+        senha = mSenha.getText().toString();
         String confirmaSenha = mConfirmaSenha.getText().toString();
 
         if(nome.length() > 32){
@@ -86,11 +108,43 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        Usuario usuario = new Usuario();
+
         usuario.setNome(nome);
         usuario.setEmail(email);
         usuario.setSenha(senha);
-        usuario.setSexo((String)(mSexo.getSelectedItem()).toString().substring(0,1).toUpperCase());
+
+        rel1.setVisibility(View.GONE);
+        rel2.setVisibility(View.VISIBLE);
+
+    }
+
+    private void validateDataFromInput2(){
+        final String sexo = mSexo.getSelectedItem().toString().substring(0,1).toUpperCase();
+        final String nasc = mNascimento.getText().toString();
+        final String cpf = mCPF.getText().toString();
+        final String celular = mCelular.getText().toString();
+
+        if(nasc.isEmpty()){
+            mNascimento.setError("Preencha sua data de nascimento");
+            return;
+        }
+
+        if(cpf.length() < 11 || cpf.length() > 11 ){
+            mCPF.setError("Digite o CPF corretamente");
+            return;
+        }
+
+        if(celular.length() < 11 || celular.length() > 11 ){
+            mCelular.setError("Email no formato inválido.");
+            return;
+        }
+
+
+        usuario.setSexo(sexo);
+        usuario.setDataNascimento(nasc);
+        usuario.setCPF(cpf);
+        usuario.setTelefone(celular);
+
 
         Call<StatusResponse> call = new RetrofitInit().getUsuarioService().register(usuario);
         call.enqueue(new Callback<StatusResponse>() {
@@ -103,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }else{
                     HashMap<String, String> userData = new HashMap<>();
                     userData.put("email", email);
-                    userData.put("password", senha);
+                    userData.put("senha", senha);
 
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     intent.putExtra("user_data", userData);
@@ -120,7 +174,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void handlerToMainActivity(View v){
+    public void handlerToRegister(View v){
         validateDataFromInput();
+    }
+
+    public void handlerToMainActivity(View v){
+        validateDataFromInput2();
     }
 }

@@ -120,6 +120,11 @@ public class LoginActivity extends AppCompatActivity {
         validateDataFromInput();
     }
 
+    public void handlerToRegisterActivity(View v){
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
     private void blockUI(boolean block){
         if(block){
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
