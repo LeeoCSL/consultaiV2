@@ -3,6 +3,7 @@ package br.com.consultaiv2.services.retrofit;
 import java.util.List;
 
 import br.com.consultaiv2.dto.RotinaResponse;
+import br.com.consultaiv2.dto.StatusResponse;
 import br.com.consultaiv2.model.Rotina;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -16,6 +17,6 @@ import retrofit2.http.Path;
 public interface RotinaService {
 
     @PUT("user/{user_id}/rotina")
-    Call<RotinaResponse> rotina(@Path("user_id") String userID, @Body Rotina rotina);
+    Call<StatusResponse> rotina(@Path("user_id") String userID, @Body Rotina rotina);
 
 }

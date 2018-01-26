@@ -3,6 +3,7 @@ package br.com.consultaiv2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -78,6 +79,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     CustomApplication.currentUser = u;
                     customApplication.setAPItoken(authResponse.getToken());
+
+                    Log.i("USUARIO_ATUAL", CustomApplication.currentUser.toString());
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

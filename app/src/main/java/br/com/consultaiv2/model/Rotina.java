@@ -163,4 +163,19 @@ public class Rotina {
                 ", diasUso=" + diasUso +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Rotina rotina = (Rotina) o;
+
+        return idaID.equals(rotina.idaID);
+    }
+
+    @Override
+    public int hashCode() {
+        return idaID.hashCode();
+    }
 }

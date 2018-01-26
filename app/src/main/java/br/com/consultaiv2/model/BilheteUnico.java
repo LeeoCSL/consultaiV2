@@ -66,4 +66,15 @@ public class BilheteUnico {
     public void setNumero(String numero) {
         this.numero = numero;
     }
+
+    @Override
+    public String toString() {
+        return "BilheteUnico{" +
+                "id=" + id +
+                ", apelido='" + apelido + '\'' +
+                ", saldo=" + saldo +
+                ", estudante=" + estudante +
+                ", numero='" + numero + '\'' +
+                '}';
+    }
 }

@@ -27,123 +27,123 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tp_1"
             android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:foregroundGravity="center"
             android:gravity="center"
-            android:padding="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:padding="10dp">
 
             <me.rishabhkhanna.customtogglebutton.CustomToggleButton
                 android:id="@+id/btn_domingo"
                 android:layout_width="20dp"
                 android:layout_height="44dp"
                 android:layout_weight="1"
-                android:textOn="D"
-                android:textOff="D"
                 android:elevation="4dp"
-                app:checkedColor="@color/colorPrimary"
-                app:uncheckedTextColor="@color/colorPrimary"
-                app:uncheckedColor="@color/colorPrimary"
+                android:textOff="D"
+                android:textOn="D"
                 app:borderWidth="2dp"
+                app:checkedColor="@color/colorPrimary"
                 app:checkedTextColor="@android:color/white"
-                app:radius="12dp"/>
+                app:radius="12dp"
+                app:uncheckedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary" />
 
             <me.rishabhkhanna.customtogglebutton.CustomToggleButton
                 android:id="@+id/btn_segunda"
                 android:layout_width="20dp"
                 android:layout_height="44dp"
-                android:layout_weight="1"
-                android:textOn="S"
-                android:textOff="S"
-                android:elevation="4dp"
                 android:layout_marginLeft="4dp"
-                app:checkedColor="@color/colorPrimary"
-                app:uncheckedTextColor="@color/colorPrimary"
-                app:uncheckedColor="@color/colorPrimary"
+                android:layout_weight="1"
+                android:elevation="4dp"
+                android:textOff="S"
+                android:textOn="S"
                 app:borderWidth="2dp"
+                app:checkedColor="@color/colorPrimary"
                 app:checkedTextColor="@android:color/white"
-                app:radius="12dp"/>
+                app:radius="12dp"
+                app:uncheckedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary" />
 
             <me.rishabhkhanna.customtogglebutton.CustomToggleButton
                 android:id="@+id/btn_terca"
                 android:layout_width="20dp"
                 android:layout_height="44dp"
-                android:layout_weight="1"
-                android:textOn="T"
-                android:textOff="T"
-                android:elevation="4dp"
                 android:layout_marginLeft="4dp"
-                app:checkedColor="@color/colorPrimary"
-                app:uncheckedTextColor="@color/colorPrimary"
-                app:uncheckedColor="@color/colorPrimary"
+                android:layout_weight="1"
+                android:elevation="4dp"
+                android:textOff="T"
+                android:textOn="T"
                 app:borderWidth="2dp"
+                app:checkedColor="@color/colorPrimary"
                 app:checkedTextColor="@android:color/white"
-                app:radius="12dp"/>
+                app:radius="12dp"
+                app:uncheckedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary" />
 
             <me.rishabhkhanna.customtogglebutton.CustomToggleButton
                 android:id="@+id/btn_quarta"
                 android:layout_width="20dp"
                 android:layout_height="44dp"
-                android:layout_weight="1"
-                android:textOn="Q"
-                android:textOff="Q"
-                android:elevation="4dp"
                 android:layout_marginLeft="4dp"
-                app:checkedColor="@color/colorPrimary"
-                app:uncheckedTextColor="@color/colorPrimary"
-                app:uncheckedColor="@color/colorPrimary"
+                android:layout_weight="1"
+                android:elevation="4dp"
+                android:textOff="Q"
+                android:textOn="Q"
                 app:borderWidth="2dp"
+                app:checkedColor="@color/colorPrimary"
                 app:checkedTextColor="@android:color/white"
-                app:radius="12dp"/>
+                app:radius="12dp"
+                app:uncheckedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary" />
 
             <me.rishabhkhanna.customtogglebutton.CustomToggleButton
                 android:id="@+id/btn_quinta"
                 android:layout_width="20dp"
                 android:layout_height="44dp"
-                android:layout_weight="1"
-                android:textOn="Q"
-                android:textOff="Q"
-                android:elevation="4dp"
                 android:layout_marginLeft="4dp"
-                app:checkedColor="@color/colorPrimary"
-                app:uncheckedTextColor="@color/colorPrimary"
-                app:uncheckedColor="@color/colorPrimary"
+                android:layout_weight="1"
+                android:elevation="4dp"
+                android:textOff="Q"
+                android:textOn="Q"
                 app:borderWidth="2dp"
+                app:checkedColor="@color/colorPrimary"
                 app:checkedTextColor="@android:color/white"
-                app:radius="12dp"/>
+                app:radius="12dp"
+                app:uncheckedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary" />
 
             <me.rishabhkhanna.customtogglebutton.CustomToggleButton
                 android:id="@+id/btn_sexta"
                 android:layout_width="20dp"
                 android:layout_height="44dp"
-                android:layout_weight="1"
-                android:textOn="S"
-                android:textOff="S"
-                android:elevation="4dp"
                 android:layout_marginLeft="4dp"
-                app:checkedColor="@color/colorPrimary"
-                app:uncheckedTextColor="@color/colorPrimary"
-                app:uncheckedColor="@color/colorPrimary"
+                android:layout_weight="1"
+                android:elevation="4dp"
+                android:textOff="S"
+                android:textOn="S"
                 app:borderWidth="2dp"
+                app:checkedColor="@color/colorPrimary"
                 app:checkedTextColor="@android:color/white"
-                app:radius="12dp"/>
+                app:radius="12dp"
+                app:uncheckedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary" />
 
             <me.rishabhkhanna.customtogglebutton.CustomToggleButton
                 android:id="@+id/btn_sabado"
                 android:layout_width="20dp"
                 android:layout_height="44dp"
-                android:layout_weight="1"
                 android:layout_marginLeft="4dp"
-                android:textOn="S"
-                android:textOff="S"
+                android:layout_weight="1"
                 android:elevation="4dp"
-                app:checkedColor="@color/colorPrimary"
-                app:uncheckedTextColor="@color/colorPrimary"
-                app:uncheckedColor="@color/colorPrimary"
+                android:textOff="S"
+                android:textOn="S"
                 app:borderWidth="2dp"
+                app:checkedColor="@color/colorPrimary"
                 app:checkedTextColor="@android:color/white"
-                app:radius="12dp"/>
+                app:radius="12dp"
+                app:uncheckedColor="@color/colorPrimary"
+                app:uncheckedTextColor="@color/colorPrimary" />
         </LinearLayout>
 
         <ScrollView
@@ -176,30 +176,50 @@
                             android:text="IDA"
                             android:textStyle="bold" />
 
-                        <ImageView
-                            android:id="@+id/tp_1"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                        <LinearLayout
+                            android:id="@+id/ll_center"
+                            android:orientation="vertical"
+                            android:gravity="center"
                             android:layout_centerHorizontal="true"
-                            android:onClick="handlerSetTimeRoutineIda"
                             android:layout_below="@+id/txt_ida"
-                            android:layout_margin="10dp"
-                            app:srcCompat="@drawable/relogio" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
-                        <TextView
+                            <ImageView
+                                android:id="@+id/tp_1"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_margin="10dp"
+                                android:visibility="visible"
+                                android:onClick="handlerSetTimeRoutineIda"
+                                app:srcCompat="@drawable/relogio" />
+
+                            <TextView
+                                android:text="10h25min"
+                                android:textSize="24sp"
+                                android:visibility="visible"
+                                android:layout_below="@+id/txt_ida"
+                                android:layout_above="@+id/layout_uso"
+                                android:layout_centerHorizontal="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+
+<!--                        <TextView
                             android:id="@+id/hora_selecionada_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/txt_ida"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:layout_margin="10dp" />
+                            android:layout_margin="10dp" />-->
 
                         <RelativeLayout
                             android:id="@+id/layout_uso"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/tp_1"
+                            android:layout_below="@+id/ll_center"
                             android:layout_marginBottom="20dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"

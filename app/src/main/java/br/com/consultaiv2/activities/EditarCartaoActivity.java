@@ -16,9 +16,12 @@ import java.util.List;
 
 import br.com.consultaiv2.R;
 import br.com.consultaiv2.application.CustomApplication;
+import br.com.consultaiv2.dto.Data;
 import br.com.consultaiv2.dto.RotinaResponse;
+import br.com.consultaiv2.dto.StatusResponse;
 import br.com.consultaiv2.model.DiasUso;
 import br.com.consultaiv2.model.Rotina;
+import br.com.consultaiv2.model.Usuario;
 import br.com.consultaiv2.retrofit.RetrofitInit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,6 +76,7 @@ public class EditarCartaoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initButtons();
+        loadDataFromUser();
 
         mGroupIda.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -113,6 +117,26 @@ public class EditarCartaoActivity extends AppCompatActivity {
         });
     }
 
+    private void loadDataFromUser(){
+        Usuario usuario = CustomApplication.currentUser;
+
+        if(usuario.getRotinas().size() > 0){
+            List<Rotina> rotina = usuario.getRotinas();
+
+            this.rotina = rotina.get(0);
+
+            DiasUso uso = rotina.get(0).getDiasUso();
+
+            for(int i = 0; i < uso.getDiasUso().length; i++){
+                if(uso.getDiasUso()[i]){
+                    mWeekDays[i].setChecked(true);
+                }else{
+                    mWeekDays[i].setChecked(false);
+                }
+            }
+        }
+    }
+
     private void initButtons(){
         mWeekDays[0] = mDomingo;
         mWeekDays[1] = mSegunda;
@@ -145,16 +169,27 @@ public class EditarCartaoActivity extends AppCompatActivity {
 
         rotina.getDiasUso().setDiasUso(checked);
 
-
-        Call<RotinaResponse> call = new RetrofitInit(this).getRotinaService().rotina(CustomApplication.currentUser.getId(), rotina);
-        call.enqueue(new Callback<RotinaResponse>() {
+        Call<StatusResponse> call = new RetrofitInit(this).getRotinaService().rotina(CustomApplication.currentUser.getId(), rotina);
+        call.enqueue(new Callback<StatusResponse>() {
             @Override
-            public void onResponse(Call<RotinaResponse> call, Response<RotinaResponse> response) {
-                Toast.makeText(EditarCartaoActivity.this, "", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+
+                StatusResponse res = response.body();
+
+                if(rotina.getIdaID() == null && rotina.getVoltaID() == null){
+                    rotina.setIdaID(res.getData().getIdRotinaIda());
+                    rotina.setVoltaID(res.getData().getIdRotinaVolta());
+                }
+
+                CustomApplication.updateRoutine(rotina);
+
+                Toast.makeText(EditarCartaoActivity.this, "Suas rotinas foram salvas.", Toast.LENGTH_SHORT).show();
+
+                finish();
             }
 
             @Override
-            public void onFailure(Call<RotinaResponse> call, Throwable t) {
+            public void onFailure(Call<StatusResponse> call, Throwable t) {
                 Toast.makeText(EditarCartaoActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

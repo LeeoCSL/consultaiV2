@@ -2,6 +2,7 @@ package br.com.consultaiv2.model;
 
 import android.app.Dialog;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -25,6 +26,16 @@ public class DiasUso {
 
     }
 
+    public DiasUso(boolean domingo, boolean segunda, boolean terca, boolean quarta, boolean quinta, boolean sexta, boolean sabado) {
+        this.domingo = domingo;
+        this.segunda = segunda;
+        this.terca = terca;
+        this.quarta = quarta;
+        this.quinta = quinta;
+        this.sexta = sexta;
+        this.sabado = sabado;
+    }
+
     public void setDiasUso(boolean[] uso){
         domingo = uso[0];
         segunda = uso[1];
@@ -33,6 +44,11 @@ public class DiasUso {
         quinta = uso[4];
         sexta = uso[5];
         sabado = uso[6];
+    }
+
+    @JsonIgnore
+    public boolean[] getDiasUso(){
+        return new boolean[]{domingo, segunda, terca, quarta, quinta, sexta, sabado};
     }
 
     public boolean isDomingo() {
@@ -89,5 +105,18 @@ public class DiasUso {
 
     public void setSabado(boolean sabado) {
         this.sabado = sabado;
+    }
+
+    @Override
+    public String toString() {
+        return "DiasUso{" +
+                "domingo=" + domingo +
+                ", segunda=" + segunda +
+                ", terca=" + terca +
+                ", quarta=" + quarta +
+                ", quinta=" + quinta +
+                ", sexta=" + sexta +
+                ", sabado=" + sabado +
+                '}';
     }
 }

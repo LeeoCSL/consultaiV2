@@ -18,6 +18,8 @@ public class HomeFragment extends Fragment {
 
     private Button mEditar;
 
+
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -45,9 +47,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    public void handlerToEditarCartaoActivity(){
+    public void handlerToEditarCartaoActivity() {
         startActivity(new Intent(getContext(), EditarCartaoActivity.class));
     }
-
-
 }
