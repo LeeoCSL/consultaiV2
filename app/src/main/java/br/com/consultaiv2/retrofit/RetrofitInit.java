@@ -1,10 +1,7 @@
 package br.com.consultaiv2.retrofit;
 
-/**
- * Created by renan.boni on 19/01/2018.
- */
-
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
@@ -12,6 +9,7 @@ import java.io.IOException;
 
 import br.com.consultaiv2.application.CustomApplication;
 import br.com.consultaiv2.model.BilheteUnico;
+import br.com.consultaiv2.services.retrofit.BilheteService;
 import br.com.consultaiv2.services.retrofit.RotinaService;
 import br.com.consultaiv2.services.retrofit.UsuarioService;
 import okhttp3.Interceptor;
@@ -30,7 +28,7 @@ public class RetrofitInit {
 
     private Retrofit retrofit;
 
-    public RetrofitInit(Activity activity){
+    public RetrofitInit(Context activity){
 
         final CustomApplication customApplication = (CustomApplication)activity.getApplicationContext();
 
@@ -68,4 +66,6 @@ public class RetrofitInit {
         return retrofit.create(UsuarioService.class);
     }
     public RotinaService getRotinaService() { return retrofit.create(RotinaService.class); }
+    public BilheteService getBilheteService() { return retrofit.create(BilheteService.class); }
 }
+

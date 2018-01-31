@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/img_logo"
             android:layout_margin="12dp"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            android:id="@+id/cardView">
 
             <RelativeLayout
                 android:id="@+id/layoutMain"
@@ -40,33 +41,47 @@
                     android:text="Bilhete teste"
                     android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/txt1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:id="@+id/ll_saldo_atual"
+                    android:orientation="horizontal"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/txt_nome_bilhete"
-                    android:layout_marginTop="10dp"
-                    android:text="Saldo atual:"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/txt_valor"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@id/txt1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/txt1"
-                    android:text="R$"
-                    android:textColor="#000000"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Saldo atual"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/txt_valor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="R$"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_saldo_atual"
+                        android:text="20,00"
+                        android:layout_marginLeft="4dp"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/layout_dias"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_valor"
+                    android:layout_below="@+id/ll_saldo_atual"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:foregroundGravity="center"
@@ -81,6 +96,7 @@
                         android:elevation="4dp"
                         android:textOff="D"
                         android:textOn="D"
+                        android:enabled="false"
                         app:borderWidth="2dp"
                         app:checkedColor="@color/colorPrimary"
                         app:checkedTextColor="@android:color/white"
@@ -97,6 +113,7 @@
                         android:elevation="4dp"
                         android:textOff="S"
                         android:textOn="S"
+                        android:enabled="false"
                         app:borderWidth="2dp"
                         app:checkedColor="@color/colorPrimary"
                         app:checkedTextColor="@android:color/white"
@@ -113,6 +130,7 @@
                         android:elevation="4dp"
                         android:textOff="T"
                         android:textOn="T"
+                        android:enabled="false"
                         app:borderWidth="2dp"
                         app:checkedColor="@color/colorPrimary"
                         app:checkedTextColor="@android:color/white"
@@ -129,6 +147,7 @@
                         android:elevation="4dp"
                         android:textOff="Q"
                         android:textOn="Q"
+                        android:enabled="false"
                         app:borderWidth="2dp"
                         app:checkedColor="@color/colorPrimary"
                         app:checkedTextColor="@android:color/white"
@@ -145,6 +164,7 @@
                         android:elevation="4dp"
                         android:textOff="Q"
                         android:textOn="Q"
+                        android:enabled="false"
                         app:borderWidth="2dp"
                         app:checkedColor="@color/colorPrimary"
                         app:checkedTextColor="@android:color/white"
@@ -161,6 +181,7 @@
                         android:elevation="4dp"
                         android:textOff="S"
                         android:textOn="S"
+                        android:enabled="false"
                         app:borderWidth="2dp"
                         app:checkedColor="@color/colorPrimary"
                         app:checkedTextColor="@android:color/white"
@@ -174,6 +195,7 @@
                         android:layout_height="44dp"
                         android:layout_marginLeft="4dp"
                         android:layout_weight="1"
+                        android:enabled="false"
                         android:elevation="4dp"
                         android:textOff="S"
                         android:textOn="S"
@@ -212,7 +234,7 @@
                     android:gravity="center">
 
                     <info.hoang8f.widget.FButton
-                        android:id="@+id/btnExcluir"
+                        android:id="@+id/btn_excluir"
                         android:layout_width="80dp"
                         android:layout_height="33dp"
                         android:layout_below="@+id/layoutHrs"
@@ -261,4 +283,12 @@
             android:layout_height="wrap_content"
             android:visibility="invisible"/>
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </FrameLayout>

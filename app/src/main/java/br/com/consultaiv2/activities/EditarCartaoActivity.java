@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import br.com.consultaiv2.model.DiasUso;
 import br.com.consultaiv2.model.Rotina;
 import br.com.consultaiv2.model.Usuario;
 import br.com.consultaiv2.retrofit.RetrofitInit;
+import br.com.consultaiv2.util.DateUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import info.hoang8f.widget.FButton;
@@ -60,6 +64,30 @@ public class EditarCartaoActivity extends AppCompatActivity {
 
     @BindView(R.id.rgroup_volta)
     RadioGroup mGroupVolta;
+
+    @BindView(R.id.tv_time_ida)
+    TextView mTimeIda;
+
+    @BindView(R.id.tv_time_volta)
+    TextView mTimeVolta;
+
+    @BindView(R.id.tp_1)
+    ImageView mRelogioIda;
+
+    @BindView(R.id.tp_2)
+    ImageView mRelogioVolta;
+
+    @BindView(R.id.rb_onibus_trilho_ida)
+    RadioButton mOnibusIda;
+
+    @BindView(R.id.rb_integracao_ida)
+    RadioButton mIntegracaoIda;
+
+    @BindView(R.id.rb_onibus_trilho_volta)
+    RadioButton mOnibusVolta;
+
+    @BindView(R.id.rb_integracao_volta)
+    RadioButton mIntegracaoVolta;
 
     private CustomToggleButton[] mWeekDays = new CustomToggleButton[7];
 
@@ -102,20 +130,22 @@ public class EditarCartaoActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if(i == R.id.rb_integracao_volta){
                     if(CustomApplication.currentUser.getBilheteUnico().isEstudante()){
-                        rotina.setValorIda(4.00);
+                        rotina.setValorVolta(4.00);
                     }else{
-                        rotina.setValorIda(6.96);
+                        rotina.setValorVolta(6.96);
                     }
                 }else{
                     if(CustomApplication.currentUser.getBilheteUnico().isEstudante()){
-                        rotina.setValorIda(2.00);
+                        rotina.setValorVolta(2.00);
                     }else{
-                        rotina.setValorIda(4.00);
+                        rotina.setValorVolta(4.00);
                     }
                 }
             }
         });
     }
+
+
 
     private void loadDataFromUser(){
         Usuario usuario = CustomApplication.currentUser;
@@ -133,6 +163,36 @@ public class EditarCartaoActivity extends AppCompatActivity {
                 }else{
                     mWeekDays[i].setChecked(false);
                 }
+            }
+
+            if(this.rotina.getHoraIda() != null){
+                mTimeIda.setText(DateUtil.stringToTime(this.rotina.getHoraIda()));
+                mTimeIda.setVisibility(View.VISIBLE);
+            }else{
+                mTimeIda.setVisibility(View.GONE);
+            }
+
+            if(this.rotina.getHoraVolta() != null){
+                mTimeVolta.setText(DateUtil.stringToTime(this.rotina.getHoraVolta()));
+                mTimeVolta.setVisibility(View.VISIBLE);
+            }else{
+                mTimeVolta.setVisibility(View.GONE);
+            }
+
+            if(this.rotina.getValorIda() == 4.0 || this.rotina.getValorIda() == 2.0){
+                mOnibusIda.setChecked(true);
+                mIntegracaoIda.setChecked(false);
+            }else{
+                mOnibusIda.setChecked(false);
+                mIntegracaoIda.setChecked(true);
+            }
+
+            if(this.rotina.getValorVolta() == 4.0 || this.rotina.getValorVolta() == 2.0){
+                mOnibusVolta.setChecked(true);
+                mIntegracaoVolta.setChecked(false);
+            }else {
+                mOnibusVolta.setChecked(false);
+                mIntegracaoVolta.setChecked(true);
             }
         }
     }
@@ -204,20 +264,6 @@ public class EditarCartaoActivity extends AppCompatActivity {
         showTimeDialog(1);
     }
 
-    public void handlerValorIda(View v){
-
-    }
-
-    public void handlerValorVolta(View v){
-
-    }
-
-    private void checkForStudent(){
-        if(CustomApplication.currentUser.getBilheteUnico().isEstudante()){
-
-        }
-    }
-
     private void showTimeDialog(final int routine){
         Calendar calendar = Calendar.getInstance();
 
@@ -228,12 +274,13 @@ public class EditarCartaoActivity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker timePicker, int h, int m) {
                 if(routine == 0){
-                    Toast.makeText(EditarCartaoActivity.this, h + ":" + m + ":00", Toast.LENGTH_SHORT).show();
                     horaIDA = h + ":" + m + ":00";
+                    mTimeIda.setText(DateUtil.stringToTime(horaIDA));
+                    mTimeIda.setVisibility(View.VISIBLE);
                 }else{
-                    Toast.makeText(EditarCartaoActivity.this, h + ":" + m + ":00", Toast.LENGTH_SHORT).show();
-
                     horaVOLTA = h + ":" + m + ":00";
+                    mTimeVolta.setText(DateUtil.stringToTime(horaVOLTA));
+                    mTimeVolta.setVisibility(View.VISIBLE);
                 }
             }
         }, hour, minute,true);

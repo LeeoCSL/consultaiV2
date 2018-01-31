@@ -53,4 +53,15 @@ public class CustomApplication extends Application {
         edit.putString("token", token);
         edit.commit();
     }
+
+    public void destroySession(){
+        currentUser = null;
+        apiKey = null;
+
+        SharedPreferences sharedPreferences = getSharedPreferences("TOKEN", MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+
+        edit.remove("token");
+        edit.commit();
+    }
 }

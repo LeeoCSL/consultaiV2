@@ -1,5 +1,6 @@
 package br.com.consultaiv2;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,10 +36,16 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.et_senha)
     EditText mSenha;
 
+    private ProgressDialog mDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mDialog = new ProgressDialog(this);
+        mDialog.setTitle("Aguarde...");
+        mDialog.setMessage("Verificando suas credenciais");
 
         // VERIFICA SE O USUÁRIO VEIO DA TELA DE REGISTRO, ASSIM LOGA AUTOMATICAMENTE
         HashMap<String, String> userData = (HashMap<String, String>) getIntent().getSerializableExtra("user_data");
@@ -60,10 +67,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void logUser(Usuario usuario){
+        mDialog.show();
+
         Call<AuthResponse> call = new RetrofitInit(this).getUsuarioService().auth(usuario);
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+
                 if(!comingFromRegister){
                     blockUI(false);
                 }
@@ -72,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(authResponse.hasError()){
                     Toast.makeText(LoginActivity.this, authResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    mDialog.dismiss();
                 }else{
                     CustomApplication customApplication = (CustomApplication) getApplicationContext();
 
@@ -80,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     CustomApplication.currentUser = u;
                     customApplication.setAPItoken(authResponse.getToken());
 
-                    Log.i("USUARIO_ATUAL", CustomApplication.currentUser.toString());
+                    mDialog.dismiss();
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -90,6 +101,9 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable t) {
+
+                mDialog.dismiss();
+
                 if(!comingFromRegister){
                     blockUI(false);
                     Toast.makeText(LoginActivity.this, "Desculpe, não conseguimos nos conectar com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();

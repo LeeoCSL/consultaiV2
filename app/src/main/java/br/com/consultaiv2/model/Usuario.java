@@ -28,6 +28,9 @@ public class Usuario {
     private String email;
     private String senha;
 
+    @JsonProperty("notification_token")
+    private String notificationToken;
+
     @JsonProperty("data_criacao")
     private String dataCriacao;
 
@@ -115,6 +118,14 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setNotificationToken(String notificationToken) {
+        this.notificationToken = notificationToken;
+    }
+
+    public String getNotificationToken() {
+        return notificationToken;
     }
 
     public String getSenha() {

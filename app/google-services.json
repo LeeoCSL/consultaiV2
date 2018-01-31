@@ -1,0 +1,117 @@
+{
+  "project_info": {
+    "project_number": "620150922859",
+    "firebase_url": "https://carrega-ai.firebaseio.com",
+    "project_id": "carrega-ai",
+    "storage_bucket": "carrega-ai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620150922859:android:b0983cc3d4cdba14",
+        "android_client_info": {
+          "package_name": "br.com.consultai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620150922859-p7949df56ap0rin44607er0i2iuu3022.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.consultai",
+            "certificate_hash": "3682fd5d5cebb81953a3ef90ec6ac7378a612aa6"
+          }
+        },
+        {
+          "client_id": "620150922859-12nhbbd0imdkucfa160vnbc9ath99rop.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.consultai",
+            "certificate_hash": "4e050657d47730e360e26baddd6b5415d7365a2a"
+          }
+        },
+        {
+          "client_id": "620150922859-566pdbuk9ughjbdk5apjddbqpdub7p2k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.consultai",
+            "certificate_hash": "6e5bcdbe5108a199dcf09fbc1d4df0e04a4a2e5b"
+          }
+        },
+        {
+          "client_id": "620150922859-ro765vp6nd640hdugghf81r0786ona65.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.consultai",
+            "certificate_hash": "386d5445f5e573c90e1513c7b0659622eeeaec02"
+          }
+        },
+        {
+          "client_id": "620150922859-v0tll9vd06kr1rjsgnb180i432sg92on.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB40y-rxFtNPrlApuXybgFmKXRym0AGuKY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620150922859-scqfg56fn7kvdqip2r1773vcif5dlksq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.redepontocerto.ConsultaIZazzy"
+              }
+            },
+            {
+              "client_id": "620150922859-v0tll9vd06kr1rjsgnb180i432sg92on.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620150922859:android:3f7e854ce07ae8e9",
+        "android_client_info": {
+          "package_name": "br.com.consultaiv2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620150922859-v0tll9vd06kr1rjsgnb180i432sg92on.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB40y-rxFtNPrlApuXybgFmKXRym0AGuKY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

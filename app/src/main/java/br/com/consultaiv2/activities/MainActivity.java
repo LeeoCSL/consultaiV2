@@ -1,5 +1,6 @@
 package br.com.consultaiv2.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,9 +10,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import br.com.consultaiv2.LoginActivity;
 import br.com.consultaiv2.R;
 import br.com.consultaiv2.adapter.ViewPagerAdapter;
 import br.com.consultaiv2.application.CustomApplication;
+import br.com.consultaiv2.fragments.ContaFragment;
 import br.com.consultaiv2.fragments.HomeFragment;
 import br.com.consultaiv2.util.BottomNavigationViewHelper;
 
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     // FRAGMENTS
     private HomeFragment mHomeFragment;
+    private ContaFragment mContaFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -30,7 +34,21 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    mHomeFragment.refreshUI();
+                    mViewPager.setCurrentItem(0);
+                    break;
+                case R.id.navigation_dashboard:
+                    mViewPager.setCurrentItem(1);
+                    break;
+                case R.id.navigation_exit:
+                    CustomApplication customApplication = (CustomApplication) getApplicationContext();
+                    customApplication.destroySession();
 
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    break;
             }
             return false;
         }
@@ -42,9 +60,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CustomApplication CustomApplication = (CustomApplication)getApplication();
-
-        Log.i("USUARIO_ATUAL", CustomApplication.currentUser.toString());
-        Log.i("TOKEN", CustomApplication.getAPItoken());
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -82,9 +97,11 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         mHomeFragment = new HomeFragment();
+        mContaFragment = new ContaFragment();
 
         adapter.addFragment(mHomeFragment);
-/*        adapter.addFragment(homeFragment);
+        adapter.addFragment(mContaFragment);
+        /*
         adapter.addFragment(myOrdersFragment);
         adapter.addFragment(myAccountFragment);*/
 

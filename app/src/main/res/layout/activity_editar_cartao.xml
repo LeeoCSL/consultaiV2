@@ -195,11 +195,10 @@
                                 app:srcCompat="@drawable/relogio" />
 
                             <TextView
+                                android:id="@+id/tv_time_ida"
                                 android:text="10h25min"
                                 android:textSize="24sp"
-                                android:visibility="visible"
-                                android:layout_below="@+id/txt_ida"
-                                android:layout_above="@+id/layout_uso"
+                                android:visibility="gone"
                                 android:layout_centerHorizontal="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
@@ -300,22 +299,39 @@
                             android:text="VOLTA"
                             android:textStyle="bold" />
 
-                        <ImageView
-                            android:id="@+id/tp_2"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:onClick="handlerSetTimeRoutineVolta"
+                        <LinearLayout
+                            android:id="@+id/ll_volta"
+                            android:orientation="vertical"
                             android:layout_below="@+id/txt_volta"
-                            android:layout_centerHorizontal="true"
-                            android:layout_margin="10dp"
-                            app:srcCompat="@drawable/relogio" />
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/tp_2"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_margin="10dp"
+                                android:onClick="handlerSetTimeRoutineVolta"
+                                app:srcCompat="@drawable/relogio" />
+
+                            <TextView
+                                android:id="@+id/tv_time_volta"
+                                android:text="10h25min"
+                                android:textSize="24sp"
+                                android:visibility="gone"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
 
                         <TextView
                             android:id="@+id/hora_selecionada_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_below="@+id/txt_volta"
+                            android:layout_below="@+id/ll_volta"
                             android:layout_margin="10dp"
                             android:layout_centerHorizontal="true"
                             />
@@ -324,7 +340,7 @@
                             android:id="@+id/layout_uso2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/tp_2"
+                            android:layout_below="@+id/ll_volta"
                             android:layout_marginBottom="20dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
