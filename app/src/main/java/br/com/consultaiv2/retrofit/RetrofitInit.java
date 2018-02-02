@@ -4,9 +4,15 @@ package br.com.consultaiv2.retrofit;
  * Created by renan.boni on 19/01/2018.
  */
 
+import android.app.Activity;
+import android.util.Log;
+
 import java.io.IOException;
 
 
+import br.com.consultaiv2.application.CustomApplication;
+import br.com.consultaiv2.model.BilheteUnico;
+import br.com.consultaiv2.services.retrofit.RotinaService;
 import br.com.consultaiv2.services.retrofit.UsuarioService;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -24,9 +30,9 @@ public class RetrofitInit {
 
     private Retrofit retrofit;
 
-    public RetrofitInit(){
+    public RetrofitInit(Activity activity){
 
-        //final CustomApplication customApplication = (CustomApplication)activity.getApplicationContext();
+        final CustomApplication customApplication = (CustomApplication)activity.getApplicationContext();
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -38,9 +44,11 @@ public class RetrofitInit {
                 Request original = chain.request();
                 Request.Builder requestBuilder = original.newBuilder();
 
-/*                if(customApplication.isUserLoggedIn()){
+                Log.i("CHAMOU INTERCEPTOR", "SIM");
+
+                if(CustomApplication.isUserLoggedIn()){
                     requestBuilder.header("Authorization", customApplication.getAPItoken());
-                }*/
+                }
 
                 Request request = requestBuilder.build();
                 return chain.proceed(request);
@@ -59,4 +67,5 @@ public class RetrofitInit {
     public UsuarioService getUsuarioService(){
         return retrofit.create(UsuarioService.class);
     }
+    public RotinaService getRotinaService() { return retrofit.create(RotinaService.class); }
 }

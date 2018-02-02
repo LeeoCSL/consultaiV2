@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 /**
  * Created by renan.boni on 19/01/2018.
  */
@@ -24,14 +26,18 @@ public class Usuario {
     private String telefone;
     private String email;
     private String senha;
-    private String data_criacao;
+
+    @JsonProperty("data_criacao")
+    private String dataCriacao;
 
     @JsonProperty("bilhete_unico")
     private BilheteUnico bilheteUnico;
 
+    private List<Rotina> rotinas;
+
     public Usuario() {}
 
-    public Usuario(String id, String nome, String sobrenome, String dataNascimento, String sexo, String CPF, String telefone, String email, String senha, String data_criacao, BilheteUnico bilheteUnico) {
+    public Usuario(String id, String nome, String sobrenome, String dataNascimento, String sexo, String CPF, String telefone, String email, String senha, String dataCriacao, BilheteUnico bilheteUnico, List<Rotina> rotinas) {
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -41,8 +47,9 @@ public class Usuario {
         this.telefone = telefone;
         this.email = email;
         this.senha = senha;
-        this.data_criacao = data_criacao;
+        this.dataCriacao = dataCriacao;
         this.bilheteUnico = bilheteUnico;
+        this.rotinas = rotinas;
     }
 
     public String getId() {
@@ -117,12 +124,12 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getData_criacao() {
-        return data_criacao;
+    public String getDataCriacao() {
+        return dataCriacao;
     }
 
-    public void setData_criacao(String data_criacao) {
-        this.data_criacao = data_criacao;
+    public void setDataCriacao(String dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
     public BilheteUnico getBilheteUnico() {
@@ -131,6 +138,14 @@ public class Usuario {
 
     public void setBilheteUnico(BilheteUnico bilheteUnico) {
         this.bilheteUnico = bilheteUnico;
+    }
+
+    public List<Rotina> getRotinas() {
+        return rotinas;
+    }
+
+    public void setRotinas(List<Rotina> rotinas) {
+        this.rotinas = rotinas;
     }
 
     @Override
@@ -145,8 +160,9 @@ public class Usuario {
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
-                ", data_criacao='" + data_criacao + '\'' +
+                ", dataCriacao='" + dataCriacao + '\'' +
                 ", bilheteUnico=" + bilheteUnico +
+                ", rotinas=" + rotinas +
                 '}';
     }
 }

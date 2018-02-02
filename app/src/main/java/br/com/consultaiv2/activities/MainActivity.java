@@ -5,11 +5,13 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import br.com.consultaiv2.R;
 import br.com.consultaiv2.adapter.ViewPagerAdapter;
+import br.com.consultaiv2.application.CustomApplication;
 import br.com.consultaiv2.fragments.HomeFragment;
 import br.com.consultaiv2.util.BottomNavigationViewHelper;
 
@@ -38,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CustomApplication CustomApplication = (CustomApplication)getApplication();
+
+        Log.i("USUARIO_ATUAL", CustomApplication.currentUser.toString());
+        Log.i("TOKEN", CustomApplication.getAPItoken());
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
