@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -28,6 +29,7 @@ import br.com.consultaiv2.activities.EditarCartaoActivity;
 import br.com.consultaiv2.application.CustomApplication;
 import br.com.consultaiv2.dto.StatusResponse;
 import br.com.consultaiv2.eventbus.events.UpdateUserSaldoEventt;
+import br.com.consultaiv2.model.BilheteUnico;
 import br.com.consultaiv2.model.Usuario;
 import br.com.consultaiv2.retrofit.RetrofitInit;
 import br.com.consultaiv2.util.MonetaryUtil;
@@ -129,26 +131,63 @@ public class HomeFragment extends Fragment {
         mBtnRecarga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Recarga");
                 builder.setIcon(R.drawable.ic_attach_money_black_24dp);
-                builder.setTitle("Nova recarga");
                 builder.setMessage("Qual o valor da sua recarga?");
 
-                builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                LayoutInflater inflater = getLayoutInflater();
+                View addRecarga = inflater.inflate(R.layout.nova_recarga_menu_layout, null);
+                builder.setView(addRecarga);
 
+                final AlertDialog alertDialog = builder.create();
+
+                final MaterialEditText input = addRecarga.findViewById(R.id.et_name);
+
+                Button btnSalvar = addRecarga.findViewById(R.id.btn_save);
+                btnSalvar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        double value = Double.parseDouble(input.getText().toString());
+
+                        BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+
+                        final double novoSaldo = bilheteUnico.getSaldo() + value;
+
+                        bilheteUnico.setSaldo(novoSaldo);
+
+                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+                        call.enqueue(new Callback<StatusResponse>() {
+                            @Override
+                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                                StatusResponse res = response.body();
+
+                                if(res.hasError()){
+                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(getActivity(), "Seu saldo foi atualizado. Novo saldo: R$ " + novoSaldo, Toast.LENGTH_SHORT).show();
+                                    alertDialog.dismiss();
+                                    refreshUI();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
 
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                Button btnCancelar = addRecarga.findViewById(R.id.btn_cancel);
+                btnCancelar.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
                     }
                 });
 
-                builder.show();
+                alertDialog.show();
             }
         });
 
@@ -191,6 +230,8 @@ public class HomeFragment extends Fragment {
         super.onResume();
 
         refreshUI();
+
+        Log.i("CURRENT USER", CustomApplication.currentUser.toString());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

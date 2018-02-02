@@ -2,6 +2,7 @@ package br.com.consultaiv2.application;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import br.com.consultaiv2.model.Rotina;
 import br.com.consultaiv2.model.Usuario;
@@ -42,8 +43,32 @@ public class CustomApplication extends Application {
     }
 
     public static void updateRoutine(Rotina rotina){
+
+        Log.i("ROTINA_RECEBIDA", rotina.toString());
+
         currentUser.getRotinas().clear();
-        currentUser.getRotinas().add(rotina);
+
+        if(rotina.getTipoIda() == 0){
+            Rotina ida = new Rotina();
+            ida.setIdaID(rotina.getIdaID());
+            ida.setFlagIda(rotina.isFlagIda());
+            ida.setHoraIda(rotina.getHoraIda());
+            ida.setValorIda(rotina.getValorIda());
+            ida.setDiasUso(rotina.getDiasUso());
+
+            currentUser.getRotinas().add(ida);
+        }
+
+        if(rotina.getTipoVolta() == 1){
+            Rotina volta = new Rotina();
+            volta.setVoltaID(rotina.getVoltaID());
+            volta.setFlagVolta(rotina.isFlagVolta());
+            volta.setHoraVolta(rotina.getHoraVolta());
+            volta.setValorVolta(rotina.getValorVolta());
+            volta.setDiasUso(rotina.getDiasUso());
+
+            currentUser.getRotinas().add(volta);
+        }
     }
 
     public void setAPItoken(String token){

@@ -153,7 +153,24 @@ public class EditarCartaoActivity extends AppCompatActivity {
         if(usuario.getRotinas().size() > 0){
             List<Rotina> rotina = usuario.getRotinas();
 
-            this.rotina = rotina.get(0);
+            Rotina ida = rotina.get(0);
+            Rotina volta = rotina.get(1);
+
+            this.rotina = new Rotina();
+            this.rotina.setIdaID(ida.getIdaID());
+            this.rotina.setVoltaID(volta.getVoltaID());
+            this.rotina.setHoraIda(ida.getHoraIda());
+            this.rotina.setHoraVolta(volta.getHoraVolta());
+            this.rotina.setValorIda(ida.getValorIda());
+            this.rotina.setValorVolta(volta.getValorVolta());
+            this.rotina.setFlagIda(ida.isFlagIda());
+            this.rotina.setFlagVolta(volta.isFlagVolta());
+            this.rotina.setTipoIda(ida.getTipoIda());
+            this.rotina.setTipoVolta(volta.getTipoVolta());
+            this.rotina.setDiasUso(ida.getDiasUso());
+
+            this.horaIDA = ida.getHoraIda();
+            this.horaVOLTA = volta.getHoraVolta();
 
             DiasUso uso = rotina.get(0).getDiasUso();
 
@@ -166,15 +183,18 @@ public class EditarCartaoActivity extends AppCompatActivity {
             }
 
             if(this.rotina.getHoraIda() != null){
-                mTimeIda.setText(DateUtil.stringToTime(this.rotina.getHoraIda()));
+                Log.i("HORAIDA", this.rotina.getHoraIda());
+                mTimeIda.setText(this.rotina.getHoraIda());
                 mTimeIda.setVisibility(View.VISIBLE);
+                horaIDA = this.rotina.getHoraIda();
             }else{
                 mTimeIda.setVisibility(View.GONE);
             }
 
             if(this.rotina.getHoraVolta() != null){
-                mTimeVolta.setText(DateUtil.stringToTime(this.rotina.getHoraVolta()));
+                mTimeVolta.setText(this.rotina.getHoraVolta());
                 mTimeVolta.setVisibility(View.VISIBLE);
+                horaVOLTA = this.rotina.getHoraVolta();
             }else{
                 mTimeVolta.setVisibility(View.GONE);
             }
@@ -212,10 +232,41 @@ public class EditarCartaoActivity extends AppCompatActivity {
     }
 
     public void handlerNewRoutine(View v){
+
+        if(horaIDA == null || horaIDA.isEmpty()){
+            Toast.makeText(this, "Você deve escolher um horário de ida.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(horaVOLTA == null || horaVOLTA.isEmpty()){
+            Toast.makeText(this, "Você deve escolher um horário de volta.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         boolean[] checked = new boolean[mWeekDays.length];
 
+        int sum = 0;
         for(int i = 0; i < mWeekDays.length; i++){
             checked[i] = mWeekDays[i].isChecked();
+
+            if(checked[i]){
+                sum++;
+            }
+        }
+        
+        if(!mOnibusIda.isChecked() && !mIntegracaoIda.isChecked()){
+            Toast.makeText(this, "Você deve escolher ônibus ou integração na ida.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        if(!mOnibusVolta.isChecked() && !mIntegracaoVolta.isChecked()){
+            Toast.makeText(this, "Você deve escolher ônibus ou integração na volta.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(sum == 0){
+            Toast.makeText(this, "Você deve escolher pelo menos um dia na sua rotina.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         rotina.setFlagIda(true);
