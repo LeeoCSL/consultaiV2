@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.consultaiv2">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="br.com.consultai">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +26,22 @@
             android:label="@string/title_activity_main" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.EditarCartaoActivity" />
+
+        <service android:name=".firebase.ConsultaiInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".firebase.ConsultaiMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".activities.CadastroCartaoActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activities.ComprarActivity"></activity>
     </application>
 
 </manifest>

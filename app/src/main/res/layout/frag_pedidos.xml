@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context="br.com.consultai.fragments.fragmentsCompra.PedidosFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/logo_final" />
+
+        <TextView
+            android:id="@+id/txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Meus pedidos"
+            android:textSize="24sp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/txt">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt"
+            android:background="@drawable/borda_pedidos"
+            android:padding="10dp"
+
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/txtDt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data"/>
+            <TextView
+                android:id="@+id/txtData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00/00/0000"
+                android:textStyle="bold"
+                android:layout_below="@+id/txtDt"
+                />
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/txtData"
+                android:background="@color/cinza_escuro"
+                android:layout_marginBottom="10dp"
+              />
+
+            <TextView
+                android:id="@+id/txtPed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view1"
+                android:text="Pedido"/>
+
+            <TextView
+                android:id="@+id/txtPedido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtPed"
+                android:text="9999999999"
+                android:textStyle="bold"
+                />
+
+                <TextView
+                    android:id="@+id/txtVlr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/view1"
+                    android:text="Valor"
+                    />
+
+                <TextView
+                    android:id="@+id/txtValor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="R$ 99,99"
+                    android:textStyle="bold"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/txtVlr"/>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXXXXXXXXX"
+                android:layout_centerHorizontal="true"/>
+
+            <ImageView
+                android:id="@+id/imgStatus"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/txtStatus"
+                android:background="@drawable/btn_default"
+                android:layout_centerHorizontal="true"
+                />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</FrameLayout>

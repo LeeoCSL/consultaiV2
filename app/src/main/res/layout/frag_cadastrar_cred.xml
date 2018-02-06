@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context="br.com.consultai.fragments.fragmentsCompra.CadastrarCreditoFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/logo_final" />
+
+        <TextView
+            android:id="@+id/txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Pagamento cartão de crédito"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/img_bandeira"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/txt"
+            android:layout_margin="10dp"/>
+
+        <EditText
+            android:id="@+id/edt_numero_cartao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt"
+            android:layout_marginBottom="10dp"
+            android:hint="Número do cartão de crédito"
+            android:inputType="number"
+            android:layout_toLeftOf="@+id/img_bandeira"/>
+
+
+
+        <EditText
+            android:id="@+id/edt_nome_cartao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edt_numero_cartao"
+            android:layout_marginBottom="10dp"
+            android:hint="Nome impresso no cartão"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/edt_validade"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edt_nome_cartao"
+            android:hint="Validade"
+            android:inputType="date"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/edt_cvv"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/edt_nome_cartao"
+            android:hint="CVV"
+            android:inputType="number"
+            android:maxLength="3"
+            />
+
+        <TextView
+            android:id="@+id/txtRB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deseja salvar este cartão para próximas compras?"
+            android:textSize="20sp"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/edt_validade"/>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtRB"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SIM"
+                android:layout_marginRight="30dp"
+                android:textIsSelectable="true"
+                android:checked="true"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NAO"
+                android:layout_marginLeft="30dp"
+                android:textIsSelectable="true"
+                />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_continuar"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Continuar"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_default"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            />
+
+    </RelativeLayout>
+
+</FrameLayout>

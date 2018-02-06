@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context="br.com.consultai.fragments.ComoUsar">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/logo_final" />
+
+        <TextView
+            android:id="@+id/txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Novo bilhete único"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/edt_apelido_bilhete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt"
+            android:layout_marginBottom="10dp"
+            android:hint="Apelido do bilhete único"
+            android:inputType="number|text"/>
+
+        <EditText
+            android:id="@+id/edt_numero_bilhete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edt_apelido_bilhete"
+            android:layout_marginBottom="10dp"
+            android:hint="Numero do bilhete único (9 digitos)"
+            android:inputType="number"/>
+
+
+        <Button
+            android:id="@+id/btn_continuar"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Salvar"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_default"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/edt_numero_bilhete"
+            android:layout_marginTop="20dp"
+            />
+
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:orientation="vertical"
     tools:context=".activities.MainActivity">
@@ -69,56 +69,56 @@
         android:orientation="vertical"
         android:padding="36dp">
 
-        <!--<FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/login_fb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/login_fb_fake"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_facebook"
-                android:onClick="handlerFakeFacebookLogin"
-                android:text="Entrar com Facebook"
-                android:textColor="@color/white" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/login_google"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="invisible"/>
-
-            <Button
-                android:id="@+id/login_google_fake"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/btn_google"
-                android:text="Entrar com Google+"
-                android:textColor="@color/white"
-                android:onClick="handlerFakeGoogleLogin"/>
-        </FrameLayout>-->
-
-        <Button
-
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/btn_spotify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/btn_cadastrar"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="#3b5998"
+            fancy:fb_focusColor="#5474b8"
+            fancy:fb_fontIconResource="&#xf082;"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="30dp"
+            fancy:fb_text="Entrar com Facebook"
+            fancy:fb_textColor="#FFFFFF" />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="#D84B37 "
+            fancy:fb_focusColor="#D84B37"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="30dp"
+            fancy:fb_text="Entrar com Google"
+            fancy:fb_textColor="#FFFFFF" />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
             android:onClick="handlerToRegisterActivity"
-            android:text="@string/cadastre_se" />
+            fancy:fb_borderColor="#000"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@android:color/transparent"
+            fancy:fb_focusColor="#5474b8"
+            fancy:fb_radius="30dp"
+            fancy:fb_text="Cadastre-se"
+            fancy:fb_textColor="#000" />
     </LinearLayout>
 </LinearLayout>

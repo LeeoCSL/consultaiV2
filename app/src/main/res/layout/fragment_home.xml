@@ -23,12 +23,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/img_logo"
-            android:layout_margin="15dp"
-            app:cardElevation="4dp">
+            android:layout_margin="12dp"
+            app:cardElevation="4dp"
+            android:id="@+id/cardView">
 
             <RelativeLayout
                 android:id="@+id/layoutMain"
-                android:padding="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -37,183 +37,174 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
                     android:text="Bilhete teste"
                     android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/txt1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:id="@+id/ll_saldo_atual"
+                    android:orientation="horizontal"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/txt_nome_bilhete"
-                    android:layout_marginTop="10dp"
-                    android:text="Saldo atual:"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/txt_valor"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@id/txt1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/txt1"
-                    android:text="R$"
-                    android:textColor="#000000"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:id="@+id/txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Saldo atual"
+                        android:textSize="18sp" />
 
+                    <TextView
+                        android:id="@+id/txt_valor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="R$"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_saldo_atual"
+                        android:text="20,00"
+                        android:layout_marginLeft="4dp"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/layout_dias"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_valor"
-                    android:layout_marginBottom="15dp"
+                    android:layout_below="@+id/ll_saldo_atual"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:foregroundGravity="center"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:padding="10dp">
 
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/selec_dom"
+                    <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                        android:id="@+id/btn_domingo"
                         android:layout_width="20dp"
-                        android:layout_height="36dp"
+                        android:layout_height="44dp"
                         android:layout_weight="1"
                         android:elevation="4dp"
+                        android:textOff="D"
+                        android:textOn="D"
                         android:enabled="false"
-                        fancy:fb_text="D"
-                        fancy:fb_defaultColor="@color/colorPrimary"
-                        fancy:fb_textColor="@color/white"
-                        fancy:fb_radius="12dp"
-                        fancy:fb_borderWidth="2dp"
-                        fancy:fb_iconPaddingLeft="0dp"
-                        fancy:fb_iconPaddingRight="0dp"
-                        fancy:fb_disabledColor="@color/white"
-                        fancy:fb_disabledTextColor="@color/cinza_escuro"
-                        fancy:fb_disabledBorderColor="@color/colorPrimary"
-                        fancy:fb_borderColor="@color/colorPrimary"/>
+                        app:borderWidth="2dp"
+                        app:checkedColor="@color/colorPrimary"
+                        app:checkedTextColor="@android:color/white"
+                        app:radius="12dp"
+                        app:uncheckedColor="@color/colorPrimary"
+                        app:uncheckedTextColor="@color/colorPrimary" />
 
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/selec_seg"
+                    <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                        android:id="@+id/btn_segunda"
                         android:layout_width="20dp"
-                        android:layout_height="36dp"
+                        android:layout_height="44dp"
                         android:layout_marginLeft="4dp"
                         android:layout_weight="1"
                         android:elevation="4dp"
+                        android:textOff="S"
+                        android:textOn="S"
                         android:enabled="false"
-                        fancy:fb_text="S"
-                        fancy:fb_defaultColor="@color/colorPrimary"
-                        fancy:fb_textColor="@color/white"
-                        fancy:fb_radius="12dp"
-                        fancy:fb_borderWidth="2dp"
-                        fancy:fb_iconPaddingLeft="0dp"
-                        fancy:fb_iconPaddingRight="0dp"
-                        fancy:fb_disabledColor="@color/white"
-                        fancy:fb_disabledTextColor="@color/cinza_escuro"
-                        fancy:fb_disabledBorderColor="@color/colorPrimary"
-                        fancy:fb_borderColor="@color/colorPrimary"/>
+                        app:borderWidth="2dp"
+                        app:checkedColor="@color/colorPrimary"
+                        app:checkedTextColor="@android:color/white"
+                        app:radius="12dp"
+                        app:uncheckedColor="@color/colorPrimary"
+                        app:uncheckedTextColor="@color/colorPrimary" />
 
-
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/selec_ter"
+                    <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                        android:id="@+id/btn_terca"
                         android:layout_width="20dp"
-                        android:layout_height="36dp"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="4dp"
                         android:layout_weight="1"
                         android:elevation="4dp"
+                        android:textOff="T"
+                        android:textOn="T"
                         android:enabled="false"
-                        android:layout_marginLeft="4dp"
-                        fancy:fb_text="T"
-                        fancy:fb_defaultColor="@color/colorPrimary"
-                        fancy:fb_textColor="@color/white"
-                        fancy:fb_radius="12dp"
-                        fancy:fb_borderWidth="2dp"
-                        fancy:fb_iconPaddingLeft="0dp"
-                        fancy:fb_iconPaddingRight="0dp"
-                        fancy:fb_disabledColor="@color/white"
-                        fancy:fb_disabledTextColor="@color/cinza_escuro"
-                        fancy:fb_disabledBorderColor="@color/colorPrimary"
-                        fancy:fb_borderColor="@color/colorPrimary"/>
+                        app:borderWidth="2dp"
+                        app:checkedColor="@color/colorPrimary"
+                        app:checkedTextColor="@android:color/white"
+                        app:radius="12dp"
+                        app:uncheckedColor="@color/colorPrimary"
+                        app:uncheckedTextColor="@color/colorPrimary" />
 
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/selec_qua"
+                    <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                        android:id="@+id/btn_quarta"
                         android:layout_width="20dp"
-                        android:layout_height="36dp"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="4dp"
                         android:layout_weight="1"
                         android:elevation="4dp"
-                        android:layout_marginLeft="4dp"
+                        android:textOff="Q"
+                        android:textOn="Q"
                         android:enabled="false"
-                        fancy:fb_text="Q"
-                        fancy:fb_defaultColor="@color/colorPrimary"
-                        fancy:fb_textColor="@color/white"
-                        fancy:fb_radius="12dp"
-                        fancy:fb_borderWidth="2dp"
-                        fancy:fb_iconPaddingLeft="0dp"
-                        fancy:fb_iconPaddingRight="0dp"
-                        fancy:fb_disabledColor="@color/white"
-                        fancy:fb_disabledTextColor="@color/cinza_escuro"
-                        fancy:fb_disabledBorderColor="@color/colorPrimary"
-                        fancy:fb_borderColor="@color/colorPrimary" />
+                        app:borderWidth="2dp"
+                        app:checkedColor="@color/colorPrimary"
+                        app:checkedTextColor="@android:color/white"
+                        app:radius="12dp"
+                        app:uncheckedColor="@color/colorPrimary"
+                        app:uncheckedTextColor="@color/colorPrimary" />
 
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/selec_qui"
+                    <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                        android:id="@+id/btn_quinta"
                         android:layout_width="20dp"
-                        android:layout_height="36dp"
-                        android:layout_weight="1"
+                        android:layout_height="44dp"
                         android:layout_marginLeft="4dp"
-                        android:elevation="4dp"
-                        android:enabled="false"
-                        fancy:fb_text="Q"
-                        fancy:fb_defaultColor="@color/colorPrimary"
-                        fancy:fb_textColor="@color/white"
-                        fancy:fb_radius="12dp"
-                        fancy:fb_borderWidth="2dp"
-                        fancy:fb_iconPaddingLeft="0dp"
-                        fancy:fb_iconPaddingRight="0dp"
-                        fancy:fb_disabledColor="@color/white"
-                        fancy:fb_disabledTextColor="@color/cinza_escuro"
-                        fancy:fb_disabledBorderColor="@color/colorPrimary"
-                        fancy:fb_borderColor="@color/colorPrimary"/>
-
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/selec_sex"
-                        android:layout_width="20dp"
-                        android:layout_height="36dp"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="4dp"
-                        android:elevation="4dp"
-                        android:enabled="false"
-                        fancy:fb_text="S"
-                        fancy:fb_defaultColor="@color/colorPrimary"
-                        fancy:fb_textColor="@color/white"
-                        fancy:fb_radius="12dp"
-                        fancy:fb_borderWidth="2dp"
-                        fancy:fb_iconPaddingLeft="0dp"
-                        fancy:fb_iconPaddingRight="0dp"
-                        fancy:fb_disabledColor="@color/white"
-                        fancy:fb_disabledTextColor="@color/cinza_escuro"
-                        fancy:fb_disabledBorderColor="@color/colorPrimary"
-                        fancy:fb_borderColor="@color/colorPrimary"/>
-
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/selec_sab"
-                        android:layout_width="20dp"
-                        android:layout_height="36dp"
                         android:layout_weight="1"
                         android:elevation="4dp"
-                        android:layout_marginLeft="4dp"
+                        android:textOff="Q"
+                        android:textOn="Q"
                         android:enabled="false"
-                        fancy:fb_text="S"
-                        fancy:fb_defaultColor="@color/colorPrimary"
-                        fancy:fb_textColor="@color/white"
-                        fancy:fb_radius="12dp"
-                        fancy:fb_borderWidth="2dp"
-                        fancy:fb_iconPaddingLeft="0dp"
-                        fancy:fb_iconPaddingRight="0dp"
-                        fancy:fb_disabledColor="@color/white"
-                        fancy:fb_disabledTextColor="@color/cinza_escuro"
-                        fancy:fb_disabledBorderColor="@color/colorPrimary"
-                        fancy:fb_borderColor="@color/colorPrimary" />
+                        app:borderWidth="2dp"
+                        app:checkedColor="@color/colorPrimary"
+                        app:checkedTextColor="@android:color/white"
+                        app:radius="12dp"
+                        app:uncheckedColor="@color/colorPrimary"
+                        app:uncheckedTextColor="@color/colorPrimary" />
 
+                    <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                        android:id="@+id/btn_sexta"
+                        android:layout_width="20dp"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_weight="1"
+                        android:elevation="4dp"
+                        android:textOff="S"
+                        android:textOn="S"
+                        android:enabled="false"
+                        app:borderWidth="2dp"
+                        app:checkedColor="@color/colorPrimary"
+                        app:checkedTextColor="@android:color/white"
+                        app:radius="12dp"
+                        app:uncheckedColor="@color/colorPrimary"
+                        app:uncheckedTextColor="@color/colorPrimary" />
+
+                    <me.rishabhkhanna.customtogglebutton.CustomToggleButton
+                        android:id="@+id/btn_sabado"
+                        android:layout_width="20dp"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:elevation="4dp"
+                        android:textOff="S"
+                        android:textOn="S"
+                        app:borderWidth="2dp"
+                        app:checkedColor="@color/colorPrimary"
+                        app:checkedTextColor="@android:color/white"
+                        app:radius="12dp"
+                        app:uncheckedColor="@color/colorPrimary"
+                        app:uncheckedTextColor="@color/colorPrimary" />
                 </LinearLayout>
 
 
@@ -239,11 +230,11 @@
                     android:layout_height="50dp"
                     android:layout_below="@+id/btn_recarga"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center">
 
                     <info.hoang8f.widget.FButton
-                        android:id="@+id/btnExcluir"
+                        android:id="@+id/btn_excluir"
                         android:layout_width="80dp"
                         android:layout_height="33dp"
                         android:layout_below="@+id/layoutHrs"
@@ -271,25 +262,62 @@
                         app:shadowEnabled="true" />
                 </LinearLayout>
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab"
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/btn_limpar"
                     android:layout_below="@+id/ll"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:elevation="6dp"
-                    android:tint="@color/white"
-                    app:srcCompat="@drawable/ic_add_black_24dp"
-                    app:pressedTranslationZ="12dp" />
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="Limpar Saldo"
+                    android:textColor="#000000"
+                    app:cornerRadius="36dp"
+                    app:fButtonColor="#FFFFFF"
+                    app:shadowColor="@android:color/darker_gray"
+                    app:shadowEnabled="true" />
+
+
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/txtVlr"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_below="@+id/cardView"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"/>
+            android:elevation="6dp"
+            android:tint="@color/white"
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            app:pressedTranslationZ="12dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="12dp"/>
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/btn_comprar"
+            android:layout_below="@+id/cardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="Comprar créditos"
+            android:textColor="#FFFFFF"
+            app:cornerRadius="36dp"
+            app:fButtonColor="@color/colorPrimary"
+            app:shadowColor="@android:color/darker_gray"
+            app:shadowEnabled="true" />
+
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </FrameLayout>
