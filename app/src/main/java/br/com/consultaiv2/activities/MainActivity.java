@@ -17,6 +17,7 @@ import br.com.consultaiv2.application.CustomApplication;
 import br.com.consultaiv2.fragments.ContaFragment;
 import br.com.consultaiv2.fragments.HomeFragment;
 import br.com.consultaiv2.util.BottomNavigationViewHelper;
+import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
                     mViewPager.setCurrentItem(1);
                     break;
                 case R.id.navigation_exit:
+                    Paper.book().destroy();
+
                     CustomApplication customApplication = (CustomApplication) getApplicationContext();
                     customApplication.destroySession();
 

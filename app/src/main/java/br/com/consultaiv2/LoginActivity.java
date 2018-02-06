@@ -10,6 +10,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.rey.material.widget.CheckBox;
+
 import java.util.HashMap;
 
 import br.com.consultaiv2.activities.MainActivity;
@@ -22,6 +24,7 @@ import br.com.consultaiv2.retrofit.RetrofitInit;
 import br.com.consultaiv2.util.InputValidator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.et_senha)
     EditText mSenha;
 
+    @BindView(R.id.cb_remember_me)
+    CheckBox mRememberMe;
+
     private ProgressDialog mDialog;
 
     @Override
@@ -43,14 +49,31 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        ButterKnife.bind(this);
+
         mDialog = new ProgressDialog(this);
         mDialog.setTitle("Aguarde...");
         mDialog.setMessage("Verificando suas credenciais");
 
+        Paper.init(this);
+
         // VERIFICA SE O USUÁRIO VEIO DA TELA DE REGISTRO, ASSIM LOGA AUTOMATICAMENTE
         HashMap<String, String> userData = (HashMap<String, String>) getIntent().getSerializableExtra("user_data");
 
-        if(userData != null){
+        String emailRememberMe = Paper.book().read("email");
+        String passwordRememberMe = Paper.book().read("password");
+
+        if(emailRememberMe != null && passwordRememberMe != null){
+            if(!emailRememberMe.isEmpty() && !passwordRememberMe.isEmpty()){
+                Usuario usuario = new Usuario();
+                usuario.setEmail(emailRememberMe);
+                usuario.setSenha(passwordRememberMe);
+
+                comingFromRegister = true;
+                logUser(usuario);
+            }
+        }
+        else if(userData != null){
             String email = userData.get("email");
             String senha = userData.get("password");
 
@@ -66,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void logUser(Usuario usuario){
+    private void logUser(final Usuario usuario){
         mDialog.show();
 
         Call<AuthResponse> call = new RetrofitInit(this).getUsuarioService().auth(usuario);
@@ -92,6 +115,11 @@ public class LoginActivity extends AppCompatActivity {
                     customApplication.setAPItoken(authResponse.getToken());
 
                     mDialog.dismiss();
+
+                    if(mRememberMe.isChecked()){
+                        Paper.book().write("email", usuario.getEmail());
+                        Paper.book().write("password", usuario.getSenha());
+                    }
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
