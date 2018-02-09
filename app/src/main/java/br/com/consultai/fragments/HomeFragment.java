@@ -1,10 +1,15 @@
 package br.com.consultai.fragments;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,21 +26,30 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
+
 import br.com.consultai.R;
+import br.com.consultai.activities.CadastroCartaoActivity;
 import br.com.consultai.activities.ComprarActivity;
 import br.com.consultai.activities.EditarCartaoActivity;
+import br.com.consultai.activities.MainActivity;
+import br.com.consultai.activities.RegisterActivity;
 import br.com.consultai.application.CustomApplication;
 import br.com.consultai.dto.StatusResponse;
 import br.com.consultai.eventbus.events.UpdateUserSaldoEventt;
 import br.com.consultai.model.BilheteUnico;
+import br.com.consultai.model.Credencial;
 import br.com.consultai.model.Usuario;
 import br.com.consultai.retrofit.RetrofitInit;
+import br.com.consultai.retrofit.RetrofitInitCompra;
 import br.com.consultai.util.MonetaryUtil;
 import info.hoang8f.widget.FButton;
 import me.rishabhkhanna.customtogglebutton.CustomToggleButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.TELEPHONY_SERVICE;
 
 
 public class HomeFragment extends Fragment {
@@ -52,7 +66,8 @@ public class HomeFragment extends Fragment {
     private CustomToggleButton mDomingo, mSegunda, mTerca, mQuarta, mQuinta, mSexta, mSabado;
     private CustomToggleButton[] mWeekDays = new CustomToggleButton[7];
 
-    public HomeFragment() {}
+    public HomeFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,11 +85,57 @@ public class HomeFragment extends Fragment {
 
         loadUI(view);
 
+
+
+
+
         btn_comprar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ComprarActivity.class);
-                startActivity(intent);
+                Usuario usuario = CustomApplication.currentUser;
+
+                Credencial credencial = new Credencial();
+                credencial.setChecksum("711sbba7dc09522f2bef16626be459179454b1bd30887a4342b752e342b752e37ed81");
+                credencial.setGcmID(FirebaseInstanceId.getInstance().getToken());
+                credencial.setIdSistemaOperacional(Build.ID);
+                credencial.setModeloComercial(Build.BRAND);
+                credencial.setModeloDispositivo(Build.MODEL);
+                credencial.setNomeOperadora(MainActivity.nomeOperadoraa);
+                credencial.setSerialTerminal(Build.SERIAL);
+                credencial.setSimCardSerialNumber(MainActivity.SChip);
+                credencial.setVersaoAPP(MainActivity.versao);
+                credencial.setVersaoDLL("af9c4ced12205dfe4af4f04acd6fe98c761c45f1339b00f808d5aec1aa7a3b18");
+                credencial.setVersaoOS(Build.VERSION.RELEASE);
+                credencial.setEmail(usuario.getEmail());
+                credencial.setIdAplicacao("30");
+
+//                Call<StatusResponse> call = new RetrofitInitCompra(getActivity()).getCompraService().inicializar(credencial);
+//                call.enqueue(new Callback<StatusResponse>() {
+//                    @Override
+//                    public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+//                        StatusResponse res = response.body();
+//
+//                        if(res.hasError()){
+//                            Toast.makeText(getContext(), "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }else {
+//                            Toast.makeText(getContext(), "oia deu certo " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//
+                            Intent intent = new Intent(getContext(), ComprarActivity.class);
+                            startActivity(intent);
+//
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<StatusResponse> call, Throwable t) {
+//                        Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                        mProgressBar.setVisibility(View.GONE);
+//                    }
+//                });
+
+
+
             }
         });
 
@@ -103,10 +164,10 @@ public class HomeFragment extends Fragment {
                             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
                                 StatusResponse res = response.body();
 
-                                if(res.hasError()){
+                                if (res.hasError()) {
                                     Toast.makeText(getActivity(), res.getMessage(), Toast.LENGTH_SHORT).show();
                                     mProgressBar.setVisibility(View.GONE);
-                                }else{
+                                } else {
                                     Toast.makeText(getActivity(), res.getMessage(), Toast.LENGTH_SHORT).show();
                                     CustomApplication.currentUser.getRotinas().clear();
                                     refreshUI();
@@ -168,9 +229,9 @@ public class HomeFragment extends Fragment {
                             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
                                 StatusResponse res = response.body();
 
-                                if(res.hasError()){
+                                if (res.hasError()) {
                                     Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                                }else{
+                                } else {
                                     Toast.makeText(getActivity(), "Seu saldo foi atualizado. Novo saldo: R$ " + novoSaldo, Toast.LENGTH_SHORT).show();
                                     alertDialog.dismiss();
                                     refreshUI();
@@ -200,7 +261,9 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void loadUI(View v){
+
+
+    private void loadUI(View v) {
 
         mProgressBar = v.findViewById(R.id.progress_bar);
 
@@ -243,21 +306,21 @@ public class HomeFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void updateUserSaldo(UpdateUserSaldoEventt event){
+    public void updateUserSaldo(UpdateUserSaldoEventt event) {
         refreshUI();
     }
 
-    public void refreshUI(){
+    public void refreshUI() {
         Usuario usuario = CustomApplication.currentUser;
 
-        if(usuario.getRotinas().size() > 0){
+        if (usuario.getRotinas().size() > 0) {
             boolean[] diasUso = usuario.getRotinas().get(0).getDiasUso().getDiasUso();
 
-            for(int i = 0; i < diasUso.length; i++){
+            for (int i = 0; i < diasUso.length; i++) {
                 mWeekDays[i].setChecked(diasUso[i]);
             }
-        }else{
-            for(int i = 0; i < mWeekDays.length; i++){
+        } else {
+            for (int i = 0; i < mWeekDays.length; i++) {
                 mWeekDays[i].setChecked(false);
             }
         }

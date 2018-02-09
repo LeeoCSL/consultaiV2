@@ -17,26 +17,24 @@ import br.com.consultai.activities.MainActivity;
  * Created by leonardo.ribeiro on 26/01/2018.
  */
 
-public class TransferenciaFinalizadaFragment extends Fragment {
+public class PedidoFinalizadoCredFragment extends Fragment {
 
     Button btn_avancar;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.frag_transferencia_fim, null);
+        View view = inflater.inflate(R.layout.frag_pedido_finalizado_cred, null);
+//        ComprarActivity.attStepView(3);
 
         btn_avancar = (Button) view.findViewById(R.id.btn_avancar);
 
         btn_avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
+                Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
-
-
 
 
 

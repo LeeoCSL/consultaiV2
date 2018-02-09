@@ -17,7 +17,7 @@ import br.com.consultai.R;
  */
 
 public class BandeiraFragment extends Fragment {
-    Button btn_elo, btn_master, btn_visa,btn_continuar;
+    Button btn_elo, btn_master, btn_visa,btn_avancar;
     Button btn_valor_10, btn_valor_20, btn_valor_30;
 
 
@@ -37,7 +37,7 @@ public class BandeiraFragment extends Fragment {
         btn_elo = (Button) view.findViewById(R.id.btn_elo);
         btn_master = (Button) view.findViewById(R.id.btn_master);
         btn_visa = (Button) view.findViewById(R.id.btn_visa);
-        btn_continuar = (Button) view.findViewById(R.id.btn_continuar);
+        btn_avancar = (Button) view.findViewById(R.id.btn_avancar);
 
         lay_bandeira = (LinearLayout) view.findViewById(R.id.lay_bandeira);
 
@@ -62,7 +62,7 @@ public class BandeiraFragment extends Fragment {
             }
         });
 
-        btn_continuar.setOnClickListener(new View.OnClickListener() {
+        btn_avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(bandeira == -1){

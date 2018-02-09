@@ -11,6 +11,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/Bottom">
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:padding="20dp">
@@ -207,6 +214,28 @@
         </RelativeLayout>
 
 
+    </RelativeLayout>
+        </ScrollView>
+        <RelativeLayout
+            android:id="@+id/Bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#CCCCCC"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+
+            <Button
+                android:id="@+id/btn_avancar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#CCCCCC"
+                android:text="Avançar &gt;"
+                android:layout_alignParentEnd="true"
+                />
+
+        </RelativeLayout>
     </RelativeLayout>
 
 </FrameLayout>

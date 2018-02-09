@@ -7,22 +7,17 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context="br.com.consultai.fragments.fragmentsCompra.BilheteCadastradoFragment">
+    tools:context="br.com.consultai.fragments.fragmentsCompra.SelecBilheteFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:padding="20dp">
-
-        <ImageView
-            android:id="@+id/img_logo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/logo_final" />
 
         <TextView
             android:id="@+id/txt"
@@ -272,5 +267,23 @@
 
         </ScrollView>
     </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#CCCCCC"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+            <Button
+                android:id="@+id/btn_avancar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#CCCCCC"
+                android:text="Avançar &gt;"
+                android:layout_alignParentEnd="true"
+                />
 
+        </RelativeLayout>
+    </RelativeLayout>
 </FrameLayout>

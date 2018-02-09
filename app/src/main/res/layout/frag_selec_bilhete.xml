@@ -7,22 +7,17 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context="br.com.consultai.fragments.ComoUsar">
+    tools:context="br.com.consultai.fragments.fragmentsCompra.SelecBilheteFragment">
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:padding="20dp">
-
-        <ImageView
-            android:id="@+id/img_logo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/logo_final" />
 
         <TextView
             android:id="@+id/txt"
@@ -36,7 +31,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/edt_apelido_bilhete"
+            android:id="@+id/txt_apelido_bilhete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt"
@@ -48,20 +43,31 @@
             android:id="@+id/txt_numero_bilhete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edt_apelido_bilhete"
+            android:layout_below="@+id/txt_apelido_bilhete"
 
             android:text="999999999"
             android:textColor="#000000"/>
+
+        <CheckBox
+            android:id="@+id/cb_bilhete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_above="@+id/viewNum"
+            />
 
         <View
             android:id="@+id/viewNum"
             android:layout_width="match_parent"
             android:layout_height="2dp"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/txt_numero_bilhete"
-            android:background="@color/cinza_escuro"/>
+            android:background="@color/cinza_escuro" />
 
 
         <Button
+            android:id="@+id/btnCadBilhete"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_numero_bilhete"
@@ -70,6 +76,38 @@
             android:background="@drawable/btn_default"
             android:text="Outro bilhete"
             android:textColor="#FFFFFF" />
+
+
+
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#CCCCCC"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+
+            <Button
+                android:id="@+id/btn_voltar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#CCCCCC"
+                android:text=" &lt; Voltar"
+                android:layout_alignParentStart="true"/>
+
+            <Button
+                android:id="@+id/btn_avancar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#CCCCCC"
+                android:text="Avançar &gt;"
+                android:layout_alignParentEnd="true"
+                />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

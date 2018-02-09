@@ -7,22 +7,17 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context="br.com.consultai.fragments.ComoUsar">
+    tools:context="br.com.consultai.fragments.fragmentsCompra.CadastrarBilheteFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/img_logo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/logo_final" />
 
         <TextView
             android:id="@+id/txt"
@@ -66,6 +61,28 @@
             android:layout_marginTop="20dp"
             />
 
+
+
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#CCCCCC"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        >
+
+    <Button
+        android:id="@+id/btn_voltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#CCCCCC"
+        android:text=" &lt; Voltar"
+        android:layout_alignParentStart="true"/>
+
+
+    </RelativeLayout>
+    </RelativeLayout>
 </FrameLayout>

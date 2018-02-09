@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:orientation="vertical"
     tools:context=".activities.MainActivity">
@@ -48,11 +49,23 @@
             android:inputType="textPassword"
             android:textColorHint="@color/hintColor" />
 
+        <com.rey.material.widget.CheckBox
+            android:id="@+id/cb_remember_me"
+            android:text="Lembrar de mim"
+            android:layout_marginTop="4dp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/Material.Drawable.CheckBox"
+            app:cbd_strokeColor="@android:color/white"
+            app:cbd_tickColor="@color/colorPrimaryDark"/>
+
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/btn_only_border"
             android:onClick="handlerToMainActivity"
             android:text="Entrar"

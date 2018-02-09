@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import br.com.consultai.R;
+import br.com.consultai.activities.ComprarActivity;
 
 /**
  * Created by leonardo.ribeiro on 26/01/2018.
@@ -20,17 +21,19 @@ public class CadastrarBilheteFragment extends Fragment {
 
     EditText edt_apelido_bilhete, edt_numero_bilhete;
 
-    Button btn_continuar;
+    Button btn_continuar, btn_voltar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.frag_cadastrar_bilhete, null);
+        ComprarActivity.attStepView(1);
 
         edt_apelido_bilhete = (EditText) view.findViewById(R.id.edt_apelido_bilhete);
         edt_numero_bilhete = (EditText) view.findViewById(R.id.edt_numero_bilhete);
 
         btn_continuar = (Button) view.findViewById(R.id.btn_continuar);
+        btn_voltar = (Button) view.findViewById(R.id.btn_voltar);
 
 
         btn_continuar.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +44,18 @@ public class CadastrarBilheteFragment extends Fragment {
                 }
                 else{
                     //TODO
+                    ComprarActivity.attStepView(2);
+                    ComprarActivity.mViewPager.setCurrentItem(2);
                 }
+            }
+        });
+
+        btn_voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ComprarActivity.attStepView(1);
+                ComprarActivity.mViewPager.setCurrentItem(0);
+
             }
         });
 

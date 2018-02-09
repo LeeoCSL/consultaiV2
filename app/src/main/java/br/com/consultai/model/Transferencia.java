@@ -9,32 +9,32 @@ import com.google.gson.annotations.SerializedName;
 public class Transferencia {
 
     @SerializedName("banco")
-    private String banco;
+    private Banco banco;
 
     @SerializedName("favorecido")
-    private String favorecido;
+    private Favorecido favorecido;
 
     public Transferencia(){}
 
-    public Transferencia(String banco, String favorecido) {
+    public Transferencia(Banco banco, Favorecido favorecido) {
         this.banco = banco;
         this.favorecido = favorecido;
 
     }
 
-    public String getBanco() {
+    public Banco getBanco() {
         return banco;
     }
 
-    public void setBanco(String banco) {
+    public void setBanco(Banco banco) {
         this.banco = banco;
     }
 
-    public String getFavorecido() {
+    public Favorecido getFavorecido() {
         return favorecido;
     }
 
-    public void setFavorecido(String favorecido) {
+    public void setFavorecido(Favorecido favorecido) {
         this.favorecido = favorecido;
     }
 }

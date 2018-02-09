@@ -9,14 +9,19 @@
     android:orientation="vertical"
     tools:context="br.com.consultai.fragments.fragmentsCompra.ComprarFragment">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/Bottom">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="20dp">
 
         <TextView
             android:id="@+id/txt"
@@ -191,7 +196,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/borda_botoes">
-                <EditText
+
+                <com.blackcat.currencyedittext.CurrencyEditText
                     android:id="@+id/edt_outro_valor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -202,41 +208,35 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_voltar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Voltar"
-            android:layout_below="@+id/lay_valor"
-
-            android:background="@drawable/btn_default"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="25dp"
-            android:visibility="visible"
-            android:layout_toLeftOf="@+id/v1"/>
-
-        <View
-            android:id="@+id/v1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lay_valor"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginLeft="25dp"
-            />
-
-        <Button
-            android:id="@+id/btn_continuar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Continuar"
-            android:layout_below="@+id/lay_valor"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/btn_default"
-            android:textColor="#FFFFFF"
-            android:layout_toRightOf="@+id/v1"
-            android:visibility="gone"/>
     </RelativeLayout>
     </ScrollView>
+        <RelativeLayout
+            android:id="@+id/Bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#CCCCCC"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+
+            <Button
+                android:id="@+id/btn_voltar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#CCCCCC"
+                android:text=" &lt; Voltar"
+                android:layout_alignParentStart="true"/>
+
+            <Button
+                android:id="@+id/btn_continuar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#CCCCCC"
+                android:text="Avançar &gt;"
+                android:layout_alignParentEnd="true"
+                />
+
+        </RelativeLayout>
+    </RelativeLayout>
 </FrameLayout>

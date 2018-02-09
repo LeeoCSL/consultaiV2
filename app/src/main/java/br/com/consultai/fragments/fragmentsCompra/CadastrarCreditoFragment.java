@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import br.com.consultai.R;
+import br.com.consultai.activities.ComprarActivity;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 
 /**
@@ -20,19 +21,19 @@ public class CadastrarCreditoFragment extends Fragment {
 
     EditText edt_numero_cartao, edt_validade, edt_nome_cartao, edt_cvv;
 
-    Button btn_continuar;
+    Button btn_avancar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.frag_cadastrar_cred, null);
-
+        ComprarActivity.attStepView(2);
 
         edt_numero_cartao = (EditText) view.findViewById(R.id.edt_numero_cartao);
         edt_validade = (EditText) view.findViewById(R.id.edt_validade);
         edt_nome_cartao = (EditText) view.findViewById(R.id.edt_nome_cartao);
         edt_cvv = (EditText) view.findViewById(R.id.edt_cvv);
-        btn_continuar = (Button) view.findViewById(R.id.btn_continuar);
+        btn_avancar = (Button) view.findViewById(R.id.btn_avancar);
 
 
         MaskEditTextChangedListener maskCred = new MaskEditTextChangedListener("#### #### #### ####", edt_numero_cartao);
@@ -42,7 +43,7 @@ public class CadastrarCreditoFragment extends Fragment {
         edt_numero_cartao.addTextChangedListener(maskCred);
         edt_validade.addTextChangedListener(maskValidade);
 
-        btn_continuar.setOnClickListener(new View.OnClickListener() {
+        btn_avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (edt_numero_cartao.getText().toString().length() != 19 ){
@@ -59,6 +60,7 @@ public class CadastrarCreditoFragment extends Fragment {
                 }
                 else{
                     //TODO
+                    ComprarActivity.mViewPager.setCurrentItem(3);
                 }
 
             }

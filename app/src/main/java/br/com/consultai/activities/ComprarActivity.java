@@ -1,50 +1,46 @@
 package br.com.consultai.activities;
 
-import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.githang.stepview.StepView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import br.com.consultai.R;
 import br.com.consultai.adapter.ViewPagerAdapter;
-import br.com.consultai.fragments.ContaFragment;
-import br.com.consultai.fragments.HomeFragment;
 import br.com.consultai.fragments.fragmentsCompra.BandeiraFragment;
-import br.com.consultai.fragments.fragmentsCompra.BilheteCadastradoFragment;
+import br.com.consultai.fragments.fragmentsCompra.SelecBilheteFragment;
 import br.com.consultai.fragments.fragmentsCompra.CadastrarBilheteFragment;
 import br.com.consultai.fragments.fragmentsCompra.CadastrarCreditoFragment;
 import br.com.consultai.fragments.fragmentsCompra.ComprarFragment;
 import br.com.consultai.fragments.fragmentsCompra.PedidoBoletoFragment;
-import br.com.consultai.fragments.fragmentsCompra.PedidoFinalizadoFragment;
+import br.com.consultai.fragments.fragmentsCompra.PedidoFinalizadoCredFragment;
 import br.com.consultai.fragments.fragmentsCompra.PedidosFragment;
 import br.com.consultai.fragments.fragmentsCompra.SelecBancoFragment;
 import br.com.consultai.fragments.fragmentsCompra.SelecCreditoFragment;
 import br.com.consultai.fragments.fragmentsCompra.TransferenciaFinalizadaFragment;
 import br.com.consultai.fragments.fragmentsCompra.TransferenciaFragment;
+import br.com.consultai.model.Pagamento;
 
 public class ComprarActivity extends AppCompatActivity {
-    StepView mStepView;
+    public static StepView mStepView;
 
     public static ViewPager mViewPager;
-
+    public static int selecaoBanco = 0;
 //    Button testebtn;
 
     int i = 1;
+    public static Pagamento pagamento = new Pagamento();
 
     private ComprarFragment mComprarFragment;
     private BandeiraFragment mBandeiraFragment;
     private SelecCreditoFragment mSelecCreditoFragment;
     private CadastrarCreditoFragment mCadastrarCreditoFragment;
-    private PedidoFinalizadoFragment mPedidoFinalizadoFragment;
-    private BilheteCadastradoFragment mBilheteCadastradoFragment;
+    private PedidoFinalizadoCredFragment mPedidoFinalizadoCredFragment;
+    private SelecBilheteFragment mSelecBilheteFragment;
     private CadastrarBilheteFragment mCadastrarBilheteFragment;
     private PedidoBoletoFragment mPedidoBoletoFragment;
     private PedidosFragment mPedidosFragment;
@@ -63,26 +59,8 @@ public class ComprarActivity extends AppCompatActivity {
         List<String> steps = Arrays.asList(new String[]{" ", " ", " "});
         mStepView.setSteps(steps);
 
-        mStepView.selectedStep(1);
-
         mViewPager = (ViewPager)findViewById(R.id.viewpager);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         mViewPager.setCurrentItem(0);
         setupViewPager(mViewPager);
 
@@ -109,27 +87,44 @@ public class ComprarActivity extends AppCompatActivity {
 
     }
 
+    public static void attStepView(int i){
+        mStepView.selectedStep(i);
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
+        //inicio
+        mSelecBilheteFragment = new SelecBilheteFragment();
+        mCadastrarBilheteFragment = new CadastrarBilheteFragment();
+        //valor e tipo
         mComprarFragment = new ComprarFragment();
-        mBandeiraFragment = new BandeiraFragment();
+        //fluxo cred
         mSelecCreditoFragment = new SelecCreditoFragment();
         mCadastrarCreditoFragment = new CadastrarCreditoFragment();
-        mPedidoFinalizadoFragment = new PedidoFinalizadoFragment();
-        mPedidoFinalizadoFragment = new PedidoFinalizadoFragment();
+        mPedidoFinalizadoCredFragment = new PedidoFinalizadoCredFragment();
+        //fluxo boleto
         mPedidoBoletoFragment = new PedidoBoletoFragment();
+        //fluxo transf
         mSelecBancoFragment = new SelecBancoFragment();
-
-        adapter.addFragment(mComprarFragment); // 0
-        adapter.addFragment(mBandeiraFragment); // 1
-        adapter.addFragment(mSelecCreditoFragment); // 2
-        adapter.addFragment(mCadastrarCreditoFragment); // 3
-        adapter.addFragment(mPedidoFinalizadoFragment); // 4
-        adapter.addFragment(mPedidoBoletoFragment); //5
-        adapter.addFragment(mSelecBancoFragment); //6
+        mTransferenciaFragment = new TransferenciaFragment();
+        mTransferenciaFinalizadaFragment = new TransferenciaFinalizadaFragment();
 
 
+        mBandeiraFragment = new BandeiraFragment();
+
+
+        adapter.addFragment(mSelecBilheteFragment);//0
+        adapter.addFragment(mCadastrarBilheteFragment);//1
+        adapter.addFragment(mComprarFragment); // 2
+        adapter.addFragment(mSelecCreditoFragment); // 3
+        adapter.addFragment(mCadastrarCreditoFragment); // 4
+        adapter.addFragment(mPedidoFinalizadoCredFragment); // 5
+        adapter.addFragment(mPedidoBoletoFragment); //6
+        adapter.addFragment(mSelecBancoFragment); //7
+        adapter.addFragment(mTransferenciaFragment); //8
+        adapter.addFragment(mTransferenciaFinalizadaFragment); //9
+        adapter.addFragment(mBandeiraFragment); // 10
         viewPager.setAdapter(adapter);
     }
 
