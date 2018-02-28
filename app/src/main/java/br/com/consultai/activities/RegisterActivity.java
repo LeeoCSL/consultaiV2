@@ -160,9 +160,9 @@ public class RegisterActivity extends AppCompatActivity {
             mCelular.setError("celular no formato inválido.");
             return;
         }
-        if(ValidarCPF.isCPF(mCPF.toString()) == false){
-            mCPF.setError("CPF invalido");
-        }
+//        if(ValidarCPF.isCPF(mCPF.toString()) == false){
+//            mCPF.setError("CPF invalido");
+//        }
 
 
         usuario.setSexo(sexo);
