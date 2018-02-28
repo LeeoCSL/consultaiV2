@@ -45,7 +45,6 @@ public class ComprarFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.frag_comprar, null);
 
-        ComprarActivity.attStepView(2);
 
         btn_continuar = (Button) view.findViewById(R.id.btn_continuar);
         btn_voltar = (Button) view.findViewById(R.id.btn_voltar);
@@ -86,29 +85,15 @@ public class ComprarFragment extends Fragment {
                 }
 
 
-                else{
-                if(tipoCompra == 0) {
-                    ComprarActivity.attStepView(2);
-                    ComprarActivity.mViewPager.setCurrentItem(3);
-                }
-                else if(tipoCompra == 1) {
-                    //TODO compra boleto
-                    ComprarActivity.attStepView(2);
-                    ComprarActivity.mViewPager.setCurrentItem(6);
-                }
-                else if(tipoCompra == 2) {
-                    ComprarActivity.attStepView(2);
-                    ComprarActivity.mViewPager.setCurrentItem(7);
-                }
+
             }
-            }
+
 
         });
 
         btn_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.attStepView(1);
                 ComprarActivity.mViewPager.setCurrentItem(0);
             }
         });

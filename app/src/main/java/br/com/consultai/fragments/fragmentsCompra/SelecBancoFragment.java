@@ -31,7 +31,6 @@ public class SelecBancoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.frag_selec_banco, null);
-        ComprarActivity.attStepView(2);
 
         btn_bradesco = (Button) view.findViewById(R.id.btn_bradesco);
         btn_itau = (Button) view.findViewById(R.id.btn_itau);
@@ -45,14 +44,12 @@ public class SelecBancoFragment extends Fragment {
         btn_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.attStepView(2);
                 ComprarActivity.mViewPager.setCurrentItem(2);
             }
         });
         btn_avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.attStepView(2);
                 ComprarActivity.mViewPager.setCurrentItem(8);
             }
         });

@@ -18,16 +18,43 @@
 />
 
 
-    <com.githang.stepview.StepView
-        android:id="@+id/step_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
         android:layout_below="@+id/logo"
+        android:gravity="center">
 
-        />
+        <ImageView
+            android:id="@+id/circulo1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/circulo_cinza_200"/>
+
+        <ImageView
+            android:id="@+id/traco1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/traco_cinza_200"/>
+
+        <ImageView
+            android:id="@+id/circulo2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/circulo_cinza_200"/>
+
+        <ImageView
+            android:id="@+id/traco2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/traco_cinza_200"/>
+
+        <ImageView
+            android:id="@+id/circulo3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/circulo_cinza_200"/>
+
+    </LinearLayout>
 
     <!--<Button-->
         <!--android:id="@+id/testebtn"-->

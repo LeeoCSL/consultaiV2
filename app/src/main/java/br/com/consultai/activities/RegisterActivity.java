@@ -156,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
 
-        if(celular.length() < 14 || celular.length() > 14 ){
+        if(celular.length() < 15 || celular.length() > 15 ){
             mCelular.setError("celular no formato inválido.");
             return;
         }

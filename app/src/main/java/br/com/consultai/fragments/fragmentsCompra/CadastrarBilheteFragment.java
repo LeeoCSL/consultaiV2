@@ -27,7 +27,6 @@ public class CadastrarBilheteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.frag_cadastrar_bilhete, null);
-        ComprarActivity.attStepView(1);
 
         edt_apelido_bilhete = (EditText) view.findViewById(R.id.edt_apelido_bilhete);
         edt_numero_bilhete = (EditText) view.findViewById(R.id.edt_numero_bilhete);
@@ -44,7 +43,6 @@ public class CadastrarBilheteFragment extends Fragment {
                 }
                 else{
                     //TODO
-                    ComprarActivity.attStepView(2);
                     ComprarActivity.mViewPager.setCurrentItem(2);
                 }
             }
@@ -53,7 +51,6 @@ public class CadastrarBilheteFragment extends Fragment {
         btn_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.attStepView(1);
                 ComprarActivity.mViewPager.setCurrentItem(0);
 
             }

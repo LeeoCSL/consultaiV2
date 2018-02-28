@@ -68,12 +68,10 @@ public class PedidoBoletoFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ComprarActivity.mStepView.selectedStep(3);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ComprarActivity.mStepView.selectedStep(3);
     }
 }

@@ -103,7 +103,6 @@ public class SelecBilheteFragment extends Fragment {
                     consultaPag.setChecksum("xxx");
                     consultaPag.setToken("xxx");
 
-                    ComprarActivity.attStepView(2);
                     ComprarActivity.mViewPager.setCurrentItem(2);
 //
 //
@@ -139,7 +138,6 @@ public class SelecBilheteFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                ComprarActivity.attStepView(1);
                 ComprarActivity.mViewPager.setCurrentItem(1);
 
 

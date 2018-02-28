@@ -27,7 +27,7 @@ public class CadastrarCreditoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.frag_cadastrar_cred, null);
-        ComprarActivity.attStepView(2);
+
 
         edt_numero_cartao = (EditText) view.findViewById(R.id.edt_numero_cartao);
         edt_validade = (EditText) view.findViewById(R.id.edt_validade);

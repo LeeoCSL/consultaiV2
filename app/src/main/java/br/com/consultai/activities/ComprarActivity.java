@@ -3,6 +3,7 @@ package br.com.consultai.activities;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.githang.stepview.StepView;
 
@@ -26,7 +27,7 @@ import br.com.consultai.fragments.fragmentsCompra.TransferenciaFragment;
 import br.com.consultai.model.Pagamento;
 
 public class ComprarActivity extends AppCompatActivity {
-    public static StepView mStepView;
+    ImageView circulo1, circulo2, circulo3, traco1, traco2;
 
     public static ViewPager mViewPager;
     public static int selecaoBanco = 0;
@@ -55,9 +56,11 @@ public class ComprarActivity extends AppCompatActivity {
 
 //        testebtn = (Button) findViewById(R.id.testebtn);
 
-        mStepView = (StepView) findViewById(R.id.step_view);
-        List<String> steps = Arrays.asList(new String[]{" ", " ", " "});
-        mStepView.setSteps(steps);
+        circulo1 = (ImageView) findViewById(R.id.circulo1);
+        circulo2 = (ImageView) findViewById(R.id.circulo2);
+        circulo3 = (ImageView) findViewById(R.id.circulo3);
+        traco1 = (ImageView) findViewById(R.id.traco1);
+        traco2 = (ImageView) findViewById(R.id.traco2);
 
         mViewPager = (ViewPager)findViewById(R.id.viewpager);
 
@@ -67,29 +70,8 @@ public class ComprarActivity extends AppCompatActivity {
 
 
 
-
-//        testebtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (i == 1) {
-//                    mStepView.selectedStep(2);
-//                    i = 2;
-//
-//                } else if (i == 2) {
-//                    mStepView.selectedStep(3);
-//                    i = 3;
-//                } else if (i == 3) {
-//                    mStepView.selectedStep(1);
-//                    i = 1;
-//                }
-//            }
-//        });
-
     }
 
-    public static void attStepView(int i){
-        mStepView.selectedStep(i);
-    }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());

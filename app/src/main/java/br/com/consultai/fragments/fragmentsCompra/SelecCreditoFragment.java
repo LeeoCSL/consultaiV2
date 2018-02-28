@@ -47,7 +47,6 @@ public class SelecCreditoFragment extends Fragment {
         btn_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.attStepView(2);
                 ComprarActivity.mViewPager.setCurrentItem(2);
             }
         });
@@ -93,7 +92,6 @@ public class SelecCreditoFragment extends Fragment {
 //                            Toast.makeText(getContext(), "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
 //                        }else{
 ////
-                            ComprarActivity.attStepView(3);
                             ComprarActivity.mViewPager.setCurrentItem(5);
 //
 //                        }
@@ -113,7 +111,6 @@ public class SelecCreditoFragment extends Fragment {
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.attStepView(2);
                 ComprarActivity.mViewPager.setCurrentItem(4);
             }
         });

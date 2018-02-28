@@ -53,7 +53,6 @@ public class TransferenciaFragment extends Fragment {
         btn_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.attStepView(2);
                 ComprarActivity.mViewPager.setCurrentItem(7);
             }
         });
