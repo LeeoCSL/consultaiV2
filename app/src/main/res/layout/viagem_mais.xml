@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Adicionar viagem"
+            android:text="Fiz uma viagem a mais"
             android:textColor="@color/cinza_escuro"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/btn_cinza"
-                android:text="3,80"
+                android:text="4,00"
                 android:textColor="@color/cinza_escuro"
                 android:visibility="invisible"
 
@@ -84,7 +84,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/btnMaisOnibusComum"
                 android:background="@drawable/btn_default"
-                android:text="3,00"
+                android:text="2,96"
                 android:textColor="@color/white"
                 android:visibility="invisible" />
 
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/btn_default"
-            android:text="1,90"
+            android:text="2,00"
             android:textColor="@color/white"
             android:visibility="invisible"
 
@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Excluir viagem"
+            android:text="Fiz uma viagem a menos"
             android:textColor="@color/cinza_escuro"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/btn_cinza"
-                android:text="3,80"
+                android:text="4,00"
                 android:textColor="@color/cinza_escuro"
                 android:visibility="invisible"
 
@@ -181,7 +181,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/btnMenosOnibusComum"
                 android:background="@drawable/btn_default"
-                android:text="3,00"
+                android:text="2,96"
                 android:textColor="@color/white"
                 android:visibility="invisible" />
 
@@ -194,7 +194,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/btn_default"
-            android:text="1,90"
+            android:text="2,00"
             android:textColor="@color/white"
             android:visibility="invisible"
 

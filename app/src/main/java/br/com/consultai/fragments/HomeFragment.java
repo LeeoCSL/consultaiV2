@@ -118,6 +118,9 @@ public class HomeFragment extends Fragment {
                     menosEstudante.setVisibility(View.VISIBLE);
                 }
 
+                mBuilder.setView(mView);
+                final AlertDialog dialog1 = mBuilder.create();
+
                 comoFunciona.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -128,7 +131,7 @@ public class HomeFragment extends Fragment {
                         builder.setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
+                                dialogInterface.dismiss();
                             }
                         });
                         builder.create();
@@ -148,7 +151,7 @@ public class HomeFragment extends Fragment {
                         builder.setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
+                                dialogInterface.dismiss();
                             }
                         });
                         builder.create();
@@ -160,7 +163,35 @@ public class HomeFragment extends Fragment {
                 maisOnibusComum.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        final BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+                        final double value = 4.00;
 
+                        bilheteUnico.setSaldoAnterior(bilheteUnico.getSaldo());
+                        final double novoSaldo = bilheteUnico.getSaldo() - value;
+
+                        bilheteUnico.setSaldo(novoSaldo);
+                        bilheteUnico.setOperacao(3);
+                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+                        call.enqueue(new Callback<StatusResponse>() {
+                            @Override
+                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                                StatusResponse res = response.body();
+
+                                if (res.hasError()) {
+                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                                    bilheteUnico.setSaldo(novoSaldo - value);
+                                } else {
+                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+                                    dialog1.dismiss();
+                                    refreshUI();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                     }
                 });
@@ -168,6 +199,35 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
+                        final BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+                        final double value = 2.96;
+
+                        bilheteUnico.setSaldoAnterior(bilheteUnico.getSaldo());
+                        final double novoSaldo = bilheteUnico.getSaldo() - value;
+
+                        bilheteUnico.setSaldo(novoSaldo);
+                        bilheteUnico.setOperacao(3);
+                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+                        call.enqueue(new Callback<StatusResponse>() {
+                            @Override
+                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                                StatusResponse res = response.body();
+
+                                if (res.hasError()) {
+                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                                    bilheteUnico.setSaldo(novoSaldo - value);
+                                } else {
+                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+                                    dialog1.dismiss();
+                                    refreshUI();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                     }
                 });
@@ -175,7 +235,35 @@ public class HomeFragment extends Fragment {
                 maisEstudante.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        final BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+                        final double value = 2.00;
 
+                        bilheteUnico.setSaldoAnterior(bilheteUnico.getSaldo());
+                        final double novoSaldo = bilheteUnico.getSaldo() - value;
+
+                        bilheteUnico.setSaldo(novoSaldo);
+                        bilheteUnico.setOperacao(4);
+                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+                        call.enqueue(new Callback<StatusResponse>() {
+                            @Override
+                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                                StatusResponse res = response.body();
+
+                                if (res.hasError()) {
+                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                                    bilheteUnico.setSaldo(novoSaldo - value);
+                                } else {
+                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+                                    dialog1.dismiss();
+                                    refreshUI();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                     }
                 });
@@ -183,14 +271,70 @@ public class HomeFragment extends Fragment {
                 menosOnibusComum.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        final BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+                        final double value = 4.00;
 
+                        bilheteUnico.setSaldoAnterior(bilheteUnico.getSaldo());
+                        final double novoSaldo = bilheteUnico.getSaldo() + value;
+
+                        bilheteUnico.setSaldo(novoSaldo);
+                        bilheteUnico.setOperacao(4);
+                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+                        call.enqueue(new Callback<StatusResponse>() {
+                            @Override
+                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                                StatusResponse res = response.body();
+
+                                if (res.hasError()) {
+                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                                    bilheteUnico.setSaldo(novoSaldo - value);
+                                } else {
+                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+                                    dialog1.dismiss();
+                                    refreshUI();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
 
                 menosIntegracaoComum.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        final BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+                        final double value = 2.96;
 
+                        bilheteUnico.setSaldoAnterior(bilheteUnico.getSaldo());
+                        final double novoSaldo = bilheteUnico.getSaldo() + value;
+
+                        bilheteUnico.setSaldo(novoSaldo);
+                        bilheteUnico.setOperacao(4);
+                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+                        call.enqueue(new Callback<StatusResponse>() {
+                            @Override
+                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                                StatusResponse res = response.body();
+
+                                if (res.hasError()) {
+                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                                    bilheteUnico.setSaldo(novoSaldo - value);
+                                } else {
+                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+                                    dialog1.dismiss();
+                                    refreshUI();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                     }
                 });
@@ -198,17 +342,43 @@ public class HomeFragment extends Fragment {
                 menosEstudante.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        final BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+                        final double value = 2.00;
 
+                        bilheteUnico.setSaldoAnterior(bilheteUnico.getSaldo());
+                        final double novoSaldo = bilheteUnico.getSaldo() + value;
+
+                        bilheteUnico.setSaldo(novoSaldo);
+                        bilheteUnico.setOperacao(4);
+                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+                        call.enqueue(new Callback<StatusResponse>() {
+                            @Override
+                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                                StatusResponse res = response.body();
+
+                                if (res.hasError()) {
+                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                                    bilheteUnico.setSaldo(novoSaldo - value);
+                                } else {
+                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+                                    dialog1.dismiss();
+                                    refreshUI();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                     }
                 });
 
-                mBuilder.setView(mView);
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
+
+                dialog1.show();
             }
         });
-
 
 
         btn_comprar.setOnClickListener(new View.OnClickListener() {
@@ -242,8 +412,8 @@ public class HomeFragment extends Fragment {
 //                        }else {
 //                            Toast.makeText(getContext(), "oia deu certo " + res.getMessage(), Toast.LENGTH_SHORT).show();
 //
-                            Intent intent = new Intent(getContext(), ComprarActivity.class);
-                            startActivity(intent);
+                Intent intent = new Intent(getContext(), ComprarActivity.class);
+                startActivity(intent);
 //
 //
 //                        }
@@ -255,7 +425,6 @@ public class HomeFragment extends Fragment {
 //                        mProgressBar.setVisibility(View.GONE);
 //                    }
 //                });
-
 
 
             }
@@ -340,10 +509,12 @@ public class HomeFragment extends Fragment {
                         final double value = Double.parseDouble(input.getText().toString());
 
                         final BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+                        double saldoAnt = bilheteUnico.getSaldo();
+                        Log.v("saldoAnt", String.valueOf(bilheteUnico));
+                        bilheteUnico.setSaldoAnterior(saldoAnt);
 
-                        bilheteUnico.setSaldoAnterior(bilheteUnico.getSaldo());
                         final double novoSaldo = bilheteUnico.getSaldo() + value;
-
+                        Log.v("saldo", String.valueOf(novoSaldo));
                         bilheteUnico.setSaldo(novoSaldo);
                         bilheteUnico.setOperacao(1);
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
@@ -436,7 +607,6 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
-
 
 
     private void loadUI(View v) {
