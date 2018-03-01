@@ -27,7 +27,7 @@ import br.com.consultai.fragments.fragmentsCompra.TransferenciaFragment;
 import br.com.consultai.model.Pagamento;
 
 public class ComprarActivity extends AppCompatActivity {
-    ImageView circulo1, circulo2, circulo3, traco1, traco2;
+   public static ImageView circulo1, circulo2, circulo3, traco1, traco2;
 
     public static ViewPager mViewPager;
     public static int selecaoBanco = 0;

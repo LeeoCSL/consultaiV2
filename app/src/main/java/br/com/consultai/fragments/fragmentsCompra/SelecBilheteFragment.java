@@ -48,7 +48,7 @@ public class SelecBilheteFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.frag_selec_bilhete, null);
 
-
+    ComprarActivity.circulo1.setBackgroundResource(R.drawable.circulo_selec_200);
 
         txt_apelido_bilhete = (TextView) view.findViewById(R.id.txt_apelido_bilhete);
         txt_numero_bilhete = (TextView) view.findViewById(R.id.txt_numero_bilhete);
