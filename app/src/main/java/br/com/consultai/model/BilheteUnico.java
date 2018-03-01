@@ -54,7 +54,7 @@ public class BilheteUnico {
     }
 
     public void setSaldoAnterior(double saldoAnterior) {
-        this.saldo = saldoAnterior;
+        this.saldoAnterior = saldoAnterior;
     }
 
     public boolean isEstudante() {

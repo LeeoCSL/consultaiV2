@@ -108,12 +108,20 @@ public class HomeFragment extends Fragment {
 
                 BilheteUnico bu = new BilheteUnico();
 
+                Log.d("estu", String.valueOf(bu.isEstudante()));
+                Toast.makeText(getContext(), String.valueOf(bu.isEstudante()), Toast.LENGTH_SHORT).show();
                 if (!bu.isEstudante()) {
                     maisOnibusComum.setVisibility(View.VISIBLE);
                     maisIntegracaoComum.setVisibility(View.VISIBLE);
                     menosOnibusComum.setVisibility(View.VISIBLE);
                     menosIntegracaoComum.setVisibility(View.VISIBLE);
+                    maisEstudante.setVisibility(View.INVISIBLE);
+                    menosEstudante.setVisibility(View.INVISIBLE);
                 } else if (bu.isEstudante()) {
+                    maisOnibusComum.setVisibility(View.INVISIBLE);
+                    maisIntegracaoComum.setVisibility(View.INVISIBLE);
+                    menosOnibusComum.setVisibility(View.INVISIBLE);
+                    menosIntegracaoComum.setVisibility(View.INVISIBLE);
                     maisEstudante.setVisibility(View.VISIBLE);
                     menosEstudante.setVisibility(View.VISIBLE);
                 }
@@ -181,8 +189,9 @@ public class HomeFragment extends Fragment {
                                     Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
                                     bilheteUnico.setSaldo(novoSaldo - value);
                                 } else {
-                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
                                     dialog1.dismiss();
+                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+
                                     refreshUI();
                                 }
                             }
@@ -510,11 +519,10 @@ public class HomeFragment extends Fragment {
 
                         final BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
                         double saldoAnt = bilheteUnico.getSaldo();
-                        Log.v("saldoAnt", String.valueOf(bilheteUnico));
+//
                         bilheteUnico.setSaldoAnterior(saldoAnt);
-
                         final double novoSaldo = bilheteUnico.getSaldo() + value;
-                        Log.v("saldo", String.valueOf(novoSaldo));
+
                         bilheteUnico.setSaldo(novoSaldo);
                         bilheteUnico.setOperacao(1);
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
