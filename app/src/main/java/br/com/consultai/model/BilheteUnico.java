@@ -2,6 +2,7 @@ package br.com.consultai.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by renan.boni on 19/01/2018.
@@ -16,15 +17,20 @@ public class BilheteUnico {
     private double saldo;
     private boolean estudante;
     private String numero;
+    private int operacao;
+    @JsonProperty("saldo_anterior")
+    private double saldoAnterior;
 
     public BilheteUnico(){}
 
-    public BilheteUnico(Integer id, String apelido, double saldo, boolean estudante, String numero) {
+    public BilheteUnico(Integer id, String apelido, double saldo, boolean estudante, String numero, int operacao, double saldoAnterior) {
         this.id = id;
         this.apelido = apelido;
         this.saldo = saldo;
         this.estudante = estudante;
         this.numero = numero;
+        this.operacao = operacao;
+        this.saldoAnterior = saldoAnterior;
     }
 
     public Integer getId() {
@@ -43,12 +49,12 @@ public class BilheteUnico {
         this.apelido = apelido;
     }
 
-    public double getSaldo() {
-        return saldo;
+    public double getSaldoAnterior() {
+        return saldoAnterior;
     }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
+    public void setSaldoAnterior(double saldoAnterior) {
+        this.saldo = saldoAnterior;
     }
 
     public boolean isEstudante() {
@@ -67,6 +73,22 @@ public class BilheteUnico {
         this.numero = numero;
     }
 
+    public int getOperacao() {
+        return operacao;
+    }
+
+    public void setOperacao(int operacao) {
+        this.operacao = operacao;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
     @Override
     public String toString() {
         return "BilheteUnico{" +
@@ -75,6 +97,7 @@ public class BilheteUnico {
                 ", saldo=" + saldo +
                 ", estudante=" + estudante +
                 ", numero='" + numero + '\'' +
+                ", operacao='" + operacao + '\'' +
                 '}';
     }
 }

@@ -25,11 +25,12 @@ import br.com.consultai.fragments.fragmentsCompra.SelecCreditoFragment;
 import br.com.consultai.fragments.fragmentsCompra.TransferenciaFinalizadaFragment;
 import br.com.consultai.fragments.fragmentsCompra.TransferenciaFragment;
 import br.com.consultai.model.Pagamento;
+import br.com.consultai.util.CustomViewPager;
 
 public class ComprarActivity extends AppCompatActivity {
    public static ImageView circulo1, circulo2, circulo3, traco1, traco2;
 
-    public static ViewPager mViewPager;
+    public static CustomViewPager mViewPager;
     public static int selecaoBanco = 0;
 //    Button testebtn;
 
@@ -62,9 +63,10 @@ public class ComprarActivity extends AppCompatActivity {
         traco1 = (ImageView) findViewById(R.id.traco1);
         traco2 = (ImageView) findViewById(R.id.traco2);
 
-        mViewPager = (ViewPager)findViewById(R.id.viewpager);
+        mViewPager = (CustomViewPager) findViewById(R.id.viewpager);
 
         mViewPager.setCurrentItem(0);
+        mViewPager.setPagingEnabled(false);
         setupViewPager(mViewPager);
 
 

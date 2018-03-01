@@ -7,14 +7,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -85,7 +88,126 @@ public class HomeFragment extends Fragment {
 
         loadUI(view);
 
+        Button fab = (Button) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+                View mView = getLayoutInflater().inflate(R.layout.viagem_mais, null);
+                ImageView comoFunciona = (ImageView) mView.findViewById(R.id.btnComoFunciona);
+                ImageView comoFuncionaMenos = (ImageView) mView.findViewById(R.id.btnComoFuncionaMenos);
 
+                Button maisOnibusComum = (Button) mView.findViewById(R.id.btnMaisOnibusComum);
+                Button maisEstudante = (Button) mView.findViewById(R.id.btnMaisEstudante);
+                Button maisIntegracaoComum = (Button) mView.findViewById(R.id.btnMaisIntegracaoComum);
+
+
+                Button menosOnibusComum = (Button) mView.findViewById(R.id.btnMenosOnibusComum);
+                Button menosIntegracaoComum = (Button) mView.findViewById(R.id.btnMenosIntegracaoComum);
+                Button menosEstudante = (Button) mView.findViewById(R.id.btnMenosEstudante);
+
+                BilheteUnico bu = new BilheteUnico();
+
+                if (!bu.isEstudante()) {
+                    maisOnibusComum.setVisibility(View.VISIBLE);
+                    maisIntegracaoComum.setVisibility(View.VISIBLE);
+                    menosOnibusComum.setVisibility(View.VISIBLE);
+                    menosIntegracaoComum.setVisibility(View.VISIBLE);
+                } else if (bu.isEstudante()) {
+                    maisEstudante.setVisibility(View.VISIBLE);
+                    menosEstudante.setVisibility(View.VISIBLE);
+                }
+
+                comoFunciona.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setMessage("Adicione uma viagem extra sempre que fizer um trajeto diferente do que está definido em sua rotina.");
+
+                        builder.setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                        builder.create();
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                    }
+                });
+
+                comoFuncionaMenos.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setMessage("Exclua uma viagem sempre que fizer um trajeto diferente do que está definido em sua rotina.");
+
+                        builder.setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                        builder.create();
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                });
+
+                maisOnibusComum.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                    }
+                });
+                maisIntegracaoComum.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                    }
+                });
+
+                maisEstudante.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                    }
+                });
+
+                menosOnibusComum.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+                menosIntegracaoComum.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                    }
+                });
+
+                menosEstudante.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                    }
+                });
+
+                mBuilder.setView(mView);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+            }
+        });
 
 
 
@@ -215,14 +337,15 @@ public class HomeFragment extends Fragment {
                 btnSalvar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        double value = Double.parseDouble(input.getText().toString());
+                        final double value = Double.parseDouble(input.getText().toString());
 
-                        BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+                        final BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
 
+                        bilheteUnico.setSaldoAnterior(bilheteUnico.getSaldo());
                         final double novoSaldo = bilheteUnico.getSaldo() + value;
 
                         bilheteUnico.setSaldo(novoSaldo);
-
+                        bilheteUnico.setOperacao(1);
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
                         call.enqueue(new Callback<StatusResponse>() {
                             @Override
@@ -231,6 +354,7 @@ public class HomeFragment extends Fragment {
 
                                 if (res.hasError()) {
                                     Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                                    bilheteUnico.setSaldo(novoSaldo - value);
                                 } else {
                                     Toast.makeText(getActivity(), "Seu saldo foi atualizado. Novo saldo: R$ " + novoSaldo, Toast.LENGTH_SHORT).show();
                                     alertDialog.dismiss();
@@ -255,6 +379,58 @@ public class HomeFragment extends Fragment {
                 });
 
                 alertDialog.show();
+            }
+        });
+
+        btn_limpar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Limpar saldo?");
+
+                builder.setMessage("Deseja realmente limpar seu saldo?");
+
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialogInterface, int i) {
+                        BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+
+
+                        bilheteUnico.setSaldoAnterior(bilheteUnico.getSaldo());
+                        bilheteUnico.setSaldo(0);
+                        bilheteUnico.setOperacao(0);
+
+                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+                        call.enqueue(new Callback<StatusResponse>() {
+                            @Override
+                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                                StatusResponse res = response.body();
+
+                                if (res.hasError()) {
+                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+                                    BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+                                    bilheteUnico.setSaldo(0);
+                                    dialogInterface.dismiss();
+                                    refreshUI();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                builder.show();
             }
         });
 
