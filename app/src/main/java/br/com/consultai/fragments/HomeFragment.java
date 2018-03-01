@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment {
 
         loadUI(view);
 
-        Button fab = (Button) view.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
