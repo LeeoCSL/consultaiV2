@@ -46,6 +46,7 @@ import br.com.consultai.model.Usuario;
 import br.com.consultai.retrofit.RetrofitInit;
 import br.com.consultai.retrofit.RetrofitInitCompra;
 import br.com.consultai.util.MonetaryUtil;
+import br.com.consultai.util.Utility;
 import info.hoang8f.widget.FButton;
 import me.rishabhkhanna.customtogglebutton.CustomToggleButton;
 import retrofit2.Call;
@@ -450,7 +451,23 @@ public class HomeFragment extends Fragment {
         mEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(!Utility.isNetworkAvailable(getContext())){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Você não está conectado a internet");
+                    builder.setMessage("Por favor conecte-se à internet para continuar");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+
+                    builder.show();
+                }
+                else {
                 handlerToEditarCartaoActivity();
+            }
             }
         });
         mExcluir.setOnClickListener(new View.OnClickListener() {

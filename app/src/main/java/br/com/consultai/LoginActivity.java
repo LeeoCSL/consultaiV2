@@ -28,6 +28,7 @@ import br.com.consultai.dto.StatusResponse;
 import br.com.consultai.model.Usuario;
 import br.com.consultai.retrofit.RetrofitInit;
 import br.com.consultai.util.InputValidator;
+import br.com.consultai.util.Utility;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.paperdb.Paper;
@@ -97,58 +98,72 @@ public class LoginActivity extends AppCompatActivity {
 
     private void logUser(final Usuario usuario){
         mDialog.show();
-
-        Call<AuthResponse> call = new RetrofitInit(this).getUsuarioService().auth(usuario);
-        call.enqueue(new Callback<AuthResponse>() {
-            @Override
-            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-
-                if(!comingFromRegister){
-                    blockUI(false);
+        if(!Utility.isNetworkAvailable(this)){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Você não está conectado a internet");
+            builder.setMessage("Por favor conecte-se à internet para continuar");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    mDialog.dismiss();
                 }
+            });
+            builder.show();
+        }
+        else {
 
-                AuthResponse authResponse = response.body();
+            Call<AuthResponse> call = new RetrofitInit(this).getUsuarioService().auth(usuario);
+            call.enqueue(new Callback<AuthResponse>() {
+                @Override
+                public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
 
-                if(authResponse.hasError()){
-                    Toast.makeText(LoginActivity.this, authResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                    mDialog.dismiss();
-                }else{
-                    CustomApplication customApplication = (CustomApplication) getApplicationContext();
-
-                    Usuario u = authResponse.getUsuario();
-
-                    CustomApplication.currentUser = u;
-                    customApplication.setAPItoken(authResponse.getToken());
-
-
-
-                    mDialog.dismiss();
-
-                    if(mRememberMe.isChecked()){
-                        Paper.book().write("email", usuario.getEmail());
-                        Paper.book().write("password", usuario.getSenha());
+                    if (!comingFromRegister) {
+                        blockUI(false);
                     }
 
-                    //verificação infos complementares
-                    //requisição, set dados ao currentuser
+                    AuthResponse authResponse = response.body();
 
-                    testeCadComp();
+                    if (authResponse.hasError()) {
+                        Toast.makeText(LoginActivity.this, authResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        mDialog.dismiss();
+                    } else {
+                        CustomApplication customApplication = (CustomApplication) getApplicationContext();
+
+                        Usuario u = authResponse.getUsuario();
+
+                        CustomApplication.currentUser = u;
+                        customApplication.setAPItoken(authResponse.getToken());
 
 
+                        mDialog.dismiss();
+
+                        if (mRememberMe.isChecked()) {
+                            Paper.book().write("email", usuario.getEmail());
+                            Paper.book().write("password", usuario.getSenha());
+                        }
+
+                        //verificação infos complementares
+                        //requisição, set dados ao currentuser
+
+                        testeCadComp();
+
+
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<AuthResponse> call, Throwable t) {
+                @Override
+                public void onFailure(Call<AuthResponse> call, Throwable t) {
 
-                mDialog.dismiss();
+                    mDialog.dismiss();
 
-                if(!comingFromRegister){
-                    blockUI(false);
-                    Toast.makeText(LoginActivity.this, "Desculpe, não conseguimos nos conectar com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (!comingFromRegister) {
+                        blockUI(false);
+                        Toast.makeText(LoginActivity.this, "Desculpe, não conseguimos nos conectar com o servidor. Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void testeCadComp(){

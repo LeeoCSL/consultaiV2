@@ -1,6 +1,7 @@
 package br.com.consultai.util;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.util.Patterns;
 import android.widget.Toast;
 
@@ -36,4 +37,11 @@ public class Utility {
     public static boolean isEmailValid(String email) {
         return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
+
+    public static boolean isNetworkAvailable(Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+
 }

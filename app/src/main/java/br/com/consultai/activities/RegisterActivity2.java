@@ -90,15 +90,24 @@ public class RegisterActivity2 extends AppCompatActivity {
             mCelular.setError("celular no formato inválido.");
             return;
         }
-        if(ValidarCPF.isCPF(mCPF.toString()) == false){
+        if(ValidarCPF.isCPF(cpf) == false){
             mCPF.setError("CPF invalido");
+            return;
         }
 
+        String envioCpf = cpf.replace(".", "");
+        envioCpf = envioCpf.replace("-", "");
 
+        String envioTel = celular.replace("(", "");
+         envioTel = envioTel.replace(")", "");
+         envioTel = envioTel.replace(" ", "");
+         envioTel = envioTel.replace("-", "");
+
+        String envioNasc = nasc.replace("/", "");
 
         usuario.setDataNascimento(nasc);
-        usuario.setCPF(cpf);
-        usuario.setTelefone(celular);
+        usuario.setCPF(envioCpf);
+        usuario.setTelefone(envioTel);
 
 
         Call<StatusResponse> call = new RetrofitInit(this).getUsuarioService().put(CustomApplication.currentUser.getId(), usuario);

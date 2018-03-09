@@ -30,7 +30,7 @@ public interface UsuarioService {
     @GET("user/{user_id}/cadastro")
     Call<CadCompResponse> getCad(@Path("user_id") String userID);
 
-    @PUT("user/{user_id}/cadastro")
+    @PUT("user/{user_id}/completar")
     Call<StatusResponse> put(@Path("user_id") String userID, @Body Usuario usuario);
 
 }

@@ -30,6 +30,7 @@ import br.com.consultai.model.Usuario;
 import br.com.consultai.retrofit.RetrofitInit;
 import br.com.consultai.util.UtilTempoDigitacao;
 import br.com.consultai.util.Utility;
+import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -69,6 +70,9 @@ public class CadastroCartaoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_cartao);
 
         ButterKnife.bind(this);
+
+        MaskEditTextChangedListener maskNum = new MaskEditTextChangedListener("#########", mNumero);
+        mNumero.addTextChangedListener(maskNum);
 
 
         btnProximo.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +171,7 @@ public class CadastroCartaoActivity extends AppCompatActivity {
         }
 
         if (numero.length() < 9) {
-            mNumero.setError("O campo numero deve ter ao menos 9 digitos.");
+            mNumero.setError("O campo numero deve ter 9 digitos.");
             return;
         }
 
