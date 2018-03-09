@@ -59,18 +59,27 @@
             android:gravity="center"
             style="@style/Material.Drawable.CheckBox"
             app:cbd_strokeColor="@android:color/white"
-            app:cbd_tickColor="@color/colorPrimaryDark"/>
+            app:cbd_tickColor="@color/colorPrimaryDark"
+            android:checked="true"/>
 
-        <Button
+        <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/btn_only_border"
             android:onClick="handlerToMainActivity"
-            android:text="Entrar"
             android:textColor="@color/white"
-            tools:ignore="HardcodedText" />
+            fancy:fb_borderColor="#FFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@android:color/transparent"
+            fancy:fb_focusColor="#5474b8"
+            fancy:fb_radius="30dp"
+            fancy:fb_text="Entrar"
+            fancy:fb_textColor="#FFF" />
+
+
+
 
     </LinearLayout>
 

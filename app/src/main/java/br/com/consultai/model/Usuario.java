@@ -39,11 +39,11 @@ public class Usuario {
 
     private List<Rotina> rotinas = new ArrayList<>();
 
-    private String versao;
+    private String versao_app;
 
     public Usuario() {}
 
-    public Usuario(String id, String nome, String sobrenome, String dataNascimento, String sexo, String CPF, String telefone, String email, String senha, String dataCriacao, BilheteUnico bilheteUnico, List<Rotina> rotinas, String versao) {
+    public Usuario(String id, String nome, String sobrenome, String dataNascimento, String sexo, String CPF, String telefone, String email, String senha, String dataCriacao, BilheteUnico bilheteUnico, List<Rotina> rotinas, String versao_app) {
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -56,7 +56,7 @@ public class Usuario {
         this.dataCriacao = dataCriacao;
         this.bilheteUnico = bilheteUnico;
         this.rotinas = rotinas;
-        this.versao = "7";
+        this.versao_app = "7";
     }
 
     public String getId() {
@@ -123,6 +123,14 @@ public class Usuario {
         this.email = email;
     }
 
+    public String getVersao_app() {
+        return versao_app;
+    }
+
+    public void setVersao_app(String versao_app) {
+        this.versao_app = "7";
+    }
+
     public void setNotificationToken(String notificationToken) {
         this.notificationToken = notificationToken;
     }
@@ -178,6 +186,7 @@ public class Usuario {
                 ", dataCriacao='" + dataCriacao + '\'' +
                 ", bilheteUnico=" + bilheteUnico +
                 ", rotinas=" + rotinas +
+                ", versao_app=" + versao_app +
                 '}';
     }
 }

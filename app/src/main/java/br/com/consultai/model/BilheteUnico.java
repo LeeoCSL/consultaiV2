@@ -17,13 +17,15 @@ public class BilheteUnico {
     private double saldo;
     private boolean estudante;
     private String numero;
-    private int operacao;
+    private String operacao;
     @JsonProperty("saldo_anterior")
     private double saldoAnterior;
+    private String id_desconto;
+    private String id_usuario;
 
     public BilheteUnico(){}
 
-    public BilheteUnico(Integer id, String apelido, double saldo, boolean estudante, String numero, int operacao, double saldoAnterior) {
+    public BilheteUnico(Integer id, String apelido, double saldo, boolean estudante, String numero, String operacao, double saldoAnterior, String id_desconto, String id_usuario) {
         this.id = id;
         this.apelido = apelido;
         this.saldo = saldo;
@@ -31,6 +33,8 @@ public class BilheteUnico {
         this.numero = numero;
         this.operacao = operacao;
         this.saldoAnterior = saldoAnterior;
+        this.id_desconto = id_desconto;
+        this.id_usuario = id_usuario;
     }
 
     public Integer getId() {
@@ -39,6 +43,14 @@ public class BilheteUnico {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(String id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
     public String getApelido() {
@@ -73,11 +85,19 @@ public class BilheteUnico {
         this.numero = numero;
     }
 
-    public int getOperacao() {
+    public String getId_desconto() {
+        return id_desconto;
+    }
+
+    public void setId_desconto(String id_desconto) {
+        this.id_desconto = id_desconto;
+    }
+
+    public String getOperacao() {
         return operacao;
     }
 
-    public void setOperacao(int operacao) {
+    public void setOperacao(String operacao) {
         this.operacao = operacao;
     }
 

@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 import br.com.consultai.LoginActivity;
 import br.com.consultai.R;
+import br.com.consultai.application.CustomApplication;
 import br.com.consultai.dto.StatusResponse;
 import br.com.consultai.model.BilheteUnico;
 import br.com.consultai.model.Usuario;
@@ -47,23 +48,14 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.et_confirmar_senha)
     MaterialEditText mConfirmaSenha;
 
-
-
     @BindView(R.id.sp_sexo)
     Spinner mSexo;
 
-    @BindView(R.id.et_nasc)
-    MaterialEditText mNascimento;
 
-    @BindView(R.id.et_cpf)
-    MaterialEditText mCPF;
-
-    @BindView(R.id.et_cel)
-    MaterialEditText mCelular;
 
     private Usuario usuario = new Usuario();
 
-    RelativeLayout rel1, rel2;
+    RelativeLayout rel1;
 
      String email = "";
      String senha = "";
@@ -76,26 +68,21 @@ public class RegisterActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         rel1 = (RelativeLayout) findViewById(R.id.rel1);
-        rel2 = (RelativeLayout) findViewById(R.id.rel2);
+//        rel2 = (RelativeLayout) findViewById(R.id.rel2);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"Masculino", "Feminino"});
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mSexo.setAdapter(adapter);
 
-        MaskEditTextChangedListener maskCel = new MaskEditTextChangedListener("(##) #####-####", mCelular);
-        MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", mCPF);
-        MaskEditTextChangedListener maskNasc = new MaskEditTextChangedListener("##/##/####", mNascimento);
 
-        mCelular.addTextChangedListener(maskCel);
-        mCPF.addTextChangedListener(maskCPF);
-        mNascimento.addTextChangedListener(maskNasc);
 
 
     }
 
     private void validateDataFromInput(){
         String nome = mNome.getText().toString();
+        final String sexo = mSexo.getSelectedItem().toString().substring(0,1).toUpperCase();
         email = mEmail.getText().toString();
         senha = mSenha.getText().toString();
         String confirmaSenha = mConfirmaSenha.getText().toString();
@@ -136,49 +123,10 @@ public class RegisterActivity extends AppCompatActivity {
 //        usuario.setBilheteUnico(bilheteUnico);
 
         usuario.setNome(nome);
+        usuario.setSexo(sexo);
         usuario.setEmail(email);
         usuario.setSenha(senha);
-
-        rel1.setVisibility(View.GONE);
-        rel2.setVisibility(View.VISIBLE);
-
-    }
-
-    private void validateDataFromInput2(){
-        final String sexo = mSexo.getSelectedItem().toString().substring(0,1).toUpperCase();
-        final String nasc = mNascimento.getText().toString();
-        final String cpf = mCPF.getText().toString();
-        final String celular = mCelular.getText().toString();
-
-        if(nasc.isEmpty()){
-            mNascimento.setError("Preencha sua data de nascimento");
-            return;
-        }
-
-
-        if(celular.length() < 15 || celular.length() > 15 ){
-            mCelular.setError("celular no formato inválido.");
-            return;
-        }
-//        if(ValidarCPF.isCPF(mCPF.toString()) == false){
-//            mCPF.setError("CPF invalido");
-//        }
-
-
-        usuario.setSexo(sexo);
-        usuario.setDataNascimento(nasc);
-        usuario.setCPF(cpf);
-        usuario.setTelefone(celular);
-
-
-
-        BilheteUnico bilheteUnico = new BilheteUnico();
-        bilheteUnico.setApelido("XXXXX");
-        bilheteUnico.setSaldo(Double.parseDouble("00"));
-        bilheteUnico.setNumero("XXXXX");
-        bilheteUnico.setEstudante(true);
-        usuario.setBilheteUnico(bilheteUnico);
-
+        usuario.setVersao_app(String.valueOf(R.string.versao));
 
         Call<StatusResponse> call = new RetrofitInit(this).getUsuarioService().register(usuario);
         call.enqueue(new Callback<StatusResponse>() {
@@ -189,11 +137,20 @@ public class RegisterActivity extends AppCompatActivity {
                 if(res.hasError()){
                     Toast.makeText(RegisterActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
                 }else{
+
+//                    CustomApplication customApplication = (CustomApplication) getApplicationContext();
+//
+//                    Usuario u = StatusResponse.getUsuario();
+//
+//                    CustomApplication.currentUser = u;
+//                    customApplication.setAPItoken(StatusResponse.getToken());
+
+
                     HashMap<String, String> userData = new HashMap<>();
                     userData.put("email", email);
                     userData.put("senha", senha);
 
-                    Intent intent = new Intent(RegisterActivity.this, CadastroCartaoActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     intent.putExtra("user_data", userData);
 
                     startActivity(intent);
@@ -208,13 +165,14 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
+
+
 
     public void handlerToRegister(View v){
         validateDataFromInput();
     }
 
-    public void handlerToMainActivity(View v){
-        validateDataFromInput2();
-    }
+
 }

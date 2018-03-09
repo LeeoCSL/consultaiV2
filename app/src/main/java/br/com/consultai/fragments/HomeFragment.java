@@ -106,10 +106,10 @@ public class HomeFragment extends Fragment {
                 Button menosIntegracaoComum = (Button) mView.findViewById(R.id.btnMenosIntegracaoComum);
                 Button menosEstudante = (Button) mView.findViewById(R.id.btnMenosEstudante);
 
-                BilheteUnico bu = new BilheteUnico();
+                Usuario usuario = CustomApplication.currentUser;
+                BilheteUnico bu = usuario.getBilheteUnico();
 
-                Log.d("estu", String.valueOf(bu.isEstudante()));
-                Toast.makeText(getContext(), String.valueOf(bu.isEstudante()), Toast.LENGTH_SHORT).show();
+
                 if (!bu.isEstudante()) {
                     maisOnibusComum.setVisibility(View.VISIBLE);
                     maisIntegracaoComum.setVisibility(View.VISIBLE);
@@ -178,7 +178,8 @@ public class HomeFragment extends Fragment {
                         final double novoSaldo = bilheteUnico.getSaldo() - value;
 
                         bilheteUnico.setSaldo(novoSaldo);
-                        bilheteUnico.setOperacao(3);
+                        bilheteUnico.setOperacao("2");
+                        bilheteUnico.setId_desconto("0");
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
                         call.enqueue(new Callback<StatusResponse>() {
                             @Override
@@ -215,7 +216,8 @@ public class HomeFragment extends Fragment {
                         final double novoSaldo = bilheteUnico.getSaldo() - value;
 
                         bilheteUnico.setSaldo(novoSaldo);
-                        bilheteUnico.setOperacao(3);
+                        bilheteUnico.setOperacao("2");
+                        bilheteUnico.setId_desconto("0");
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
                         call.enqueue(new Callback<StatusResponse>() {
                             @Override
@@ -251,7 +253,8 @@ public class HomeFragment extends Fragment {
                         final double novoSaldo = bilheteUnico.getSaldo() - value;
 
                         bilheteUnico.setSaldo(novoSaldo);
-                        bilheteUnico.setOperacao(4);
+                        bilheteUnico.setOperacao("2");
+                        bilheteUnico.setId_desconto("0");
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
                         call.enqueue(new Callback<StatusResponse>() {
                             @Override
@@ -287,7 +290,8 @@ public class HomeFragment extends Fragment {
                         final double novoSaldo = bilheteUnico.getSaldo() + value;
 
                         bilheteUnico.setSaldo(novoSaldo);
-                        bilheteUnico.setOperacao(4);
+                        bilheteUnico.setOperacao("2");
+                        bilheteUnico.setId_desconto("1");
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
                         call.enqueue(new Callback<StatusResponse>() {
                             @Override
@@ -322,7 +326,8 @@ public class HomeFragment extends Fragment {
                         final double novoSaldo = bilheteUnico.getSaldo() + value;
 
                         bilheteUnico.setSaldo(novoSaldo);
-                        bilheteUnico.setOperacao(4);
+                        bilheteUnico.setOperacao("2");
+                        bilheteUnico.setId_desconto("1");
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
                         call.enqueue(new Callback<StatusResponse>() {
                             @Override
@@ -358,7 +363,9 @@ public class HomeFragment extends Fragment {
                         final double novoSaldo = bilheteUnico.getSaldo() + value;
 
                         bilheteUnico.setSaldo(novoSaldo);
-                        bilheteUnico.setOperacao(4);
+                        bilheteUnico.setOperacao("2");
+                        bilheteUnico.setId_desconto("1");
+
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
                         call.enqueue(new Callback<StatusResponse>() {
                             @Override
@@ -388,6 +395,7 @@ public class HomeFragment extends Fragment {
                 dialog1.show();
             }
         });
+
 
 
         btn_comprar.setOnClickListener(new View.OnClickListener() {
@@ -524,7 +532,9 @@ public class HomeFragment extends Fragment {
                         final double novoSaldo = bilheteUnico.getSaldo() + value;
 
                         bilheteUnico.setSaldo(novoSaldo);
-                        bilheteUnico.setOperacao(1);
+                        bilheteUnico.setOperacao("1");
+                        bilheteUnico.setId_desconto(null);
+
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
                         call.enqueue(new Callback<StatusResponse>() {
                             @Override
@@ -577,7 +587,8 @@ public class HomeFragment extends Fragment {
 
                         bilheteUnico.setSaldoAnterior(bilheteUnico.getSaldo());
                         bilheteUnico.setSaldo(0);
-                        bilheteUnico.setOperacao(0);
+                        bilheteUnico.setOperacao("0");
+                        bilheteUnico.setId_desconto(null);
 
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
                         call.enqueue(new Callback<StatusResponse>() {

@@ -1,7 +1,11 @@
 package br.com.consultai;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,10 +17,14 @@ import com.rey.material.widget.CheckBox;
 
 import java.util.HashMap;
 
+import br.com.consultai.activities.CadastroCartaoActivity;
 import br.com.consultai.activities.MainActivity;
 import br.com.consultai.activities.RegisterActivity;
+import br.com.consultai.activities.RegisterActivity2;
 import br.com.consultai.application.CustomApplication;
 import br.com.consultai.dto.AuthResponse;
+import br.com.consultai.dto.CadCompResponse;
+import br.com.consultai.dto.StatusResponse;
 import br.com.consultai.model.Usuario;
 import br.com.consultai.retrofit.RetrofitInit;
 import br.com.consultai.util.InputValidator;
@@ -73,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else if(userData != null){
             String email = userData.get("email");
-            String senha = userData.get("password");
+            String senha = userData.get("senha");
 
             Usuario usuario = new Usuario();
             usuario.setEmail(email);
@@ -112,6 +120,8 @@ public class LoginActivity extends AppCompatActivity {
                     CustomApplication.currentUser = u;
                     customApplication.setAPItoken(authResponse.getToken());
 
+
+
                     mDialog.dismiss();
 
                     if(mRememberMe.isChecked()){
@@ -119,9 +129,12 @@ public class LoginActivity extends AppCompatActivity {
                         Paper.book().write("password", usuario.getSenha());
                     }
 
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                    //verificação infos complementares
+                    //requisição, set dados ao currentuser
+
+                    testeCadComp();
+
+
                 }
             }
 
@@ -136,6 +149,95 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void testeCadComp(){
+        Toast.makeText(this, "chegou aqui", Toast.LENGTH_SHORT).show();
+
+        CustomApplication customApplication = (CustomApplication) getApplicationContext();
+
+        Usuario u = CustomApplication.currentUser;
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String loginToken = sharedPref.getString("token", null);
+
+        Call<CadCompResponse> call = new RetrofitInit(this).getUsuarioService().getCad(CustomApplication.currentUser.getId());
+        call.enqueue(new Callback<CadCompResponse>() {
+            @Override
+            public void onResponse(Call<CadCompResponse> call, Response<CadCompResponse> response) {
+                CadCompResponse res = response.body();
+
+                if(res.hasError()){
+                    Toast.makeText(LoginActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(LoginActivity.this, "funfou", Toast.LENGTH_SHORT).show();
+
+                    CustomApplication customApplication = (CustomApplication) getApplicationContext();
+
+                    Usuario u = CustomApplication.currentUser;
+
+                    String cpf = res.getCpf();
+                    String telefone = res.getTelefone();
+                    String dtn = res.getData_nascimento();
+                    u.setCPF(cpf);
+                    u.setTelefone(telefone);
+                    u.setDataNascimento(dtn);
+
+
+                    if (u.getCPF() == null || u.getDataNascimento() == null || u.getTelefone() == null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                        builder.setTitle("Cadastro complementar");
+                        builder.setMessage("Você deseja cadastrar as informações complementares do cadastro?");
+
+                        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(LoginActivity.this, RegisterActivity2.class);
+                                startActivity(intent);
+                            }
+                        }).setNegativeButton("Faço isso depois", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Usuario us = CustomApplication.currentUser;
+                                if (us.getBilheteUnico() == null) {
+                                    Intent intent = new Intent(LoginActivity.this, CadastroCartaoActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    dialogInterface.dismiss();
+                                } else {
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                }
+                                dialogInterface.dismiss();
+                            }
+                        });
+
+                        builder.show();
+                    } else {
+
+                        if (u.getBilheteUnico() == null) {
+                            Intent intent = new Intent(LoginActivity.this, CadastroCartaoActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        } else {
+
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CadCompResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void validateDataFromInput(){

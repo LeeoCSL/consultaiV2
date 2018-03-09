@@ -9,16 +9,16 @@ import java.util.InputMismatchException;
 public class ValidarCPF {
     public static boolean isCPF(String CPF) {
 
-        String validar = CPF.substring(0, 3) + CPF.substring(4, 7)  +
-                CPF.substring(8, 11) + CPF.substring(12, 14);
+        CPF = CPF.replace(".", "");
+        CPF = CPF.replace("-", "");
 
 // considera-se erro CPF's formados por uma sequencia de numeros iguais
-        if (validar.equals("00000000000") || validar.equals("11111111111") ||
-                validar.equals("22222222222") || validar.equals("33333333333") ||
-                validar.equals("44444444444") || validar.equals("55555555555") ||
-                validar.equals("66666666666") || validar.equals("77777777777") ||
-                validar.equals("88888888888") || validar.equals("99999999999") ||
-                (validar.length() != 11))
+        if (CPF.equals("00000000000") || CPF.equals("11111111111") ||
+                CPF.equals("22222222222") || CPF.equals("33333333333") ||
+                CPF.equals("44444444444") || CPF.equals("55555555555") ||
+                CPF.equals("66666666666") || CPF.equals("77777777777") ||
+                CPF.equals("88888888888") || CPF.equals("99999999999") ||
+                (CPF.length() != 11))
             return(false);
 
         char dig10, dig11;
@@ -33,7 +33,7 @@ public class ValidarCPF {
 // converte o i-esimo caractere do CPF em um numero:
 // por exemplo, transforma o caractere '0' no inteiro 0
 // (48 eh a posicao de '0' na tabela ASCII)
-                num = (int)(validar.charAt(i) - 48);
+                num = (int)(CPF.charAt(i) - 48);
                 sm = sm + (num * peso);
                 peso = peso - 1;
             }
@@ -47,7 +47,7 @@ public class ValidarCPF {
             sm = 0;
             peso = 11;
             for(i=0; i<10; i++) {
-                num = (int)(validar.charAt(i) - 48);
+                num = (int)(CPF.charAt(i) - 48);
                 sm = sm + (num * peso);
                 peso = peso - 1;
             }
@@ -58,7 +58,7 @@ public class ValidarCPF {
             else dig11 = (char)(r + 48);
 
 // Verifica se os digitos calculados conferem com os digitos informados.
-            if ((dig10 == validar.charAt(9)) && (dig11 == validar.charAt(10)))
+            if ((dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10)))
                 return(true);
             else return(false);
         } catch (InputMismatchException erro) {

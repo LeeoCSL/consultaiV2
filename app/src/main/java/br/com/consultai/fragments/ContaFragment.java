@@ -56,7 +56,7 @@ public class ContaFragment extends Fragment implements Validator.ValidationListe
 
         mSalvar = view.findViewById(R.id.btn_salvar);
         mProgressBar = view.findViewById(R.id.progress_bar);
-
+        updateUI();
         mSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +92,11 @@ public class ContaFragment extends Fragment implements Validator.ValidationListe
 
             mCartaoApelido.setText(bilheteUnico.getApelido());
             mCartaoNumero.setText(bilheteUnico.getNumero());
-            mEstudante.setChecked(bilheteUnico.isEstudante());
+            if(bilheteUnico.isEstudante()) {
+                mEstudante.setChecked(true);
+            }else{
+                mEstudante.setChecked(false);
+            }
         }
     }
 
@@ -106,7 +110,9 @@ public class ContaFragment extends Fragment implements Validator.ValidationListe
             bilheteUnico.setApelido(mCartaoApelido.getText().toString());
             bilheteUnico.setNumero(mCartaoNumero.getText().toString());
             bilheteUnico.setEstudante(mEstudante.isChecked());
-
+            bilheteUnico.setOperacao(null);
+            bilheteUnico.setId_desconto(null);
+//            Toast.makeText(getContext(), "est: " + mEstudante.isChecked(), Toast.LENGTH_SHORT).show();
             Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
             call.enqueue(new Callback<StatusResponse>() {
                 @Override

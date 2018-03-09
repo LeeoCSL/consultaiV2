@@ -16,12 +16,15 @@ public class StatusResponse {
 
     private Data data = new Data();
 
+    private String id;
+
     public StatusResponse(){}
 
-    public StatusResponse(boolean error, String message, Data data) {
+    public StatusResponse(boolean error, String message, Data data, String id) {
         this.error = error;
         this.message = message;
         this.data = data;
+        this.id = id;
     }
 
     public boolean hasError() {
@@ -38,6 +41,14 @@ public class StatusResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Data getData() {

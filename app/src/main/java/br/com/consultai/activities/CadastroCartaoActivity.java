@@ -195,11 +195,16 @@ public class CadastroCartaoActivity extends AppCompatActivity {
         bilheteUnico.setSaldo(Double.parseDouble(mSaldo.getText().toString().substring(2, mSaldo.length())));
         bilheteUnico.setNumero(mNumero.getText().toString());
         bilheteUnico.setEstudante(checkEstudante.isChecked());
+        bilheteUnico.setOperacao(null);
+        bilheteUnico.setId_desconto(null);
 
         final Usuario user = CustomApplication.currentUser;
+
+        bilheteUnico.setId_usuario(CustomApplication.currentUser.getId());
+
         user.setBilheteUnico(bilheteUnico);
 
-        Call<StatusResponse> call = new RetrofitInit(this).getUsuarioService().update(user);
+        Call<StatusResponse> call = new RetrofitInit(this).getBilheteService().post(CustomApplication.currentUser.getId(),bilheteUnico);
         call.enqueue(new Callback<StatusResponse>() {
             @Override
             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
@@ -212,7 +217,8 @@ public class CadastroCartaoActivity extends AppCompatActivity {
                     userData.put("email", user.getEmail());
                     userData.put("senha", user.getSenha());
 
-                    Intent intent = new Intent(CadastroCartaoActivity.this, LoginActivity.class);
+                    mDialog.dismiss();
+                    Intent intent = new Intent(CadastroCartaoActivity.this, MainActivity.class);
                     intent.putExtra("user_data", userData);
 
                     startActivity(intent);

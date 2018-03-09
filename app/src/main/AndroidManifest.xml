@@ -15,13 +15,58 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- Branch URI scheme -->
+            <intent-filter>
+                <data
+                    android:host="open"
+                    android:scheme="consultai" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="mrig.app.link"
+                    android:scheme="https" />
+            </intent-filter>
         </activity>
+
+        <!-- Branch init -->
+        <meta-data
+            android:name="io.branch.sdk.BranchKey"
+            android:value="key_live_bouSDSHLebUQUQzErHxQHboesrbq6kIE" />
+        <meta-data
+            android:name="io.branch.sdk.BranchKey.test"
+            android:value="key_test_kdqJsLMGfiGMJQCCBQUelcefwAkr1cHN" />
+
+        <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environment) -->
+        <meta-data
+            android:name="io.branch.sdk.TestMode"
+            android:value="false" />
+
+        <!-- Branch install referrer tracking -->
+        <receiver
+            android:name="io.branch.referral.InstallListener"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main" />
@@ -42,7 +87,9 @@
         <activity
             android:name=".activities.CadastroCartaoActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activities.ComprarActivity"></activity>
+        <activity android:name=".activities.ComprarActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".activities.RegisterActivity2"></activity>
     </application>
 
 </manifest>
