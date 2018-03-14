@@ -1,5 +1,6 @@
 package br.com.consultai.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -51,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.sp_sexo)
     Spinner mSexo;
 
-
+    private ProgressDialog mDialog;
 
     private Usuario usuario = new Usuario();
 
@@ -75,6 +76,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         mSexo.setAdapter(adapter);
 
+        mDialog = new ProgressDialog(this);
+        mDialog.setTitle("Aguarde...");
+        mDialog.setMessage("Verificando suas credenciais");
 
 
 
@@ -138,6 +142,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
                 }else{
 
+                    mDialog.show();
+
 //                    CustomApplication customApplication = (CustomApplication) getApplicationContext();
 //
 //                    Usuario u = StatusResponse.getUsuario();
@@ -150,9 +156,12 @@ public class RegisterActivity extends AppCompatActivity {
                     userData.put("email", email);
                     userData.put("senha", senha);
 
+//                    LoginActivity.mEmail.setText(email);
+//                    LoginActivity.mSenha.setText(senha);
+
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     intent.putExtra("user_data", userData);
-
+                    mDialog.dismiss();
                     startActivity(intent);
                     finish();
 

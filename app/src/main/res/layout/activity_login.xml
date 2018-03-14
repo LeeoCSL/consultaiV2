@@ -16,7 +16,7 @@
         android:layout_weight="0.6"
         android:background="@drawable/logo_background"
         android:orientation="vertical"
-        android:padding="36dp">
+        android:padding="24dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
 
         <com.rey.material.widget.CheckBox
             android:id="@+id/cb_remember_me"
-            android:text="Lembrar de mim"
+            android:text="Manter conectado"
             android:layout_marginTop="4dp"
             android:textColor="@android:color/white"
             android:layout_width="wrap_content"
@@ -66,9 +66,9 @@
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:background="@drawable/btn_only_border"
             android:onClick="handlerToMainActivity"
+            android:layout_marginTop="8dp"
             android:textColor="@color/white"
             fancy:fb_borderColor="#FFF"
             fancy:fb_borderWidth="1dp"

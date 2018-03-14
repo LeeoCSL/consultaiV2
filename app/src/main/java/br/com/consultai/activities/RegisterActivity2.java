@@ -1,5 +1,6 @@
 package br.com.consultai.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import br.com.consultai.util.ValidarCPF;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,7 +42,14 @@ public class RegisterActivity2 extends AppCompatActivity {
     @BindView(R.id.et_cel)
     MaterialEditText mCelular;
 
+    @BindView(R.id.btn_nao_cadastrar)
+    Button mBtnNaoCadastrar;
+
     Button btn_cadastrar;
+
+
+
+    public static ProgressDialog mDialog;
 
 
     @Override
@@ -63,13 +72,52 @@ public class RegisterActivity2 extends AppCompatActivity {
         mCPF.addTextChangedListener(maskCPF);
         mNascimento.addTextChangedListener(maskNasc);
 
+        mBtnNaoCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Usuario usuario = CustomApplication.currentUser;
+
+                if (usuario.getBilheteUnico() == null) {
+
+                    Intent intent = new Intent(RegisterActivity2.this, CadastroCartaoActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                } else {
+
+                    Intent intent = new Intent(RegisterActivity2.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+
+            }
+        });
+
         btn_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                mDialog = new ProgressDialog(RegisterActivity2.this);
+                mDialog.setTitle("Aguarde");
+                mDialog.setMessage("Estamos verificando suas credenciais.");
+                mDialog.show();
                 validateDataFromInput2();
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Paper.book().destroy();
+
+        CustomApplication customApplication = (CustomApplication) getApplicationContext();
+        customApplication.destroySession();
+
+        Intent intent = new Intent(RegisterActivity2.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     private void validateDataFromInput2(){
@@ -82,16 +130,19 @@ public class RegisterActivity2 extends AppCompatActivity {
 
         if(nasc.isEmpty()){
             mNascimento.setError("Preencha sua data de nascimento");
+            mDialog.dismiss();
             return;
         }
 
 
         if(celular.length() < 15 || celular.length() > 15 ){
             mCelular.setError("celular no formato inválido.");
+            mDialog.dismiss();
             return;
         }
         if(ValidarCPF.isCPF(cpf) == false){
             mCPF.setError("CPF invalido");
+            mDialog.dismiss();
             return;
         }
 
@@ -133,11 +184,12 @@ public class RegisterActivity2 extends AppCompatActivity {
 
 
                     if (u.getBilheteUnico() == null) {
+                        mDialog.dismiss();
                         Intent intent = new Intent(RegisterActivity2.this, CadastroCartaoActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     } else {
-
+                        mDialog.dismiss();
                         Intent intent = new Intent(RegisterActivity2.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
@@ -151,6 +203,7 @@ public class RegisterActivity2 extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<StatusResponse> call, Throwable t) {
+                mDialog.dismiss();
                 Toast.makeText(RegisterActivity2.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

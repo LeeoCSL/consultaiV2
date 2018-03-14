@@ -21,6 +21,7 @@ import br.com.consultai.dto.StatusResponse;
 import br.com.consultai.model.BilheteUnico;
 import br.com.consultai.model.Usuario;
 import br.com.consultai.retrofit.RetrofitInit;
+import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import info.hoang8f.widget.FButton;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,9 +51,15 @@ public class ContaFragment extends Fragment implements Validator.ValidationListe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_conta_fragment, container, false);
 
+
+
         mCartaoApelido = view.findViewById(R.id.et_apelido_cartao);
         mCartaoNumero = view.findViewById(R.id.et_numero_cartao);
         mEstudante = view.findViewById(R.id.cb_estudante);
+
+        MaskEditTextChangedListener maskNum = new MaskEditTextChangedListener("#########", mCartaoNumero);
+        mCartaoNumero.addTextChangedListener(maskNum);
+
 
         mSalvar = view.findViewById(R.id.btn_salvar);
         mProgressBar = view.findViewById(R.id.progress_bar);
@@ -110,7 +117,7 @@ public class ContaFragment extends Fragment implements Validator.ValidationListe
             bilheteUnico.setApelido(mCartaoApelido.getText().toString());
             bilheteUnico.setNumero(mCartaoNumero.getText().toString());
             bilheteUnico.setEstudante(mEstudante.isChecked());
-            bilheteUnico.setOperacao(null);
+            bilheteUnico.setOperacao("3");
             bilheteUnico.setId_desconto(null);
 //            Toast.makeText(getContext(), "est: " + mEstudante.isChecked(), Toast.LENGTH_SHORT).show();
             Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);

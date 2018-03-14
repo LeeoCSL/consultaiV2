@@ -41,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
     private boolean comingFromRegister = false;
 
     @BindView(R.id.et_email)
-    EditText mEmail;
+   EditText mEmail;
 
     @BindView(R.id.et_senha)
-    EditText mSenha;
+   EditText mSenha;
 
     @BindView(R.id.cb_remember_me)
     CheckBox mRememberMe;
@@ -55,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
 
         ButterKnife.bind(this);
 
@@ -67,6 +69,8 @@ public class LoginActivity extends AppCompatActivity {
         // VERIFICA SE O USUÁRIO VEIO DA TELA DE REGISTRO, ASSIM LOGA AUTOMATICAMENTE
         HashMap<String, String> userData = (HashMap<String, String>) getIntent().getSerializableExtra("user_data");
 
+
+
         String emailRememberMe = Paper.book().read("email");
         String passwordRememberMe = Paper.book().read("password");
 
@@ -75,6 +79,9 @@ public class LoginActivity extends AppCompatActivity {
                 Usuario usuario = new Usuario();
                 usuario.setEmail(emailRememberMe);
                 usuario.setSenha(passwordRememberMe);
+
+                mEmail.setText(emailRememberMe);
+                mSenha.setText(passwordRememberMe);
 
                 comingFromRegister = true;
                 logUser(usuario);
@@ -167,7 +174,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void testeCadComp(){
-        Toast.makeText(this, "chegou aqui", Toast.LENGTH_SHORT).show();
 
         CustomApplication customApplication = (CustomApplication) getApplicationContext();
 
@@ -185,7 +191,6 @@ public class LoginActivity extends AppCompatActivity {
                 if(res.hasError()){
                     Toast.makeText(LoginActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(LoginActivity.this, "funfou", Toast.LENGTH_SHORT).show();
 
                     CustomApplication customApplication = (CustomApplication) getApplicationContext();
 
@@ -295,5 +300,14 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        String mail = Paper.book().read("email");
+        String pass = Paper.book().read("password");
+
+        mEmail.setText(mail);
+        mSenha.setText(pass);
+    }
 }

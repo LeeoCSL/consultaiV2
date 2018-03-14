@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Estamos quase lá! \n essas informaçoes não são obrigatorias por hora, mas serão necessarias para comprar creditos."
+                android:text="Estamos quase lá! \n Essas informaçoes não são obrigatorias por hora, mas serão necessarias para comprar creditos."
                 android:textAlignment="center"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:textSize="20sp"

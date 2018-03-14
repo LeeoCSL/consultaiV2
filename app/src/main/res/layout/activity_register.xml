@@ -54,7 +54,7 @@
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/et_nome"
                     android:inputType="textPersonName"
-                    android:hint="nome completo"
+                    android:hint="Nome completo"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary"
                     android:layout_width="match_parent"

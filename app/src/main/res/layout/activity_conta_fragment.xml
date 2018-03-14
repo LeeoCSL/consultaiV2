@@ -40,7 +40,10 @@
                 android:id="@+id/et_apelido_cartao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Apelido do cartão" />
+                android:hint="Apelido do cartão"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:inputType="number"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -51,7 +54,8 @@
                 android:id="@+id/et_numero_cartao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Número do cartão" />
+                android:hint="Número do cartão"
+                android:inputType="number"/>
         </android.support.design.widget.TextInputLayout>
 
         <CheckBox

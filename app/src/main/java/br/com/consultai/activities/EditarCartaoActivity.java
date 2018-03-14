@@ -1,5 +1,6 @@
 package br.com.consultai.activities;
 
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -90,6 +91,8 @@ public class EditarCartaoActivity extends AppCompatActivity {
     private String horaIDA;
     private String horaVOLTA;
 
+    private ProgressDialog mDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +102,10 @@ public class EditarCartaoActivity extends AppCompatActivity {
 
         initButtons();
         loadDataFromUser();
+
+        mDialog = new ProgressDialog(this);
+        mDialog.setTitle("Aguarde...");
+        mDialog.setMessage("Verificando suas credenciais");
 
         mGroupIda.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -274,6 +281,8 @@ public class EditarCartaoActivity extends AppCompatActivity {
 
         rotina.getDiasUso().setDiasUso(checked);
 
+        mDialog.show();
+
         Call<StatusResponse> call = new RetrofitInit(this).getRotinaService().rotina(CustomApplication.currentUser.getId(), rotina);
         call.enqueue(new Callback<StatusResponse>() {
             @Override
@@ -289,7 +298,7 @@ public class EditarCartaoActivity extends AppCompatActivity {
                 CustomApplication.updateRoutine(rotina);
 
                 Toast.makeText(EditarCartaoActivity.this, "Suas rotinas foram salvas.", Toast.LENGTH_SHORT).show();
-
+                mDialog.dismiss();
                 finish();
             }
 

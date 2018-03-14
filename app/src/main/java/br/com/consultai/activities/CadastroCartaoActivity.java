@@ -24,6 +24,7 @@ import br.com.consultai.R;
 //import br.com.consultai.utils.UtilTempoDigitacao;
 //import br.com.consultai.utils.Utility;
 import br.com.consultai.application.CustomApplication;
+import br.com.consultai.dto.AuthResponse;
 import br.com.consultai.dto.StatusResponse;
 import br.com.consultai.model.BilheteUnico;
 import br.com.consultai.model.Usuario;
@@ -33,6 +34,7 @@ import br.com.consultai.util.Utility;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -149,6 +151,19 @@ public class CadastroCartaoActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Paper.book().destroy();
+
+        CustomApplication customApplication = (CustomApplication) getApplicationContext();
+        customApplication.destroySession();
+
+        Intent intent = new Intent(CadastroCartaoActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
 
     private void validateDataFromEditText() {
         apelido = mApelido.getText().toString().trim();
@@ -182,6 +197,10 @@ public class CadastroCartaoActivity extends AppCompatActivity {
         if (!checkEstudante.isChecked()) {
             estudante = false;
         }
+        if(Utility.stringToFloat(mSaldo.getText().toString()) > 300.00){
+            mSaldo.setError("O valor maximo de saldo é de R$300,00.");
+            return;
+        }
 
         saldo = Utility.stringToFloat(mSaldo.getText().toString().trim());
 
@@ -196,7 +215,7 @@ public class CadastroCartaoActivity extends AppCompatActivity {
     private void createCartao(String numero, String apelido, String saldo, String estudante) {
         BilheteUnico bilheteUnico = new BilheteUnico();
         bilheteUnico.setApelido(mApelido.getText().toString());
-        bilheteUnico.setSaldo(Double.parseDouble(mSaldo.getText().toString().substring(2, mSaldo.length())));
+        bilheteUnico.setSaldo(Utility.stringToFloat(mSaldo.getText().toString()));
         bilheteUnico.setNumero(mNumero.getText().toString());
         bilheteUnico.setEstudante(checkEstudante.isChecked());
         bilheteUnico.setOperacao(null);
@@ -225,6 +244,8 @@ public class CadastroCartaoActivity extends AppCompatActivity {
                     Intent intent = new Intent(CadastroCartaoActivity.this, MainActivity.class);
                     intent.putExtra("user_data", userData);
 
+//                    validarEmail();
+
                     startActivity(intent);
                     finish();
                 }
@@ -232,6 +253,7 @@ public class CadastroCartaoActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<StatusResponse> call, Throwable t) {
+                mDialog.dismiss();
                 Toast.makeText(CadastroCartaoActivity.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
@@ -255,6 +277,31 @@ public class CadastroCartaoActivity extends AppCompatActivity {
 //        Toast.makeText(this, x + " " +y, Toast.LENGTH_SHORT).show();
         return false;
 
+    }
+
+    public void validarEmail(){
+        Call<AuthResponse> call = new RetrofitInit(this).getUsuarioService().postEmail(CustomApplication.currentUser.getEmail());
+        call.enqueue(new Callback<AuthResponse>() {
+            @Override
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                AuthResponse res = response.body();
+
+                if (res.hasError()) {
+                    Toast.makeText(CadastroCartaoActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+
+                    Toast.makeText(CadastroCartaoActivity.this, "foi :D", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
+                mDialog.dismiss();
+                Toast.makeText(CadastroCartaoActivity.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+
+        });
     }
 
 }

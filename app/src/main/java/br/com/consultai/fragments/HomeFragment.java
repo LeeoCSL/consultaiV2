@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blackcat.currencyedittext.CurrencyEditText;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -29,6 +30,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import br.com.consultai.R;
@@ -523,34 +525,54 @@ public class HomeFragment extends Fragment {
         mBtnRecarga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final BilheteUnico bu = CustomApplication.currentUser.getBilheteUnico();
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Recarga");
                 builder.setIcon(R.drawable.ic_attach_money_black_24dp);
-                builder.setMessage("Qual o valor da sua recarga?");
+                builder.setMessage("Qual o valor da sua recarga? (Valor maximo = R$" + (300.00 - bu.getSaldo()) + ")");
 
                 LayoutInflater inflater = getLayoutInflater();
                 View addRecarga = inflater.inflate(R.layout.nova_recarga_menu_layout, null);
                 builder.setView(addRecarga);
 
+
+
                 final AlertDialog alertDialog = builder.create();
 
-                final MaterialEditText input = addRecarga.findViewById(R.id.et_name);
+                final CurrencyEditText input = addRecarga.findViewById(R.id.et_name);
+
+                input.setFocusable(true);
 
                 Button btnSalvar = addRecarga.findViewById(R.id.btn_save);
                 btnSalvar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        final double value = Double.parseDouble(input.getText().toString());
+
+                        final double value = Utility.stringToFloat(input.getText().toString());
+                        if (value > 300.00){
+                            input.setError("O valor máximo de recarga é de R$300,00.");
+                            input.setError("O valor máximo de recarga é de R$300,00.");
+                            return;
+                        }
 
                         final BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
                         double saldoAnt = bilheteUnico.getSaldo();
 //
                         bilheteUnico.setSaldoAnterior(saldoAnt);
+                        if((bilheteUnico.getSaldo() + value) >300.00){
+                            input.setError("O saldo do bilhete não pode ultrapassar R$300,00.");
+                            return;
+                        }
                         final double novoSaldo = bilheteUnico.getSaldo() + value;
+
+
 
                         bilheteUnico.setSaldo(novoSaldo);
                         bilheteUnico.setOperacao("1");
                         bilheteUnico.setId_desconto(null);
+
+                        DecimalFormat formato = new DecimalFormat("#.##");
+                        final double novoSaldo2 = Double.valueOf(formato.format(novoSaldo).replace(",","."));
 
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
                         call.enqueue(new Callback<StatusResponse>() {
@@ -562,7 +584,7 @@ public class HomeFragment extends Fragment {
                                     Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
                                     bilheteUnico.setSaldo(novoSaldo - value);
                                 } else {
-                                    Toast.makeText(getActivity(), "Seu saldo foi atualizado. Novo saldo: R$ " + novoSaldo, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Seu saldo foi atualizado. Novo saldo: R$ " + novoSaldo2, Toast.LENGTH_SHORT).show();
                                     alertDialog.dismiss();
                                     refreshUI();
                                 }

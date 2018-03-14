@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
+        <com.blackcat.currencyedittext.CurrencyEditText
             android:id="@+id/et_name"
             android:inputType="number"
             android:hint="Valor..."
@@ -25,7 +25,10 @@
             app:met_baseColor="@color/colorPrimaryDark"
             app:met_floatingLabel="highlight"
             app:met_primaryColor="@color/colorPrimaryDark"
-            app:met_singleLineEllipsis="true"/>
+            app:met_singleLineEllipsis="true"
+            android:maxLines="1"
+            android:maxLength="8"
+            />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -42,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:fButtonColor="@color/colorPrimary"
-                app:shadowColor="@android:color/black"
+
                 app:shadowEnabled="true"
                 app:shadowHeight="5dp"
                 app:cornerRadius="4dp"/>
@@ -57,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:fButtonColor="@color/colorPrimaryDark"
-                app:shadowColor="@android:color/black"
+
                 app:shadowEnabled="true"
                 app:shadowHeight="5dp"
                 app:cornerRadius="4dp"/>

@@ -71,7 +71,8 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main" />
-        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.RegisterActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activities.EditarCartaoActivity" />
 
         <service android:name=".firebase.ConsultaiInstanceIDService">
@@ -90,7 +91,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.ComprarActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".activities.RegisterActivity2"></activity>
+        <activity android:name=".activities.RegisterActivity2"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>
