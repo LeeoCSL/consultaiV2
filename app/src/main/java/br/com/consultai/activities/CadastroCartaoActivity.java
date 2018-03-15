@@ -29,6 +29,7 @@ import br.com.consultai.dto.StatusResponse;
 import br.com.consultai.model.BilheteUnico;
 import br.com.consultai.model.Usuario;
 import br.com.consultai.retrofit.RetrofitInit;
+import br.com.consultai.retrofit.RetrofitInitTestes;
 import br.com.consultai.util.UtilTempoDigitacao;
 import br.com.consultai.util.Utility;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
@@ -51,7 +52,7 @@ public class CadastroCartaoActivity extends AppCompatActivity {
     EditText mNumero;
 
     String apelido, numero;
-    double  saldo;
+    double saldo;
 
     @BindView(R.id.btnProximo)
     Button btnProximo;
@@ -66,6 +67,7 @@ public class CadastroCartaoActivity extends AppCompatActivity {
     public static String tempoApelido, tempoNumero, tempoSaldo;
     public static String coords;
     public static String tempoClique;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,17 +89,15 @@ public class CadastroCartaoActivity extends AppCompatActivity {
         btnProximo.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     UtilTempoDigitacao.inicioTempo();
-                }
-                else if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     UtilTempoDigitacao.fimTempo();
                 }
                 tempoClique = String.valueOf(UtilTempoDigitacao.dtfs);
                 return false;
             }
         });
-
 
 
         mApelido.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -152,8 +152,7 @@ public class CadastroCartaoActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         Paper.book().destroy();
 
         CustomApplication customApplication = (CustomApplication) getApplicationContext();
@@ -197,7 +196,7 @@ public class CadastroCartaoActivity extends AppCompatActivity {
         if (!checkEstudante.isChecked()) {
             estudante = false;
         }
-        if(Utility.stringToFloat(mSaldo.getText().toString()) > 300.00){
+        if (Utility.stringToFloat(mSaldo.getText().toString()) > 300.00) {
             mSaldo.setError("O valor maximo de saldo é de R$300,00.");
             return;
         }
@@ -227,7 +226,7 @@ public class CadastroCartaoActivity extends AppCompatActivity {
 
         user.setBilheteUnico(bilheteUnico);
 
-        Call<StatusResponse> call = new RetrofitInit(this).getBilheteService().post(CustomApplication.currentUser.getId(),bilheteUnico);
+        Call<StatusResponse> call = new RetrofitInit(this).getBilheteService().post(CustomApplication.currentUser.getId(), bilheteUnico);
         call.enqueue(new Callback<StatusResponse>() {
             @Override
             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
@@ -244,7 +243,7 @@ public class CadastroCartaoActivity extends AppCompatActivity {
                     Intent intent = new Intent(CadastroCartaoActivity.this, MainActivity.class);
                     intent.putExtra("user_data", userData);
 
-//                    validarEmail();
+                    validarEmail();
 
                     startActivity(intent);
                     finish();
@@ -254,7 +253,7 @@ public class CadastroCartaoActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<StatusResponse> call, Throwable t) {
                 mDialog.dismiss();
-                Toast.makeText(CadastroCartaoActivity.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CadastroCartaoActivity.this, "Falha na comunicação com o servidor. Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
 
@@ -279,25 +278,47 @@ public class CadastroCartaoActivity extends AppCompatActivity {
 
     }
 
-    public void validarEmail(){
-        Call<AuthResponse> call = new RetrofitInit(this).getUsuarioService().postEmail(CustomApplication.currentUser.getEmail());
-        call.enqueue(new Callback<AuthResponse>() {
+    public void validarEmail() {
+//        Call<StatusResponse> call = new RetrofitInitTestes(this).getUsuarioService().postEmail(CustomApplication.currentUser.getEmail());
+//        call.enqueue(new Callback<StatusResponse>() {
+//            @Override
+//            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+//                StatusResponse res = response.body();
+//
+//                if (res.hasError()) {
+//                    Toast.makeText(CadastroCartaoActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                } else {
+//
+//                    Toast.makeText(CadastroCartaoActivity.this, "foi :D", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<StatusResponse> call, Throwable t) {
+//                mDialog.dismiss();
+//                Toast.makeText(CadastroCartaoActivity.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//            }
+//
+//        });
+        Call<StatusResponse> call = new RetrofitInitTestes(this).getUsuarioService().getEmail(CustomApplication.currentUser.getEmail());
+        call.enqueue(new Callback<StatusResponse>() {
             @Override
-            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                AuthResponse res = response.body();
+            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                StatusResponse res = response.body();
 
                 if (res.hasError()) {
                     Toast.makeText(CadastroCartaoActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
-
                     Toast.makeText(CadastroCartaoActivity.this, "foi :D", Toast.LENGTH_SHORT).show();
+
                 }
             }
 
             @Override
-            public void onFailure(Call<AuthResponse> call, Throwable t) {
+            public void onFailure(Call<StatusResponse> call, Throwable t) {
                 mDialog.dismiss();
-                Toast.makeText(CadastroCartaoActivity.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CadastroCartaoActivity.this, "Falha na comunicação com o servidor. Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
 

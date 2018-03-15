@@ -33,7 +33,7 @@ public interface UsuarioService {
     @PUT("user/{user_id}/completar")
     Call<StatusResponse> put(@Path("user_id") String userID, @Body Usuario usuario);
 
-    @POST("teste/{email}")
-    Call<AuthResponse> postEmail(@Path ("email") String email);
+    @GET("teste/{email}")
+    Call<StatusResponse> getEmail(@Path ("email") String email);
 
 }
