@@ -19,6 +19,7 @@ allprojects {
     repositories {
         google()
         maven{url "https://jitpack.io"}
+        maven{url "https://maven.fabric.io/public"}
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
     }

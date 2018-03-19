@@ -51,13 +51,15 @@ public class CadastroCartaoActivity extends AppCompatActivity {
     @BindView(R.id.edt_numero)
     EditText mNumero;
 
-    String apelido, numero;
-    double saldo;
+    private String apelido;
+    private String numero;
+    private double saldo;
+    private boolean estudante;
 
     @BindView(R.id.btnProximo)
     Button btnProximo;
 
-    Boolean estudante;
+
 
     @BindView(R.id.checkEstudante)
     CheckBox checkEstudante;
@@ -191,11 +193,10 @@ public class CadastroCartaoActivity extends AppCompatActivity {
 
         if (checkEstudante.isChecked()) {
             estudante = true;
-        }
-
-        if (!checkEstudante.isChecked()) {
+        }else{
             estudante = false;
         }
+
         if (Utility.stringToFloat(mSaldo.getText().toString()) > 300.00) {
             mSaldo.setError("O valor maximo de saldo é de R$300,00.");
             return;
@@ -208,25 +209,20 @@ public class CadastroCartaoActivity extends AppCompatActivity {
         mDialog.setMessage("Estamos verificando suas credenciais.");
         mDialog.show();
 
-        createCartao(numero, apelido, String.valueOf(saldo), String.valueOf(estudante));
+        createCartao(numero, apelido, saldo, estudante);
     }
 
-    private void createCartao(String numero, String apelido, String saldo, String estudante) {
-        BilheteUnico bilheteUnico = new BilheteUnico();
-        bilheteUnico.setApelido(mApelido.getText().toString());
-        bilheteUnico.setSaldo(Utility.stringToFloat(mSaldo.getText().toString()));
-        bilheteUnico.setNumero(mNumero.getText().toString());
-        bilheteUnico.setEstudante(checkEstudante.isChecked());
-        bilheteUnico.setOperacao(null);
-        bilheteUnico.setId_desconto(null);
+    private void createCartao(String numero, String apelido, double saldo, boolean estudante) {
 
-        final Usuario user = CustomApplication.currentUser;
+        final BilheteUnico bilheteUnico = new BilheteUnico();
 
-        bilheteUnico.setId_usuario(CustomApplication.currentUser.getId());
+        bilheteUnico.setApelido(apelido);
+        bilheteUnico.setSaldo(saldo);
+        bilheteUnico.setNumero(numero);
+        bilheteUnico.setEstudante(estudante);
+        bilheteUnico.setUsuarioID(CustomApplication.currentUser.getId());
 
-        user.setBilheteUnico(bilheteUnico);
-
-        Call<StatusResponse> call = new RetrofitInit(this).getBilheteService().post(CustomApplication.currentUser.getId(), bilheteUnico);
+        Call<StatusResponse> call = new RetrofitInit(this).getBilheteService().post(bilheteUnico);
         call.enqueue(new Callback<StatusResponse>() {
             @Override
             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
@@ -235,15 +231,17 @@ public class CadastroCartaoActivity extends AppCompatActivity {
                 if (res.hasError()) {
                     Toast.makeText(CadastroCartaoActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
-                    HashMap<String, String> userData = new HashMap<>();
-                    userData.put("email", user.getEmail());
-                    userData.put("senha", user.getSenha());
+                    CustomApplication.currentUser.setBilheteUnico(bilheteUnico);
+
+                    //HashMap<String, String> userData = new HashMap<>();
+                    //userData.put("email", user.getEmail());
+                    //userData.put("senha", user.getSenha());
 
                     mDialog.dismiss();
                     Intent intent = new Intent(CadastroCartaoActivity.this, MainActivity.class);
-                    intent.putExtra("user_data", userData);
+                    //intent.putExtra("user_data", userData);
 
-                    validarEmail();
+                    //validarEmail();
 
                     startActivity(intent);
                     finish();

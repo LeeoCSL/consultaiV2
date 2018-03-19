@@ -1,5 +1,6 @@
 package br.com.consultai.services.retrofit;
 
+import br.com.consultai.dto.AuthFacebookResponse;
 import br.com.consultai.dto.AuthResponse;
 import br.com.consultai.dto.CadCompResponse;
 import br.com.consultai.dto.StatusResponse;
@@ -23,6 +24,9 @@ public interface UsuarioService {
 
     @POST("auth")
     Call<AuthResponse> auth(@Body Usuario usuario);
+
+    @POST("auth/facebook")
+    Call<AuthFacebookResponse> authFacebook(@Body Usuario usuario);
 
     @PUT("user")
     Call<StatusResponse> update(@Body Usuario usuario);

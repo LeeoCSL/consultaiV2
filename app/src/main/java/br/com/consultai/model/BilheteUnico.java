@@ -3,6 +3,7 @@ package br.com.consultai.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by renan.boni on 19/01/2018.
@@ -18,14 +19,18 @@ public class BilheteUnico {
     private boolean estudante;
     private String numero;
     private String operacao;
-    @JsonProperty("saldo_anterior")
+
+    @SerializedName("saldo_anterior")
     private double saldoAnterior;
+
     private String id_desconto;
-    private String id_usuario;
+
+    @JsonProperty("id_usuario")
+    private String usuarioID;
 
     public BilheteUnico(){}
 
-    public BilheteUnico(Integer id, String apelido, double saldo, boolean estudante, String numero, String operacao, double saldoAnterior, String id_desconto, String id_usuario) {
+    public BilheteUnico(Integer id, String apelido, double saldo, boolean estudante, String numero, String operacao, double saldoAnterior, String id_desconto, String usuarioID) {
         this.id = id;
         this.apelido = apelido;
         this.saldo = saldo;
@@ -34,7 +39,7 @@ public class BilheteUnico {
         this.operacao = operacao;
         this.saldoAnterior = saldoAnterior;
         this.id_desconto = id_desconto;
-        this.id_usuario = id_usuario;
+        this.usuarioID = usuarioID;
     }
 
     public Integer getId() {
@@ -45,14 +50,6 @@ public class BilheteUnico {
         this.id = id;
     }
 
-    public String getId_usuario() {
-        return id_usuario;
-    }
-
-    public void setId_usuario(String id_usuario) {
-        this.id_usuario = id_usuario;
-    }
-
     public String getApelido() {
         return apelido;
     }
@@ -61,12 +58,12 @@ public class BilheteUnico {
         this.apelido = apelido;
     }
 
-    public double getSaldoAnterior() {
-        return saldoAnterior;
+    public double getSaldo() {
+        return saldo;
     }
 
-    public void setSaldoAnterior(double saldoAnterior) {
-        this.saldoAnterior = saldoAnterior;
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
     }
 
     public boolean isEstudante() {
@@ -85,14 +82,6 @@ public class BilheteUnico {
         this.numero = numero;
     }
 
-    public String getId_desconto() {
-        return id_desconto;
-    }
-
-    public void setId_desconto(String id_desconto) {
-        this.id_desconto = id_desconto;
-    }
-
     public String getOperacao() {
         return operacao;
     }
@@ -101,12 +90,28 @@ public class BilheteUnico {
         this.operacao = operacao;
     }
 
-    public double getSaldo() {
-        return saldo;
+    public double getSaldoAnterior() {
+        return saldoAnterior;
     }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
+    public void setSaldoAnterior(double saldoAnterior) {
+        this.saldoAnterior = saldoAnterior;
+    }
+
+    public String getId_desconto() {
+        return id_desconto;
+    }
+
+    public void setId_desconto(String id_desconto) {
+        this.id_desconto = id_desconto;
+    }
+
+    public String getUsuarioID() {
+        return usuarioID;
+    }
+
+    public void setUsuarioID(String usuarioID) {
+        this.usuarioID = usuarioID;
     }
 
     @Override
@@ -118,6 +123,9 @@ public class BilheteUnico {
                 ", estudante=" + estudante +
                 ", numero='" + numero + '\'' +
                 ", operacao='" + operacao + '\'' +
+                ", saldoAnterior=" + saldoAnterior +
+                ", id_desconto='" + id_desconto + '\'' +
+                ", usuarioID='" + usuarioID + '\'' +
                 '}';
     }
 }

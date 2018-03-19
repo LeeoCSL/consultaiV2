@@ -19,6 +19,7 @@ import java.util.List;
 import br.com.consultai.R;
 import br.com.consultai.application.CustomApplication;
 import br.com.consultai.dto.StatusResponse;
+import br.com.consultai.dto.StatusRotinaResponse;
 import br.com.consultai.model.DiasUso;
 import br.com.consultai.model.Rotina;
 import br.com.consultai.model.Usuario;
@@ -283,16 +284,16 @@ public class EditarCartaoActivity extends AppCompatActivity {
 
         mDialog.show();
 
-        Call<StatusResponse> call = new RetrofitInit(this).getRotinaService().rotina(CustomApplication.currentUser.getId(), rotina);
-        call.enqueue(new Callback<StatusResponse>() {
+        Call<StatusRotinaResponse> call = new RetrofitInit(this).getRotinaService().rotina(CustomApplication.currentUser.getId(), rotina);
+        call.enqueue(new Callback<StatusRotinaResponse>() {
             @Override
-            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+            public void onResponse(Call<StatusRotinaResponse> call, Response<StatusRotinaResponse> response) {
 
-                StatusResponse res = response.body();
+                StatusRotinaResponse res = response.body();
 
                 if(rotina.getIdaID() == null && rotina.getVoltaID() == null){
-                    rotina.setIdaID(res.getData().getIdRotinaIda());
-                    rotina.setVoltaID(res.getData().getIdRotinaVolta());
+                    rotina.setIdaID(res.getRotinaIdaID());
+                    rotina.setVoltaID(res.getRotinaVoltaID());
                 }
 
                 CustomApplication.updateRoutine(rotina);
@@ -303,7 +304,7 @@ public class EditarCartaoActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<StatusResponse> call, Throwable t) {
+            public void onFailure(Call<StatusRotinaResponse> call, Throwable t) {
                 Toast.makeText(EditarCartaoActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

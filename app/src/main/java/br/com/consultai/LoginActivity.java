@@ -8,12 +8,22 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.mukeshsolanki.sociallogin.facebook.FacebookHelper;
+import com.mukeshsolanki.sociallogin.facebook.FacebookListener;
 import com.rey.material.widget.CheckBox;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -22,6 +32,7 @@ import br.com.consultai.activities.MainActivity;
 import br.com.consultai.activities.RegisterActivity;
 import br.com.consultai.activities.RegisterActivity2;
 import br.com.consultai.application.CustomApplication;
+import br.com.consultai.dto.AuthFacebookResponse;
 import br.com.consultai.dto.AuthResponse;
 import br.com.consultai.dto.CadCompResponse;
 import br.com.consultai.dto.StatusResponse;
@@ -36,29 +47,34 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements FacebookListener{
 
     private boolean comingFromRegister = false;
 
     @BindView(R.id.et_email)
-   EditText mEmail;
+    EditText mEmail;
 
     @BindView(R.id.et_senha)
-   EditText mSenha;
+    EditText mSenha;
 
     @BindView(R.id.cb_remember_me)
     CheckBox mRememberMe;
 
     private ProgressDialog mDialog;
 
+    private FacebookHelper mFacebookHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
         ButterKnife.bind(this);
+
+        // FACEBOOK SETTINGS
+        FacebookSdk.setApplicationId(getResources().getString(R.string.facebook_app_id));
+        FacebookSdk.sdkInitialize(this);
+        mFacebookHelper = new FacebookHelper(this);
 
         mDialog = new ProgressDialog(this);
         mDialog.setTitle("Aguarde...");
@@ -104,7 +120,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void logUser(final Usuario usuario){
+
         mDialog.show();
+
         if(!Utility.isNetworkAvailable(this)){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Você não está conectado a internet");
@@ -119,7 +137,6 @@ public class LoginActivity extends AppCompatActivity {
             builder.show();
         }
         else {
-
             Call<AuthResponse> call = new RetrofitInit(this).getUsuarioService().auth(usuario);
             call.enqueue(new Callback<AuthResponse>() {
                 @Override
@@ -142,18 +159,28 @@ public class LoginActivity extends AppCompatActivity {
                         CustomApplication.currentUser = u;
                         customApplication.setAPItoken(authResponse.getToken());
 
-
-                        mDialog.dismiss();
-
                         if (mRememberMe.isChecked()) {
                             Paper.book().write("email", usuario.getEmail());
                             Paper.book().write("password", usuario.getSenha());
                         }
 
+                        mDialog.dismiss();
+
+                        if (u.getBilheteUnico() == null) {
+                            Intent intent = new Intent(LoginActivity.this, CadastroCartaoActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
+
+
                         //verificação infos complementares
                         //requisição, set dados ao currentuser
 
-                        testeCadComp();
+                        //testeCadComp();
 
 
                     }
@@ -241,13 +268,10 @@ public class LoginActivity extends AppCompatActivity {
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         } else {
-
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         }
-
-
                     }
                 }
             }
@@ -309,5 +333,133 @@ public class LoginActivity extends AppCompatActivity {
 
         mEmail.setText(mail);
         mSenha.setText(pass);
+    }
+
+    public void handlerFacebookLogin(View v){
+        mFacebookHelper.performSignIn(LoginActivity.this);
+    }
+
+    @Override
+    public void onFbSignInFail(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onFbSignInSuccess(String s, String s1) {
+        GraphRequest request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+
+                        try {
+                            String id = object.getString("id");
+                            String name = object.getString("name");
+                            String email = object.getString("email");
+                            String gender = object.getString("gender");
+
+                            // SE O USUARIO TIVER O EMAIL PRIVADO
+                            if(email == null || email.isEmpty()){
+
+                            }
+
+                            final Usuario usuario = new Usuario();
+                            usuario.setId(id);
+                            usuario.setNome(name);
+                            usuario.setEmail(email);
+                            usuario.setSexo(String.valueOf(gender.charAt(0)));
+
+                            Log.i("USERFACEBOOK", usuario.toString());
+
+
+                            Call<AuthFacebookResponse> call = new RetrofitInit(LoginActivity.this).getUsuarioService().authFacebook(usuario);
+                            call.enqueue(new Callback<AuthFacebookResponse>() {
+                                @Override
+                                public void onResponse(Call<AuthFacebookResponse> call, Response<AuthFacebookResponse> response) {
+                                    AuthFacebookResponse res = response.body();
+
+                                    if(res.isCollapse()){
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                                        builder.setTitle("Email em uso");
+                                        builder.setMessage("Este email já está sendo usado por uma conta normal. Deseja vincular sua conta com o email já existente?");
+
+                                        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                usuario.setOverlap(true);
+
+                                                // CHAMADA PRA SUBSTITUIR O EMAIL
+                                                Call<AuthFacebookResponse> callOverlap = new RetrofitInit(LoginActivity.this).getUsuarioService().authFacebook(usuario);
+                                                callOverlap.enqueue(new Callback<AuthFacebookResponse>() {
+                                                    @Override
+                                                    public void onResponse(Call<AuthFacebookResponse> call, Response<AuthFacebookResponse> response) {
+                                                        AuthFacebookResponse overlapRes = response.body();
+
+                                                        Usuario usuarioFacebook = overlapRes.getUsuario();
+                                                        //SE O USUARIO FOI SUBSTITUIDO VERIFICA SE POSSUI BILHETE
+                                                        Log.i("CHEGOU AQUI", usuarioFacebook.toString());
+                                                        if(usuarioFacebook.getBilheteUnico() != null){
+                                                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                                        }else{
+                                                            startActivity(new Intent(LoginActivity.this, CadastroCartaoActivity.class));
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<AuthFacebookResponse> call, Throwable t) {
+
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                                        builder.setNegativeButton("Não", null);
+                                        builder.show();
+                                    }else{
+                                        if(res.isError()){
+
+                                        }else{
+                                            Usuario usuarioFacebook = res.getUsuario();
+                                            CustomApplication.currentUser = usuarioFacebook;
+
+                                            if(usuarioFacebook.getBilheteUnico() != null){
+                                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                            }else{
+                                                startActivity(new Intent(LoginActivity.this, CadastroCartaoActivity.class));
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<AuthFacebookResponse> call, Throwable t) {
+                                    Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link,email,gender");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
+    @Override
+    public void onFBSignOut() {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        mFacebookHelper.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -28,6 +28,9 @@ public class Usuario {
     private String email;
     private String senha;
 
+    // SOBREPOR EMAIL ATUAL PELO FACEBOOK
+    private boolean overlap;
+
     @JsonProperty("notification_token")
     private String notificationToken;
 
@@ -43,7 +46,7 @@ public class Usuario {
 
     public Usuario() {}
 
-    public Usuario(String id, String nome, String sobrenome, String dataNascimento, String sexo, String CPF, String telefone, String email, String senha, String dataCriacao, BilheteUnico bilheteUnico, List<Rotina> rotinas, String versao_app) {
+    public Usuario(String id, String nome, String sobrenome, String dataNascimento, String sexo, String CPF, String telefone, String email, String senha, boolean overlap, String notificationToken, String dataCriacao, BilheteUnico bilheteUnico, List<Rotina> rotinas, String versao_app) {
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -53,10 +56,12 @@ public class Usuario {
         this.telefone = telefone;
         this.email = email;
         this.senha = senha;
+        this.overlap = overlap;
+        this.notificationToken = notificationToken;
         this.dataCriacao = dataCriacao;
         this.bilheteUnico = bilheteUnico;
         this.rotinas = rotinas;
-        this.versao_app = "7";
+        this.versao_app = versao_app;
     }
 
     public String getId() {
@@ -171,6 +176,14 @@ public class Usuario {
         this.rotinas = rotinas;
     }
 
+    public boolean isOverlap() {
+        return overlap;
+    }
+
+    public void setOverlap(boolean overlap) {
+        this.overlap = overlap;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -183,10 +196,12 @@ public class Usuario {
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
+                ", overlap=" + overlap +
+                ", notificationToken='" + notificationToken + '\'' +
                 ", dataCriacao='" + dataCriacao + '\'' +
                 ", bilheteUnico=" + bilheteUnico +
                 ", rotinas=" + rotinas +
-                ", versao_app=" + versao_app +
+                ", versao_app='" + versao_app + '\'' +
                 '}';
     }
 }

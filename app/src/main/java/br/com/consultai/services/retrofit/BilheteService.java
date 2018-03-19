@@ -20,4 +20,7 @@ public interface BilheteService {
     @POST("user/{id_usuario}/bilhete")
     Call<StatusResponse> post(@Path("id_usuario") String userID,@Body BilheteUnico bilheteUnico);
 
+    @POST("/bilhete")
+    Call<StatusResponse> post(@Body BilheteUnico bilheteUnico);
+
 }
