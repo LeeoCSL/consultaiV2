@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.List;
 
+import br.com.consultai.LoginActivity;
 import br.com.consultai.R;
 import br.com.consultai.application.CustomApplication;
 import br.com.consultai.dto.StatusResponse;
@@ -290,13 +291,17 @@ public class EditarCartaoActivity extends AppCompatActivity {
             public void onResponse(Call<StatusRotinaResponse> call, Response<StatusRotinaResponse> response) {
 
                 StatusRotinaResponse res = response.body();
+                if (res != null) {
 
-                if(rotina.getIdaID() == null && rotina.getVoltaID() == null){
-                    rotina.setIdaID(res.getRotinaIdaID());
-                    rotina.setVoltaID(res.getRotinaVoltaID());
+                    if (rotina.getIdaID() == null && rotina.getVoltaID() == null) {
+                        rotina.setIdaID(res.getRotinaIdaID());
+                        rotina.setVoltaID(res.getRotinaVoltaID());
+                    }
+                }else {
+                    Toast.makeText(EditarCartaoActivity.this, "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
                 }
 
-                CustomApplication.updateRoutine(rotina);
+                    CustomApplication.updateRoutine(rotina);
 
                 Toast.makeText(EditarCartaoActivity.this, "Suas rotinas foram salvas.", Toast.LENGTH_SHORT).show();
                 mDialog.dismiss();

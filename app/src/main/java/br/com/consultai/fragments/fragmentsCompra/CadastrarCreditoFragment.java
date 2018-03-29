@@ -35,6 +35,12 @@ public class CadastrarCreditoFragment extends Fragment {
         edt_cvv = (EditText) view.findViewById(R.id.edt_cvv);
         btn_avancar = (Button) view.findViewById(R.id.btn_avancar);
 
+//        ComprarActivity.circulo1.setBackgroundResource(R.drawable.circulo_checkbox_200);
+//        ComprarActivity.traco1.setBackgroundResource(R.drawable.traco_verde_200);
+//        ComprarActivity.circulo2.setBackgroundResource(R.drawable.circulo_selec_200);
+//        ComprarActivity.traco2.setBackgroundResource(R.drawable.traco_cinza_200);
+//        ComprarActivity.circulo3.setBackgroundResource(R.drawable.circulo_cinza_200);
+
 
         MaskEditTextChangedListener maskCred = new MaskEditTextChangedListener("#### #### #### ####", edt_numero_cartao);
         MaskEditTextChangedListener maskValidade = new MaskEditTextChangedListener("##/##", edt_validade);
@@ -60,7 +66,7 @@ public class CadastrarCreditoFragment extends Fragment {
                 }
                 else{
                     //TODO
-                    ComprarActivity.mViewPager.setCurrentItem(3);
+                    ComprarActivity.mViewPager.setCurrentItem(3, false);
                 }
 
             }

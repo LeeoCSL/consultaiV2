@@ -50,10 +50,16 @@ public class TransferenciaFragment extends Fragment {
         //4 bb
         //5 santander
 
+//        ComprarActivity.circulo1.setBackgroundResource(R.drawable.circulo_checkbox_200);
+//        ComprarActivity.traco1.setBackgroundResource(R.drawable.traco_verde_200);
+//        ComprarActivity.circulo2.setBackgroundResource(R.drawable.circulo_selec_200);
+//        ComprarActivity.traco2.setBackgroundResource(R.drawable.traco_cinza_200);
+//        ComprarActivity.circulo3.setBackgroundResource(R.drawable.circulo_cinza_200);
+
         btn_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.mViewPager.setCurrentItem(7);
+                ComprarActivity.mViewPager.setCurrentItem(7, false);
             }
         });
         btn_avancar.setOnClickListener(new View.OnClickListener() {

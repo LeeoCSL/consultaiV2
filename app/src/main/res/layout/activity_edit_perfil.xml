@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.consultai.activities.EditPerfilActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/logo_final" />
+
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Editar Perfil"
+        android:textColor="#787878"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_voltar"
+        android:layout_below="@+id/txt1"
+        android:layout_marginBottom="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edt_nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:focusedByDefault="false"
+                android:hint="Nome"
+
+                />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_nome"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:editable="false"
+                android:enabled="false"
+                android:hint="Email" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edt_nasc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_email"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:hint="Nascimento" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edt_cpf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_nasc"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:editable="false"
+                android:enabled="false"
+                android:hint="CPF" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edt_tel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_cpf"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:hint="Telefone" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/btn_voltar"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_toLeftOf="@+id/v1"
+        android:shadowColor="@android:color/black"
+        android:text="Voltar"
+        android:textColor="#FFFFFF"
+        app:cornerRadius="28dp"
+        app:fButtonColor="@color/colorPrimary"
+        app:shadowEnabled="true" />
+
+    <View
+        android:id="@+id/v1"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="10dp" />
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/btn_continuar"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_toRightOf="@+id/v1"
+        android:shadowColor="@android:color/black"
+        android:text="Salvar"
+        android:textColor="#FFFFFF"
+        app:cornerRadius="28dp"
+        app:fButtonColor="@color/colorPrimary"
+        app:shadowEnabled="true" />
+
+
+</RelativeLayout>

@@ -216,24 +216,26 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="#CCCCCC"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+
+            android:backgroundTint="#00bcd4"
             >
 
             <Button
                 android:id="@+id/btn_voltar"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:background="#CCCCCC"
+                android:background="#008ba3"
                 android:text=" &lt; Voltar"
+                android:textColor="#FFFFFF"
                 android:layout_alignParentStart="true"/>
 
             <Button
                 android:id="@+id/btn_continuar"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:background="#CCCCCC"
+                android:background="#008ba3"
                 android:text="Avançar &gt;"
+                android:textColor="#FFFFFF"
                 android:layout_alignParentEnd="true"
                 />
 

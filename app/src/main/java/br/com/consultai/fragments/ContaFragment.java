@@ -15,6 +15,7 @@ import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.annotation.Required;
 import com.mobsandgeeks.saripaar.Validator;
 
+import br.com.consultai.LoginActivity;
 import br.com.consultai.R;
 import br.com.consultai.application.CustomApplication;
 import br.com.consultai.dto.StatusResponse;
@@ -126,15 +127,20 @@ public class ContaFragment extends Fragment implements Validator.ValidationListe
                 public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
                     StatusResponse res = response.body();
 
-                    if(res.hasError()){
+                    if(res!=null){
+                    if (res.hasError()) {
                         mProgressBar.setVisibility(View.GONE);
                         Toast.makeText(getActivity(), res.getMessage(), Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         CustomApplication.currentUser.setBilheteUnico(bilheteUnico);
                         updateUI();
                         Toast.makeText(getActivity(), res.getMessage(), Toast.LENGTH_SHORT).show();
                         mProgressBar.setVisibility(View.GONE);
                     }
+                }else{
+                    Toast.makeText(getContext(), "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
+
+                }
                 }
 
                 @Override

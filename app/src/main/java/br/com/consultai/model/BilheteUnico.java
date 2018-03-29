@@ -13,7 +13,7 @@ import com.google.gson.annotations.SerializedName;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BilheteUnico {
 
-    private Integer id;
+    private String id;
     private String apelido;
     private double saldo;
     private boolean estudante;
@@ -30,7 +30,7 @@ public class BilheteUnico {
 
     public BilheteUnico(){}
 
-    public BilheteUnico(Integer id, String apelido, double saldo, boolean estudante, String numero, String operacao, double saldoAnterior, String id_desconto, String usuarioID) {
+    public BilheteUnico(String id, String apelido, double saldo, boolean estudante, String numero, String operacao, double saldoAnterior, String id_desconto, String usuarioID) {
         this.id = id;
         this.apelido = apelido;
         this.saldo = saldo;
@@ -42,11 +42,11 @@ public class BilheteUnico {
         this.usuarioID = usuarioID;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

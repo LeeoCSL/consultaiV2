@@ -3,17 +3,18 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_home"
         android:title="Inicio" />
 
-    <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="Conta" />
 
     <item
-        android:id="@+id/navigation_exit"
-        android:icon="@drawable/ic_exit_to_app_black_24dp"
-        android:title="Sair" />
+        android:id="@+id/navigation_pedidos"
+        android:icon="@drawable/ic_pedidos"
+        android:title="Pedidos" />
+
+    <item
+        android:id="@+id/navigation_conf"
+        android:icon="@drawable/ic_conf"
+        android:title="Configurações" />
 
 </menu>

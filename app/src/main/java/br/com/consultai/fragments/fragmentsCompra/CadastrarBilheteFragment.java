@@ -34,6 +34,11 @@ public class CadastrarBilheteFragment extends Fragment {
         btn_continuar = (Button) view.findViewById(R.id.btn_continuar);
         btn_voltar = (Button) view.findViewById(R.id.btn_voltar);
 
+//        ComprarActivity.circulo1.setBackgroundResource(R.drawable.circulo_selec_200);
+//        ComprarActivity.traco1.setBackgroundResource(R.drawable.traco_cinza_200);
+//        ComprarActivity.circulo2.setBackgroundResource(R.drawable.circulo_cinza_200);
+//        ComprarActivity.traco2.setBackgroundResource(R.drawable.traco_cinza_200);
+//        ComprarActivity.circulo3.setBackgroundResource(R.drawable.circulo_cinza_200);
 
         btn_continuar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +48,8 @@ public class CadastrarBilheteFragment extends Fragment {
                 }
                 else{
                     //TODO
-                    ComprarActivity.mViewPager.setCurrentItem(2);
+                    ComprarActivity.mViewPager.setCurrentItem(2, false);
+                    ComprarActivity.atualizaStepView();
                 }
             }
         });
@@ -51,11 +57,14 @@ public class CadastrarBilheteFragment extends Fragment {
         btn_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.mViewPager.setCurrentItem(0);
+                ComprarActivity.mViewPager.setCurrentItem(0, false);
+                ComprarActivity.atualizaStepView();
 
             }
         });
 
         return view;
     }
+
+
 }

@@ -48,7 +48,11 @@ public class SelecBilheteFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.frag_selec_bilhete, null);
 
-    ComprarActivity.circulo1.setBackgroundResource(R.drawable.circulo_selec_200);
+//        ComprarActivity.circulo1.setBackgroundResource(R.drawable.circulo_selec_200);
+//        ComprarActivity.traco1.setBackgroundResource(R.drawable.traco_cinza_200);
+//        ComprarActivity.circulo2.setBackgroundResource(R.drawable.circulo_cinza_200);
+//        ComprarActivity.traco2.setBackgroundResource(R.drawable.traco_cinza_200);
+//        ComprarActivity.circulo3.setBackgroundResource(R.drawable.circulo_cinza_200);
 
         txt_apelido_bilhete = (TextView) view.findViewById(R.id.txt_apelido_bilhete);
         txt_numero_bilhete = (TextView) view.findViewById(R.id.txt_numero_bilhete);
@@ -103,8 +107,8 @@ public class SelecBilheteFragment extends Fragment {
                     consultaPag.setChecksum("xxx");
                     consultaPag.setToken("xxx");
 
-                    ComprarActivity.mViewPager.setCurrentItem(2);
-//
+                    ComprarActivity.mViewPager.setCurrentItem(11, false);
+ComprarActivity.atualizaStepView();
 //
 //                        }
 //                    }
@@ -138,7 +142,8 @@ public class SelecBilheteFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                ComprarActivity.mViewPager.setCurrentItem(1);
+                ComprarActivity.mViewPager.setCurrentItem(1, false);
+                ComprarActivity.atualizaStepView();
 
 
             }

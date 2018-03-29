@@ -25,7 +25,9 @@ public class ConsultaiInstanceIDService extends FirebaseInstanceIdService {
 
         Log.i("mandouagora", refreshedToken);
 
-        CustomApplication.currentUser.setNotificationToken(refreshedToken);
+        if (refreshedToken != null) {
+            CustomApplication.currentUser.setNotificationToken(refreshedToken);
+        }
 
         Call<StatusResponse> call = new RetrofitInit(getBaseContext()).getUsuarioService().update(CustomApplication.currentUser);
         call.enqueue(new Callback<StatusResponse>() {
@@ -33,7 +35,7 @@ public class ConsultaiInstanceIDService extends FirebaseInstanceIdService {
             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
                 StatusResponse res = response.body();
 
-                if(res.hasError()){
+                if (res.hasError()) {
                     Toast.makeText(ConsultaiInstanceIDService.this, "Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }

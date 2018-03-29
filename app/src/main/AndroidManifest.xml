@@ -71,8 +71,9 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main" />
-        <activity android:name=".activities.RegisterActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.EditarCartaoActivity" />
 
         <service android:name=".firebase.ConsultaiInstanceIDService">
@@ -91,12 +92,17 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.ComprarActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".activities.RegisterActivity2"
-            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".activities.RegisterActivity2"
+            android:windowSoftInputMode="adjustPan" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+            android:value="@string/facebook_app_id" />
+
+        <activity android:name=".activities.EditPerfilActivity" />
+        <activity android:name=".activities.EditBilheteActivity" />
+        <activity android:name=".activities.ComoUsarActivity"></activity>
     </application>
 
 </manifest>

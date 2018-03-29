@@ -33,6 +33,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
+import br.com.consultai.LoginActivity;
 import br.com.consultai.R;
 import br.com.consultai.activities.CadastroCartaoActivity;
 import br.com.consultai.activities.ComprarActivity;
@@ -90,6 +91,9 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         loadUI(view);
+//        String tk = FirebaseInstanceId.getInstance().getToken();;
+//
+//        Log.i("mandouagora", tk);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +134,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 mBuilder.setView(mView);
+
                 final AlertDialog dialog1 = mBuilder.create();
 
                 comoFunciona.setOnClickListener(new View.OnClickListener() {
@@ -183,28 +188,31 @@ public class HomeFragment extends Fragment {
                         bilheteUnico.setSaldo(novoSaldo);
                         bilheteUnico.setOperacao("2");
                         bilheteUnico.setId_desconto("0");
-                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
-                        call.enqueue(new Callback<StatusResponse>() {
-                            @Override
-                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
-                                StatusResponse res = response.body();
 
-                                if (res.hasError()) {
-                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                                    bilheteUnico.setSaldo(novoSaldo - value);
-                                } else {
-                                    dialog1.dismiss();
-                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+                        comunicacaoViagens(CustomApplication.currentUser.getId(), bilheteUnico, value, novoSaldo, dialog1);
 
-                                    refreshUI();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<StatusResponse> call, Throwable t) {
-                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+//                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+//                        call.enqueue(new Callback<StatusResponse>() {
+//                            @Override
+//                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+//                                StatusResponse res = response.body();
+//
+//                                if (res.hasError()) {
+//                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    bilheteUnico.setSaldo(novoSaldo - value);
+//                                } else {
+//                                    dialog1.dismiss();
+//                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+//
+//                                    refreshUI();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+//                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
 
                     }
                 });
@@ -221,27 +229,30 @@ public class HomeFragment extends Fragment {
                         bilheteUnico.setSaldo(novoSaldo);
                         bilheteUnico.setOperacao("2");
                         bilheteUnico.setId_desconto("0");
-                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
-                        call.enqueue(new Callback<StatusResponse>() {
-                            @Override
-                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
-                                StatusResponse res = response.body();
+                        comunicacaoViagens(CustomApplication.currentUser.getId(), bilheteUnico, value, novoSaldo, dialog1);
 
-                                if (res.hasError()) {
-                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                                    bilheteUnico.setSaldo(novoSaldo - value);
-                                } else {
-                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
-                                    dialog1.dismiss();
-                                    refreshUI();
-                                }
-                            }
 
-                            @Override
-                            public void onFailure(Call<StatusResponse> call, Throwable t) {
-                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+//                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+//                        call.enqueue(new Callback<StatusResponse>() {
+//                            @Override
+//                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+//                                StatusResponse res = response.body();
+//
+//                                if (res.hasError()) {
+//                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    bilheteUnico.setSaldo(novoSaldo - value);
+//                                } else {
+//                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+//                                    dialog1.dismiss();
+//                                    refreshUI();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+//                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
 
                     }
                 });
@@ -258,27 +269,30 @@ public class HomeFragment extends Fragment {
                         bilheteUnico.setSaldo(novoSaldo);
                         bilheteUnico.setOperacao("2");
                         bilheteUnico.setId_desconto("0");
-                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
-                        call.enqueue(new Callback<StatusResponse>() {
-                            @Override
-                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
-                                StatusResponse res = response.body();
 
-                                if (res.hasError()) {
-                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                                    bilheteUnico.setSaldo(novoSaldo - value);
-                                } else {
-                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
-                                    dialog1.dismiss();
-                                    refreshUI();
-                                }
-                            }
+                        comunicacaoViagens(CustomApplication.currentUser.getId(), bilheteUnico, value, novoSaldo, dialog1);
 
-                            @Override
-                            public void onFailure(Call<StatusResponse> call, Throwable t) {
-                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+//                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+//                        call.enqueue(new Callback<StatusResponse>() {
+//                            @Override
+//                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+//                                StatusResponse res = response.body();
+//
+//                                if (res.hasError()) {
+//                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    bilheteUnico.setSaldo(novoSaldo - value);
+//                                } else {
+//                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+//                                    dialog1.dismiss();
+//                                    refreshUI();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+//                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
 
                     }
                 });
@@ -295,27 +309,30 @@ public class HomeFragment extends Fragment {
                         bilheteUnico.setSaldo(novoSaldo);
                         bilheteUnico.setOperacao("2");
                         bilheteUnico.setId_desconto("1");
-                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
-                        call.enqueue(new Callback<StatusResponse>() {
-                            @Override
-                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
-                                StatusResponse res = response.body();
+                        comunicacaoViagens(CustomApplication.currentUser.getId(), bilheteUnico, value, novoSaldo, dialog1);
 
-                                if (res.hasError()) {
-                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                                    bilheteUnico.setSaldo(novoSaldo - value);
-                                } else {
-                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
-                                    dialog1.dismiss();
-                                    refreshUI();
-                                }
-                            }
 
-                            @Override
-                            public void onFailure(Call<StatusResponse> call, Throwable t) {
-                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+//                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+//                        call.enqueue(new Callback<StatusResponse>() {
+//                            @Override
+//                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+//                                StatusResponse res = response.body();
+//
+//                                if (res.hasError()) {
+//                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    bilheteUnico.setSaldo(novoSaldo - value);
+//                                } else {
+//                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+//                                    dialog1.dismiss();
+//                                    refreshUI();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+//                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
                     }
                 });
 
@@ -331,27 +348,30 @@ public class HomeFragment extends Fragment {
                         bilheteUnico.setSaldo(novoSaldo);
                         bilheteUnico.setOperacao("2");
                         bilheteUnico.setId_desconto("1");
-                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
-                        call.enqueue(new Callback<StatusResponse>() {
-                            @Override
-                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
-                                StatusResponse res = response.body();
 
-                                if (res.hasError()) {
-                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                                    bilheteUnico.setSaldo(novoSaldo - value);
-                                } else {
-                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
-                                    dialog1.dismiss();
-                                    refreshUI();
-                                }
-                            }
+                        comunicacaoViagens(CustomApplication.currentUser.getId(), bilheteUnico, value, novoSaldo, dialog1);
 
-                            @Override
-                            public void onFailure(Call<StatusResponse> call, Throwable t) {
-                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+//                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+//                        call.enqueue(new Callback<StatusResponse>() {
+//                            @Override
+//                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+//                                StatusResponse res = response.body();
+//
+//                                if (res.hasError()) {
+//                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    bilheteUnico.setSaldo(novoSaldo - value);
+//                                } else {
+//                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+//                                    dialog1.dismiss();
+//                                    refreshUI();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+//                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
 
                     }
                 });
@@ -369,27 +389,30 @@ public class HomeFragment extends Fragment {
                         bilheteUnico.setOperacao("2");
                         bilheteUnico.setId_desconto("1");
 
-                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
-                        call.enqueue(new Callback<StatusResponse>() {
-                            @Override
-                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
-                                StatusResponse res = response.body();
+                        comunicacaoViagens(CustomApplication.currentUser.getId(), bilheteUnico, value, novoSaldo, dialog1);
 
-                                if (res.hasError()) {
-                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                                    bilheteUnico.setSaldo(novoSaldo - value);
-                                } else {
-                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
-                                    dialog1.dismiss();
-                                    refreshUI();
-                                }
-                            }
 
-                            @Override
-                            public void onFailure(Call<StatusResponse> call, Throwable t) {
-                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+//                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+//                        call.enqueue(new Callback<StatusResponse>() {
+//                            @Override
+//                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+//                                StatusResponse res = response.body();
+//
+//                                if (res.hasError()) {
+//                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    bilheteUnico.setSaldo(novoSaldo - value);
+//                                } else {
+//                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+//                                    dialog1.dismiss();
+//                                    refreshUI();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+//                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
 
                     }
                 });
@@ -398,7 +421,6 @@ public class HomeFragment extends Fragment {
                 dialog1.show();
             }
         });
-
 
 
         btn_comprar.setOnClickListener(new View.OnClickListener() {
@@ -454,7 +476,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if(!Utility.isNetworkAvailable(getContext())){
+                if (!Utility.isNetworkAvailable(getContext())) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setTitle("Você não está conectado a internet");
                     builder.setMessage("Por favor conecte-se à internet para continuar");
@@ -466,10 +488,9 @@ public class HomeFragment extends Fragment {
                     });
 
                     builder.show();
+                } else {
+                    handlerToEditarCartaoActivity();
                 }
-                else {
-                handlerToEditarCartaoActivity();
-            }
             }
         });
         mExcluir.setOnClickListener(new View.OnClickListener() {
@@ -478,7 +499,7 @@ public class HomeFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setIcon(R.drawable.ic_warning_black_24dp);
                 builder.setTitle("Atenção");
-                builder.setMessage("Você tem certeza que deseja apagar as suas rotinas?");
+                builder.setMessage("Você tem certeza que deseja apagar a sua rotina?");
 
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
@@ -491,6 +512,7 @@ public class HomeFragment extends Fragment {
                             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
                                 StatusResponse res = response.body();
 
+                                if(res!=null){
                                 if (res.hasError()) {
                                     Toast.makeText(getActivity(), res.getMessage(), Toast.LENGTH_SHORT).show();
                                     mProgressBar.setVisibility(View.GONE);
@@ -500,6 +522,10 @@ public class HomeFragment extends Fragment {
                                     refreshUI();
                                     mProgressBar.setVisibility(View.GONE);
                                 }
+                            }else{
+                                Toast.makeText(getContext(), "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
+
+                            }
                             }
 
                             @Override
@@ -529,12 +555,11 @@ public class HomeFragment extends Fragment {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Recarga");
                 builder.setIcon(R.drawable.ic_attach_money_black_24dp);
-                builder.setMessage("Qual o valor da sua recarga? (Valor maximo = R$" + (300.00 - bu.getSaldo()) + ")");
+                builder.setMessage("Qual o valor da sua recarga? (Valor máximo = R$" + (300.00 - bu.getSaldo()) + ")");
 
                 LayoutInflater inflater = getLayoutInflater();
                 View addRecarga = inflater.inflate(R.layout.nova_recarga_menu_layout, null);
                 builder.setView(addRecarga);
-
 
 
                 final AlertDialog alertDialog = builder.create();
@@ -549,7 +574,7 @@ public class HomeFragment extends Fragment {
                     public void onClick(View view) {
 
                         final double value = Utility.stringToFloat(input.getText().toString());
-                        if (value > 300.00){
+                        if (value > 300.00) {
                             input.setError("O valor máximo de recarga é de R$300,00.");
                             input.setError("O valor máximo de recarga é de R$300,00.");
                             return;
@@ -559,12 +584,11 @@ public class HomeFragment extends Fragment {
                         double saldoAnt = bilheteUnico.getSaldo();
 //
                         bilheteUnico.setSaldoAnterior(saldoAnt);
-                        if((bilheteUnico.getSaldo() + value) >300.00){
+                        if ((bilheteUnico.getSaldo() + value) > 300.00) {
                             input.setError("O saldo do bilhete não pode ultrapassar R$300,00.");
                             return;
                         }
                         final double novoSaldo = bilheteUnico.getSaldo() + value;
-
 
 
                         bilheteUnico.setSaldo(novoSaldo);
@@ -572,7 +596,7 @@ public class HomeFragment extends Fragment {
                         bilheteUnico.setId_desconto(null);
 
                         DecimalFormat formato = new DecimalFormat("#.##");
-                        final double novoSaldo2 = Double.valueOf(formato.format(novoSaldo).replace(",","."));
+                        final double novoSaldo2 = Double.valueOf(formato.format(novoSaldo).replace(",", "."));
 
                         Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
                         call.enqueue(new Callback<StatusResponse>() {
@@ -580,6 +604,7 @@ public class HomeFragment extends Fragment {
                             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
                                 StatusResponse res = response.body();
 
+                                if(res!=null){
                                 if (res.hasError()) {
                                     Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
                                     bilheteUnico.setSaldo(novoSaldo - value);
@@ -588,6 +613,9 @@ public class HomeFragment extends Fragment {
                                     alertDialog.dismiss();
                                     refreshUI();
                                 }
+                            }else{
+                                Toast.makeText(getContext(), "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
+                            }
                             }
 
                             @Override
@@ -635,6 +663,7 @@ public class HomeFragment extends Fragment {
                             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
                                 StatusResponse res = response.body();
 
+                                if(res!=null){
                                 if (res.hasError()) {
                                     Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
                                 } else {
@@ -644,6 +673,9 @@ public class HomeFragment extends Fragment {
                                     dialogInterface.dismiss();
                                     refreshUI();
                                 }
+                            }else{
+                                Toast.makeText(getContext(), "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
+                            }
                             }
 
                             @Override
@@ -735,5 +767,37 @@ public class HomeFragment extends Fragment {
 
     public void handlerToEditarCartaoActivity() {
         startActivity(new Intent(getContext(), EditarCartaoActivity.class));
+    }
+
+
+    private void comunicacaoViagens(String id, final BilheteUnico bUnico, final double value, final double novoSaldo, final AlertDialog dialog1) {
+
+        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bUnico);
+        call.enqueue(new Callback<StatusResponse>() {
+            @Override
+            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                StatusResponse res = response.body();
+
+                if(res!=null){
+                if (res.hasError()) {
+                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                    bUnico.setSaldo(novoSaldo - value);
+                } else {
+                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+
+                    dialog1.dismiss();
+                    refreshUI();
+                }
+            }else{
+                Toast.makeText(getContext(), "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
+
+            }
+            }
+
+            @Override
+            public void onFailure(Call<StatusResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

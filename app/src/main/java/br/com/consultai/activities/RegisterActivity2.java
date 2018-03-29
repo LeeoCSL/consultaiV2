@@ -32,7 +32,6 @@ import retrofit2.Response;
 public class RegisterActivity2 extends AppCompatActivity {
 
 
-
     @BindView(R.id.et_nasc)
     MaterialEditText mNascimento;
 
@@ -46,7 +45,6 @@ public class RegisterActivity2 extends AppCompatActivity {
     Button mBtnNaoCadastrar;
 
     Button btn_cadastrar;
-
 
 
     public static ProgressDialog mDialog;
@@ -108,8 +106,7 @@ public class RegisterActivity2 extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         Paper.book().destroy();
 
         CustomApplication customApplication = (CustomApplication) getApplicationContext();
@@ -120,7 +117,7 @@ public class RegisterActivity2 extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void validateDataFromInput2(){
+    private void validateDataFromInput2() {
 
         Usuario usuario = CustomApplication.currentUser;
 
@@ -128,19 +125,19 @@ public class RegisterActivity2 extends AppCompatActivity {
         final String cpf = mCPF.getText().toString();
         final String celular = mCelular.getText().toString();
 
-        if(nasc.isEmpty()){
+        if (nasc.isEmpty()) {
             mNascimento.setError("Preencha sua data de nascimento");
             mDialog.dismiss();
             return;
         }
 
 
-        if(celular.length() < 15 || celular.length() > 15 ){
+        if (celular.length() < 15 || celular.length() > 15) {
             mCelular.setError("celular no formato inválido.");
             mDialog.dismiss();
             return;
         }
-        if(ValidarCPF.isCPF(cpf) == false){
+        if (ValidarCPF.isCPF(cpf) == false) {
             mCPF.setError("CPF invalido");
             mDialog.dismiss();
             return;
@@ -150,9 +147,9 @@ public class RegisterActivity2 extends AppCompatActivity {
         envioCpf = envioCpf.replace("-", "");
 
         String envioTel = celular.replace("(", "");
-         envioTel = envioTel.replace(")", "");
-         envioTel = envioTel.replace(" ", "");
-         envioTel = envioTel.replace("-", "");
+        envioTel = envioTel.replace(")", "");
+        envioTel = envioTel.replace(" ", "");
+        envioTel = envioTel.replace("-", "");
 
         String envioNasc = nasc.replace("/", "");
 
@@ -167,11 +164,13 @@ public class RegisterActivity2 extends AppCompatActivity {
             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
                 StatusResponse res = response.body();
 
-                if(res.hasError()){
-                    Toast.makeText(RegisterActivity2.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                }else{
+                if (res != null) {
+                    if (res.hasError()) {
+                        Toast.makeText(RegisterActivity2.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                        mDialog.dismiss();
+                    } else {
 
-                    Usuario u = CustomApplication.currentUser;
+                        Usuario u = CustomApplication.currentUser;
 
 //                    CustomApplication customApplication = (CustomApplication) getApplicationContext();
 //
@@ -181,39 +180,35 @@ public class RegisterActivity2 extends AppCompatActivity {
 //                    customApplication.setAPItoken(StatusResponse.getToken());
 
 
-
-
-                    if (u.getBilheteUnico() == null) {
-                        mDialog.dismiss();
-                        Intent intent = new Intent(RegisterActivity2.this, CadastroCartaoActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    } else {
-                        mDialog.dismiss();
-                        Intent intent = new Intent(RegisterActivity2.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                        if (u.getBilheteUnico() == null) {
+                            mDialog.dismiss();
+                            Intent intent = new Intent(RegisterActivity2.this, CadastroCartaoActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        } else {
+                            mDialog.dismiss();
+                            Intent intent = new Intent(RegisterActivity2.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
                     }
-
-
-
-
+                } else {
+                    Toast.makeText(RegisterActivity2.this, "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
                 }
             }
+
 
             @Override
             public void onFailure(Call<StatusResponse> call, Throwable t) {
                 mDialog.dismiss();
-                Toast.makeText(RegisterActivity2.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity2.this, "Falha na comunicação com o servidor. Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
 
-
-
     }
 
-    public void handlerToMainActivity(View v){
+    public void handlerToMainActivity(View v) {
 //        validateDataFromInput2();
     }
 

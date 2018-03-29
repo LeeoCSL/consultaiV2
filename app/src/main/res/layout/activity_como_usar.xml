@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.consultai.activities.ComoUsarActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/logo_final" />
+
+            <TextView
+                android:id="@+id/txtComoUsar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/logo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="Como usar"
+                android:textColor="@color/cinza_escuro"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtTituloRotina"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtComoUsar"
+
+                android:layout_marginBottom="10dp"
+                android:text="Rotina"
+                android:textSize="20sp" />
+            
+            <TextView
+                android:id="@+id/txtRotina"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTituloRotina"
+android:layout_marginBottom="10dp"
+                android:text="Em configurações, clique em “EDITAR \nROTINA”,para programar sua rotina \nEscolha qual horário da ida, os dias da \nsemana e qual meio de transporte público \né utilizado. \nNão esqueça de salvar! \nFaça o mesmo para a volta."/>
+
+            <TextView
+                android:id="@+id/txtTituloRecarga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recarga"
+                android:layout_below="@+id/txtRotina"
+                android:textSize="20sp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/txtRecarga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTituloRecarga"
+                android:text="Sempre que fizer uma recarga, clique em \n“RECARREGUEI MEU BILHETE” e digite \no valor da recarga"/>
+
+            <TextView
+                android:id="@+id/txtTituloExcluir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtRecarga"
+                android:text="Excluir"
+                android:textSize="20sp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/txtExcluir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTituloExcluir"
+                android:text="Você também pode limpar sua rotina \nclicando em “EDITAR ROTINA” e em \nseguida “LIMPAR ROTINA”"/>
+
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

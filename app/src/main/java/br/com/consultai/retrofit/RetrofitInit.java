@@ -26,9 +26,9 @@ public class RetrofitInit {
 
     private Retrofit retrofit;
 
-    public RetrofitInit(Context activity){
+    public RetrofitInit(Context activity) {
 
-        final CustomApplication customApplication = (CustomApplication)activity.getApplicationContext();
+        final CustomApplication customApplication = (CustomApplication) activity.getApplicationContext();
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -42,7 +42,7 @@ public class RetrofitInit {
 
                 Log.i("CHAMOU INTERCEPTOR", "SIM");
 
-                if(CustomApplication.isUserLoggedIn()){
+                if (CustomApplication.isUserLoggedIn()) {
                     requestBuilder.header("Authorization", customApplication.getAPItoken());
                 }
 
@@ -54,16 +54,22 @@ public class RetrofitInit {
         client.addInterceptor(interceptor);
 
         this.retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.15.13:3000/")
+                .baseUrl("http://35.203.10.13:3000")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .client(client.build())
                 .build();
     }
 
-    public UsuarioService getUsuarioService(){
+    public UsuarioService getUsuarioService() {
         return retrofit.create(UsuarioService.class);
     }
-    public RotinaService getRotinaService() { return retrofit.create(RotinaService.class); }
-    public BilheteService getBilheteService() { return retrofit.create(BilheteService.class); }
+
+    public RotinaService getRotinaService() {
+        return retrofit.create(RotinaService.class);
+    }
+
+    public BilheteService getBilheteService() {
+        return retrofit.create(BilheteService.class);
+    }
 }
 

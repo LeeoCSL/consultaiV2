@@ -44,13 +44,13 @@ public class SelecBancoFragment extends Fragment {
         btn_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.mViewPager.setCurrentItem(2);
+                ComprarActivity.mViewPager.setCurrentItem(2, false);
             }
         });
         btn_avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.mViewPager.setCurrentItem(8);
+                ComprarActivity.mViewPager.setCurrentItem(8, false);
             }
         });
 

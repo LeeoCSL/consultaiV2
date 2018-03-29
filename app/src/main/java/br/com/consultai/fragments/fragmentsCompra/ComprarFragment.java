@@ -57,6 +57,12 @@ public class ComprarFragment extends Fragment {
         edt_outro_valor = (EditText) view.findViewById(R.id.edt_outro_valor);
         lay_valor = (LinearLayout) view.findViewById(R.id.lay_valor);
 
+//        ComprarActivity.circulo1.setBackgroundResource(R.drawable.circulo_checkbox_200);
+//        ComprarActivity.traco1.setBackgroundResource(R.drawable.traco_verde_200);
+//        ComprarActivity.circulo2.setBackgroundResource(R.drawable.circulo_selec_200);
+//        ComprarActivity.traco2.setBackgroundResource(R.drawable.traco_cinza_200);
+//        ComprarActivity.circulo3.setBackgroundResource(R.drawable.circulo_cinza_200);
+
         btn_continuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +100,7 @@ public class ComprarFragment extends Fragment {
         btn_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.mViewPager.setCurrentItem(0);
+                ComprarActivity.mViewPager.setCurrentItem(0, false);
             }
         });
 

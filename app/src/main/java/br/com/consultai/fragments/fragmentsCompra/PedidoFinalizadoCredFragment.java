@@ -28,6 +28,12 @@ public class PedidoFinalizadoCredFragment extends Fragment {
 
         btn_avancar = (Button) view.findViewById(R.id.btn_avancar);
 
+//        ComprarActivity.circulo1.setBackgroundResource(R.drawable.circulo_checkbox_200);
+//        ComprarActivity.traco1.setBackgroundResource(R.drawable.traco_verde_200);
+//        ComprarActivity.circulo2.setBackgroundResource(R.drawable.circulo_checkbox_200);
+//        ComprarActivity.traco2.setBackgroundResource(R.drawable.traco_verde_200);
+//        ComprarActivity.circulo3.setBackgroundResource(R.drawable.circulo_selec_200);
+
         btn_avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

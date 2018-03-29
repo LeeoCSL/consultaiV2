@@ -22,10 +22,12 @@ import br.com.consultai.fragments.fragmentsCompra.PedidoFinalizadoCredFragment;
 import br.com.consultai.fragments.fragmentsCompra.PedidosFragment;
 import br.com.consultai.fragments.fragmentsCompra.SelecBancoFragment;
 import br.com.consultai.fragments.fragmentsCompra.SelecCreditoFragment;
+import br.com.consultai.fragments.fragmentsCompra.TipoCompraFragment;
 import br.com.consultai.fragments.fragmentsCompra.TransferenciaFinalizadaFragment;
 import br.com.consultai.fragments.fragmentsCompra.TransferenciaFragment;
 import br.com.consultai.model.Pagamento;
 import br.com.consultai.util.CustomViewPager;
+import br.com.consultai.util.ZoomOutPageTransformer;
 
 public class ComprarActivity extends AppCompatActivity {
    public static ImageView circulo1, circulo2, circulo3, traco1, traco2;
@@ -37,18 +39,22 @@ public class ComprarActivity extends AppCompatActivity {
     int i = 1;
     public static Pagamento pagamento = new Pagamento();
 
+    private SelecBilheteFragment mSelecBilheteFragment;
+    private CadastrarBilheteFragment mCadastrarBilheteFragment;
     private ComprarFragment mComprarFragment;
-    private BandeiraFragment mBandeiraFragment;
     private SelecCreditoFragment mSelecCreditoFragment;
     private CadastrarCreditoFragment mCadastrarCreditoFragment;
     private PedidoFinalizadoCredFragment mPedidoFinalizadoCredFragment;
-    private SelecBilheteFragment mSelecBilheteFragment;
-    private CadastrarBilheteFragment mCadastrarBilheteFragment;
     private PedidoBoletoFragment mPedidoBoletoFragment;
-    private PedidosFragment mPedidosFragment;
     private SelecBancoFragment mSelecBancoFragment;
-    private TransferenciaFinalizadaFragment mTransferenciaFinalizadaFragment;
     private TransferenciaFragment mTransferenciaFragment;
+    private TransferenciaFinalizadaFragment mTransferenciaFinalizadaFragment;
+    private BandeiraFragment mBandeiraFragment;
+    private TipoCompraFragment mTipoCompraFragment;
+
+    private PedidosFragment mPedidosFragment;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +71,12 @@ public class ComprarActivity extends AppCompatActivity {
 
         mViewPager = (CustomViewPager) findViewById(R.id.viewpager);
 
-        mViewPager.setCurrentItem(0);
+        mViewPager.setCurrentItem(0, false);
         mViewPager.setPagingEnabled(false);
+        atualizaStepView();
         setupViewPager(mViewPager);
+
+
 
 
 
@@ -95,6 +104,9 @@ public class ComprarActivity extends AppCompatActivity {
         mTransferenciaFinalizadaFragment = new TransferenciaFinalizadaFragment();
 
 
+        mTipoCompraFragment = new TipoCompraFragment();
+
+
         mBandeiraFragment = new BandeiraFragment();
 
 
@@ -109,7 +121,36 @@ public class ComprarActivity extends AppCompatActivity {
         adapter.addFragment(mTransferenciaFragment); //8
         adapter.addFragment(mTransferenciaFinalizadaFragment); //9
         adapter.addFragment(mBandeiraFragment); // 10
+        adapter.addFragment(mTipoCompraFragment); //11
         viewPager.setAdapter(adapter);
+        viewPager.setAnimation(null);
+    }
+
+    public static void atualizaStepView(){
+        if(mViewPager.getCurrentItem() == 0 || mViewPager.getCurrentItem() == 1 || mViewPager.getCurrentItem() == 11){
+            ComprarActivity.circulo1.setBackgroundResource(R.drawable.circulo_selec_200);
+            ComprarActivity.traco1.setBackgroundResource(R.drawable.traco_cinza_200);
+            ComprarActivity.circulo2.setBackgroundResource(R.drawable.circulo_cinza_200);
+            ComprarActivity.traco2.setBackgroundResource(R.drawable.traco_cinza_200);
+            ComprarActivity.circulo3.setBackgroundResource(R.drawable.circulo_cinza_200);
+        }
+
+        else if(mViewPager.getCurrentItem() == 2 || mViewPager.getCurrentItem() == 3 || mViewPager.getCurrentItem() == 4 ||
+                mViewPager.getCurrentItem() == 7 || mViewPager.getCurrentItem() == 8 || mViewPager.getCurrentItem() == 10){
+            ComprarActivity.circulo1.setBackgroundResource(R.drawable.circulo_checkbox_200);
+            ComprarActivity.traco1.setBackgroundResource(R.drawable.traco_verde_200);
+            ComprarActivity.circulo2.setBackgroundResource(R.drawable.circulo_selec_200);
+            ComprarActivity.traco2.setBackgroundResource(R.drawable.traco_cinza_200);
+            ComprarActivity.circulo3.setBackgroundResource(R.drawable.circulo_cinza_200);
+        }
+
+        else if(mViewPager.getCurrentItem() == 5 || mViewPager.getCurrentItem() == 6 || mViewPager.getCurrentItem() == 9){
+            ComprarActivity.circulo1.setBackgroundResource(R.drawable.circulo_checkbox_200);
+            ComprarActivity.traco1.setBackgroundResource(R.drawable.traco_verde_200);
+            ComprarActivity.circulo2.setBackgroundResource(R.drawable.circulo_checkbox_200);
+            ComprarActivity.traco2.setBackgroundResource(R.drawable.traco_verde_200);
+            ComprarActivity.circulo3.setBackgroundResource(R.drawable.circulo_selec_200);
+        }
     }
 
 }

@@ -44,10 +44,16 @@ public class SelecCreditoFragment extends Fragment {
         btn_avancar = (Button) view.findViewById(R.id.btn_avancar);
         btnCadastrar = (Button) view.findViewById(R.id.btnCadastrar);
 
+//        ComprarActivity.circulo1.setBackgroundResource(R.drawable.circulo_checkbox_200);
+//        ComprarActivity.traco1.setBackgroundResource(R.drawable.traco_verde_200);
+//        ComprarActivity.circulo2.setBackgroundResource(R.drawable.circulo_selec_200);
+//        ComprarActivity.traco2.setBackgroundResource(R.drawable.traco_cinza_200);
+//        ComprarActivity.circulo3.setBackgroundResource(R.drawable.circulo_cinza_200);
+
         btn_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.mViewPager.setCurrentItem(2);
+                ComprarActivity.mViewPager.setCurrentItem(2, false);
             }
         });
 
@@ -92,7 +98,7 @@ public class SelecCreditoFragment extends Fragment {
 //                            Toast.makeText(getContext(), "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
 //                        }else{
 ////
-                            ComprarActivity.mViewPager.setCurrentItem(5);
+                            ComprarActivity.mViewPager.setCurrentItem(5, false);
 //
 //                        }
 //                    }
@@ -111,7 +117,7 @@ public class SelecCreditoFragment extends Fragment {
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComprarActivity.mViewPager.setCurrentItem(4);
+                ComprarActivity.mViewPager.setCurrentItem(4, false);
             }
         });
 

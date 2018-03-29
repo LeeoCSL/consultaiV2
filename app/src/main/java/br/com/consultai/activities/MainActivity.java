@@ -19,14 +19,16 @@ import br.com.consultai.LoginActivity;
 import br.com.consultai.R;
 import br.com.consultai.adapter.ViewPagerAdapter;
 import br.com.consultai.application.CustomApplication;
+import br.com.consultai.fragments.ConfigsFragment;
 import br.com.consultai.fragments.ContaFragment;
 import br.com.consultai.fragments.HomeFragment;
+import br.com.consultai.fragments.PedidosFragment;
 import br.com.consultai.util.BottomNavigationViewHelper;
 import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ViewPager mViewPager;
+    public static ViewPager mViewPager;
     private BottomNavigationView navigation;
     private MenuItem prevMenuItem;
     public static String nomeOperadoraa;
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     // FRAGMENTS
     private HomeFragment mHomeFragment;
     private ContaFragment mContaFragment;
+    private PedidosFragment mPedidosFragment;
+    private ConfigsFragment mConfigsFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -46,19 +50,22 @@ public class MainActivity extends AppCompatActivity {
                     mHomeFragment.refreshUI();
                     mViewPager.setCurrentItem(0);
                     break;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_pedidos:
                     mViewPager.setCurrentItem(1);
                     break;
-                case R.id.navigation_exit:
-                    Paper.book().destroy();
-
-                    CustomApplication customApplication = (CustomApplication) getApplicationContext();
-                    customApplication.destroySession();
-
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                case R.id.navigation_conf:
+                    mViewPager.setCurrentItem(2);
                     break;
+//                case R.id.navigation_exit:
+//                    Paper.book().destroy();
+//
+//                    CustomApplication customApplication = (CustomApplication) getApplicationContext();
+//                    customApplication.destroySession();
+//
+//                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    startActivity(intent);
+//                    break;
             }
             return false;
         }
@@ -104,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
 
         setupViewPager(mViewPager);
 
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -127,9 +136,13 @@ public class MainActivity extends AppCompatActivity {
 
         mHomeFragment = new HomeFragment();
         mContaFragment = new ContaFragment();
+        mPedidosFragment = new PedidosFragment();
+        mConfigsFragment = new ConfigsFragment();
 
         adapter.addFragment(mHomeFragment);
-        adapter.addFragment(mContaFragment);
+        adapter.addFragment(mPedidosFragment);
+        adapter.addFragment(mConfigsFragment);
+
         /*
         adapter.addFragment(myOrdersFragment);
         adapter.addFragment(myAccountFragment);*/
