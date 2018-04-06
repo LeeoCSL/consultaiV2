@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,13 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInApi;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.mukeshsolanki.sociallogin.facebook.FacebookHelper;
 import com.mukeshsolanki.sociallogin.facebook.FacebookListener;
@@ -29,6 +37,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import br.com.consultai.activities.CadastroCartaoActivity;
+import br.com.consultai.activities.ConfirmaCadActivity;
 import br.com.consultai.activities.MainActivity;
 import br.com.consultai.activities.RegisterActivity;
 import br.com.consultai.activities.RegisterActivity2;
@@ -44,11 +53,12 @@ import br.com.consultai.util.Utility;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.paperdb.Paper;
+import mehdi.sakout.fancybuttons.FancyButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements FacebookListener {
+public class LoginActivity extends AppCompatActivity implements FacebookListener, GoogleApiClient.OnConnectionFailedListener {
 
     private boolean comingFromRegister = false;
 
@@ -61,9 +71,19 @@ public class LoginActivity extends AppCompatActivity implements FacebookListener
     @BindView(R.id.cb_remember_me)
     CheckBox mRememberMe;
 
+    @BindView(R.id.btn_google)
+    FancyButton mLoginGoogle;
+
     private ProgressDialog mDialog;
 
     private FacebookHelper mFacebookHelper;
+
+    private GoogleApiClient googleApiClient;
+    private static final int REQ_CODE = 9001;
+
+    public static String nameGoogle;
+    public static String emailGoogle;
+    public static String idGoogle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +91,11 @@ public class LoginActivity extends AppCompatActivity implements FacebookListener
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
+
+        GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+
+        googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions).build();
+
 
         // FACEBOOK SETTINGS
         FacebookSdk.setApplicationId(getResources().getString(R.string.facebook_app_id));
@@ -116,6 +141,55 @@ public class LoginActivity extends AppCompatActivity implements FacebookListener
             setContentView(R.layout.activity_login);
             ButterKnife.bind(this);
         }
+
+        mLoginGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!Utility.isNetworkAvailable(getApplicationContext())) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                    builder.setTitle("Você não está conectado a internet");
+                    builder.setMessage("Por favor conecte-se à internet para continuar");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            mDialog.dismiss();
+                        }
+                    });
+                    builder.show();
+                } else{
+                    signInGoogle();
+            }
+            }
+        });
+    }
+
+
+    private void signInGoogle() {
+mDialog.show();
+        Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        startActivityForResult(intent, REQ_CODE);
+
+    }
+
+
+    private void handleResult(GoogleSignInResult result) {
+            mDialog.dismiss();
+            if(result.isSuccess()){
+                GoogleSignInAccount account = result.getSignInAccount();
+                nameGoogle = account.getDisplayName();
+                emailGoogle = account.getEmail();
+                idGoogle = account.getId();
+                Toast.makeText(this, "nome: " + nameGoogle + " email: " + emailGoogle + " id: " + idGoogle, Toast.LENGTH_LONG).show();
+//                Log.v("googlesignin", account.toString());
+                //COM API CONSULTAI
+
+                Intent intent = new Intent(this, ConfirmaCadActivity.class);
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(this, "erro login google", Toast.LENGTH_LONG).show();
+            }
     }
 
     private void logUser(final Usuario usuario) {
@@ -161,7 +235,7 @@ public class LoginActivity extends AppCompatActivity implements FacebookListener
                             String notification_token = FirebaseInstanceId.getInstance().getToken();
 
                             //update 26/03
-                            if (customApplication.getAPItoken() != notification_token) {
+                            if (!customApplication.getAPItoken().equals(notification_token)) {
                                 HashMap<String, String> map = new HashMap<>();
                                 map.put("notification_token", notification_token);
 //                            map.put("email", CustomApplication.currentUser.getEmail());
@@ -216,95 +290,95 @@ public class LoginActivity extends AppCompatActivity implements FacebookListener
         }
     }
 
-    public void testeCadComp() {
-
-        CustomApplication customApplication = (CustomApplication) getApplicationContext();
-
-        Usuario u = CustomApplication.currentUser;
-
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String loginToken = sharedPref.getString("token", null);
-
-        Call<CadCompResponse> call = new RetrofitInit(this).getUsuarioService().getCad(CustomApplication.currentUser.getId());
-        call.enqueue(new Callback<CadCompResponse>() {
-            @Override
-            public void onResponse(Call<CadCompResponse> call, Response<CadCompResponse> response) {
-                CadCompResponse res = response.body();
-
-                if (res != null) {
-                    if (res.hasError()) {
-                        Toast.makeText(LoginActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                    } else {
-
-                        CustomApplication customApplication = (CustomApplication) getApplicationContext();
-
-                        Usuario u = CustomApplication.currentUser;
-
-                        String cpf = res.getCpf();
-                        String telefone = res.getTelefone();
-                        String dtn = res.getData_nascimento();
-                        u.setCPF(cpf);
-                        u.setTelefone(telefone);
-                        u.setDataNascimento(dtn);
-
-
-                        if (u.getCPF() == null || u.getDataNascimento() == null || u.getTelefone() == null) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                            builder.setTitle("Cadastro complementar");
-                            builder.setMessage("Você deseja cadastrar as informações complementares do cadastro?");
-
-                            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Intent intent = new Intent(LoginActivity.this, RegisterActivity2.class);
-                                    startActivity(intent);
-                                }
-                            }).setNegativeButton("Faço isso depois", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Usuario us = CustomApplication.currentUser;
-                                    if (us.getBilheteUnico() == null) {
-                                        Intent intent = new Intent(LoginActivity.this, CadastroCartaoActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent);
-                                        dialogInterface.dismiss();
-                                    } else {
-                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent);
-                                    }
-                                    dialogInterface.dismiss();
-                                }
-                            });
-
-                            builder.show();
-                        } else {
-
-                            if (u.getBilheteUnico() == null) {
-                                Intent intent = new Intent(LoginActivity.this, CadastroCartaoActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                            } else {
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                            }
-                        }
-                    }
-                } else {
-                    Toast.makeText(LoginActivity.this, "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-
-            @Override
-            public void onFailure(Call<CadCompResponse> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Falha na comunicação com o servidor. Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
+//    public void testeCadComp() {
+//
+//        CustomApplication customApplication = (CustomApplication) getApplicationContext();
+//
+//        Usuario u = CustomApplication.currentUser;
+//
+//        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+//        String loginToken = sharedPref.getString("token", null);
+//
+//        Call<CadCompResponse> call = new RetrofitInit(this).getUsuarioService().getCad(CustomApplication.currentUser.getId());
+//        call.enqueue(new Callback<CadCompResponse>() {
+//            @Override
+//            public void onResponse(Call<CadCompResponse> call, Response<CadCompResponse> response) {
+//                CadCompResponse res = response.body();
+//
+//                if (res != null) {
+//                    if (res.hasError()) {
+//                        Toast.makeText(LoginActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                    } else {
+//
+//                        CustomApplication customApplication = (CustomApplication) getApplicationContext();
+//
+//                        Usuario u = CustomApplication.currentUser;
+//
+//                        String cpf = res.getCpf();
+//                        String telefone = res.getTelefone();
+//                        String dtn = res.getData_nascimento();
+//                        u.setCPF(cpf);
+//                        u.setTelefone(telefone);
+//                        u.setDataNascimento(dtn);
+//
+//
+//                        if (u.getCPF() == null || u.getDataNascimento() == null || u.getTelefone() == null) {
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+//                            builder.setTitle("Cadastro complementar");
+//                            builder.setMessage("Você deseja cadastrar as informações complementares do cadastro?");
+//
+//                            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                    Intent intent = new Intent(LoginActivity.this, RegisterActivity2.class);
+//                                    startActivity(intent);
+//                                }
+//                            }).setNegativeButton("Faço isso depois", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                    Usuario us = CustomApplication.currentUser;
+//                                    if (us.getBilheteUnico() == null) {
+//                                        Intent intent = new Intent(LoginActivity.this, CadastroCartaoActivity.class);
+//                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                        startActivity(intent);
+//                                        dialogInterface.dismiss();
+//                                    } else {
+//                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                        startActivity(intent);
+//                                    }
+//                                    dialogInterface.dismiss();
+//                                }
+//                            });
+//
+//                            builder.show();
+//                        } else {
+//
+//                            if (u.getBilheteUnico() == null) {
+//                                Intent intent = new Intent(LoginActivity.this, CadastroCartaoActivity.class);
+//                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                startActivity(intent);
+//                            } else {
+//                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                startActivity(intent);
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    Toast.makeText(LoginActivity.this, "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
+//
+//                }
+//            }
+//
+//
+//            @Override
+//            public void onFailure(Call<CadCompResponse> call, Throwable t) {
+//                Toast.makeText(LoginActivity.this, "Falha na comunicação com o servidor. Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//    }
 
     private void validateDataFromInput() {
         String email = mEmail.getText().toString().trim();
@@ -358,7 +432,21 @@ public class LoginActivity extends AppCompatActivity implements FacebookListener
     }
 
     public void handlerFacebookLogin(View v) {
-        mFacebookHelper.performSignIn(LoginActivity.this);
+        if (!Utility.isNetworkAvailable(this)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Você não está conectado a internet");
+            builder.setMessage("Por favor conecte-se à internet para continuar");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    mDialog.dismiss();
+                }
+            });
+            builder.show();
+        }else {
+            mFacebookHelper.performSignIn(LoginActivity.this);
+        }
     }
 
     @Override
@@ -447,6 +535,8 @@ public class LoginActivity extends AppCompatActivity implements FacebookListener
                                             } else {
                                                 Usuario usuarioFacebook = res.getUsuario();
                                                 CustomApplication.currentUser = usuarioFacebook;
+                                                CustomApplication customApplication = (CustomApplication) getApplicationContext();
+                                                customApplication.setAPItoken(res.getToken());
 
                                                 if (usuarioFacebook.getBilheteUnico() != null) {
                                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -488,7 +578,15 @@ public class LoginActivity extends AppCompatActivity implements FacebookListener
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if(requestCode==REQ_CODE){
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleResult(result);
+        }
+
         mFacebookHelper.onActivityResult(requestCode, resultCode, data);
+
+
+
     }
 
     public void patchNotification(HashMap map) {
@@ -521,6 +619,11 @@ public class LoginActivity extends AppCompatActivity implements FacebookListener
                 Toast.makeText(LoginActivity.this, "Falha na comunicação com o servidor. Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 }

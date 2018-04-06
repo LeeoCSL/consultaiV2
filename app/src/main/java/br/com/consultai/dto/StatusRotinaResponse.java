@@ -11,19 +11,18 @@ public class StatusRotinaResponse {
     private boolean error;
     private String message;
 
-    @JsonProperty("rotina_ida_id")
-    private Integer rotinaIdaID;
+    @JsonProperty("id")
+    private String id;
 
-    @JsonProperty("rotina_volta_id")
-    private Integer rotinaVoltaID;
+
 
     public StatusRotinaResponse(){}
 
-    public StatusRotinaResponse(boolean error, String message, Integer rotinaIdaID, Integer rotinaVoltaID) {
+    public StatusRotinaResponse(boolean error, String message, String id) {
         this.error = error;
         this.message = message;
-        this.rotinaIdaID = rotinaIdaID;
-        this.rotinaVoltaID = rotinaVoltaID;
+        this.id = id;
+
     }
 
     public boolean isError() {
@@ -42,29 +41,22 @@ public class StatusRotinaResponse {
         this.message = message;
     }
 
-    public Integer getRotinaIdaID() {
-        return rotinaIdaID;
+    public String getId() {
+        return id;
     }
 
-    public void setRotinaIdaID(Integer rotinaIdaID) {
-        this.rotinaIdaID = rotinaIdaID;
+    public void setRotinaIdaID(String id) {
+            this.id = id;
     }
 
-    public Integer getRotinaVoltaID() {
-        return rotinaVoltaID;
-    }
 
-    public void setRotinaVoltaID(Integer rotinaVoltaID) {
-        this.rotinaVoltaID = rotinaVoltaID;
-    }
 
     @Override
     public String toString() {
         return "StatusRotinaResponse{" +
                 "error=" + error +
                 ", message='" + message + '\'' +
-                ", rotinaIdaID=" + rotinaIdaID +
-                ", rotinaVoltaID=" + rotinaVoltaID +
+                ", id=" + id +
                 '}';
     }
 }

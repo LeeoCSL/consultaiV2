@@ -62,6 +62,8 @@ public class RegisterActivity2 extends AppCompatActivity {
 //        mCelular = (MaterialEditText) findViewById(R.id.et_cel);
         ButterKnife.bind(this);
 
+        Usuario u = CustomApplication.currentUser;
+
         MaskEditTextChangedListener maskCel = new MaskEditTextChangedListener("(##) #####-####", mCelular);
         MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", mCPF);
         MaskEditTextChangedListener maskNasc = new MaskEditTextChangedListener("##/##/####", mNascimento);
@@ -69,6 +71,16 @@ public class RegisterActivity2 extends AppCompatActivity {
         mCelular.addTextChangedListener(maskCel);
         mCPF.addTextChangedListener(maskCPF);
         mNascimento.addTextChangedListener(maskNasc);
+
+        if(u.getCPF() != null){
+            mCPF.setText(u.getCPF());
+        }
+        if(u.getTelefone() != null){
+            mCelular.setText(u.getTelefone());
+        }
+        if(u.getDataNascimento() != null){
+            mNascimento.setText(u.getDataNascimento());
+        }
 
         mBtnNaoCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,10 +123,10 @@ public class RegisterActivity2 extends AppCompatActivity {
 
         CustomApplication customApplication = (CustomApplication) getApplicationContext();
         customApplication.destroySession();
-
-        Intent intent = new Intent(RegisterActivity2.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+finish();
+//        Intent intent = new Intent(RegisterActivity2.this, LoginActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(intent);
     }
 
     private void validateDataFromInput2() {
@@ -158,7 +170,7 @@ public class RegisterActivity2 extends AppCompatActivity {
         usuario.setTelefone(envioTel);
 
 
-        Call<StatusResponse> call = new RetrofitInit(this).getUsuarioService().put(CustomApplication.currentUser.getId(), usuario);
+        Call<StatusResponse> call = new RetrofitInit(this).getUsuarioService().atualizaUser(CustomApplication.currentUser.getId(), usuario);
         call.enqueue(new Callback<StatusResponse>() {
             @Override
             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
@@ -178,6 +190,7 @@ public class RegisterActivity2 extends AppCompatActivity {
 //
 //                    CustomApplication.currentUser = u;
 //                    customApplication.setAPItoken(StatusResponse.getToken());
+                        Toast.makeText(RegisterActivity2.this, res.getMessage(), Toast.LENGTH_SHORT).show();
 
 
                         if (u.getBilheteUnico() == null) {

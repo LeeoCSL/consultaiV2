@@ -2,13 +2,11 @@ package br.com.consultai.util;
 
 import android.util.Patterns;
 
-/**
- * Created by renan.boni on 19/01/2018.
- */
+
 
 public class InputValidator {
 
-    public static String NAME_PATTERN = "^[A-Za-z]+((\\s)?([A-Za-z])+)*$";
+    public static String NAME_PATTERN = "^[A-Za-zÀ-ú]+((\\s)?([A-Za-zÀ-ú])+)*$";
 
     public static boolean isValidName(String name) {
         return name.matches(NAME_PATTERN);

@@ -1,6 +1,5 @@
 package br.com.consultai.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -9,75 +8,58 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-
-import android.widget.RelativeLayout;
-
-
-import android.widget.CheckBox;
-
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.HashMap;
 
 import br.com.consultai.LoginActivity;
 import br.com.consultai.R;
-import br.com.consultai.application.CustomApplication;
 import br.com.consultai.dto.StatusResponse;
-import br.com.consultai.model.BilheteUnico;
 import br.com.consultai.model.Usuario;
 import br.com.consultai.retrofit.RetrofitInit;
 import br.com.consultai.util.InputValidator;
-import br.com.consultai.util.ValidarCPF;
-import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class ConfirmaCadActivity extends AppCompatActivity {
 
     @BindView(R.id.et_nome)
-    MaterialEditText mNome;
+    EditText mNome;
 
     @BindView(R.id.et_email)
-    MaterialEditText mEmail;
-
-    @BindView(R.id.et_senha)
-    MaterialEditText mSenha;
-
-    @BindView(R.id.et_confirmar_senha)
-    MaterialEditText mConfirmaSenha;
+    EditText mEmail;
 
     @BindView(R.id.sp_sexo)
     Spinner mSexo;
 
-    private ProgressDialog mDialog;
-
-    private Usuario usuario = new Usuario();
-
-    RelativeLayout rel1;
-
-     String email = "";
-     String senha = "";
+    @BindView(R.id.btn_continuar)
+    Button mConfirma;
 
     String sex;
 
     String nome;
 
+    String email = "";
+    String senha = "";
+
+    private Usuario usuario = new Usuario();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_confirma_cad);
 
         ButterKnife.bind(this);
 
-        rel1 = (RelativeLayout) findViewById(R.id.rel1);
-//        rel2 = (RelativeLayout) findViewById(R.id.rel2);
+        mNome.setText(LoginActivity.nameGoogle);
+        mEmail.setText(LoginActivity.emailGoogle);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"Sexo", "Masculino", "Feminino"}){
 
@@ -117,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         mSexo.setAdapter(adapter);
 
-mSexo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSexo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -137,14 +119,12 @@ mSexo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             }
         });
 
-
-
-        mDialog = new ProgressDialog(this);
-        mDialog.setTitle("Aguarde...");
-        mDialog.setMessage("Verificando suas credenciais");
-
-
-
+        mConfirma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validateDataFromInput();
+            }
+        });
     }
 
     private void testeNome(String nome){
@@ -161,11 +141,9 @@ mSexo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
     private void validateDataFromInput(){
         nome = mNome.getText().toString();
-
         final String sexo = sex;
         email = mEmail.getText().toString();
-        senha = mSenha.getText().toString();
-        String confirmaSenha = mConfirmaSenha.getText().toString();
+
 
 
 
@@ -178,6 +156,7 @@ mSexo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             mNome.setError("Nome em branco ou com formato inválido.");
             return;
         }
+
         testeNome(nome);
 
         if(mSexo.getSelectedItem().equals("Sexo")){
@@ -193,15 +172,7 @@ mSexo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             return;
         }
 
-        if(senha.length() < 6 || senha.length() > 60){
-            mSenha.setError("Sua senha deve ter no minímmo 6 e no máximo 60 caracteres.");
-            return;
-        }
 
-        if(!senha.equals(confirmaSenha)){
-            mConfirmaSenha.setError("As senhas digitadas não coincidem.");
-            return;
-        }
 
 
 
@@ -217,62 +188,58 @@ mSexo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
         usuario.setNome(nome);
         usuario.setSexo(sexo);
         usuario.setEmail(email);
-        usuario.setSenha(senha);
         usuario.setVersao_app(String.valueOf(R.string.versao));
 
-        Call<StatusResponse> call = new RetrofitInit(this).getUsuarioService().register(usuario);
-        call.enqueue(new Callback<StatusResponse>() {
-            @Override
-            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
-                StatusResponse res = response.body();
-
-                if(res!=null){
-                if (res.hasError()) {
-                    Toast.makeText(RegisterActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                } else {
-
-                    mDialog.show();
-
-//                    CustomApplication customApplication = (CustomApplication) getApplicationContext();
+//        Call<StatusResponse> call = new RetrofitInit(this).getUsuarioService().register(usuario);
+//        call.enqueue(new Callback<StatusResponse>() {
+//            @Override
+//            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+//                StatusResponse res = response.body();
 //
-//                    Usuario u = StatusResponse.getUsuario();
+//                if(res!=null){
+//                    if (res.hasError()) {
+//                        Toast.makeText(RegisterActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                    } else {
 //
-//                    CustomApplication.currentUser = u;
-//                    customApplication.setAPItoken(StatusResponse.getToken());
+//                        mDialog.show();
+//
+////                    CustomApplication customApplication = (CustomApplication) getApplicationContext();
+////
+////                    Usuario u = StatusResponse.getUsuario();
+////
+////                    CustomApplication.currentUser = u;
+////                    customApplication.setAPItoken(StatusResponse.getToken());
+//
+//
+//                        HashMap<String, String> userData = new HashMap<>();
+//                        userData.put("email", email);
+//                        userData.put("senha", senha);
+//
+////                    LoginActivity.mEmail.setText(email);
+////                    LoginActivity.mSenha.setText(senha);
+//
+//                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+//                        intent.putExtra("user_data", userData);
+//                        mDialog.dismiss();
+//                        startActivity(intent);
+//                        finish();
+//
+//
+//                    }
+//                }else{
+//                    Toast.makeText(RegisterActivity.this, "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<StatusResponse> call, Throwable t) {
+//                Toast.makeText(RegisterActivity.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        Toast.makeText(ConfirmaCadActivity.this, "YaY", Toast.LENGTH_SHORT).show();
 
 
-                    HashMap<String, String> userData = new HashMap<>();
-                    userData.put("email", email);
-                    userData.put("senha", senha);
-
-//                    LoginActivity.mEmail.setText(email);
-//                    LoginActivity.mSenha.setText(senha);
-
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                    intent.putExtra("user_data", userData);
-                    mDialog.dismiss();
-                    startActivity(intent);
-                    finish();
-
-
-                }
-            }else{
-                Toast.makeText(RegisterActivity.this, "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
-            }
-            }
-
-            @Override
-            public void onFailure(Call<StatusResponse> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-
-
-    public void handlerToRegister(View v){
-        validateDataFromInput();
     }
 
 

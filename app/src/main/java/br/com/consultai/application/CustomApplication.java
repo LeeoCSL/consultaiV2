@@ -46,29 +46,49 @@ public class CustomApplication extends Application {
 
         Log.i("ROTINA_RECEBIDA", rotina.toString());
 
-        currentUser.getRotinas().clear();
 
-        if(rotina.getTipoIda() == 0){
-            Rotina ida = new Rotina();
-            ida.setIdaID(rotina.getIdaID());
-            ida.setFlagIda(rotina.isFlagIda());
-            ida.setHoraIda(rotina.getHoraIda());
-            ida.setValorIda(rotina.getValorIda());
-            ida.setDiasUso(rotina.getDiasUso());
 
-            currentUser.getRotinas().add(ida);
-        }
+        Rotina rotinaUpdate = new Rotina();
 
-        if(rotina.getTipoVolta() == 1){
-            Rotina volta = new Rotina();
-            volta.setVoltaID(rotina.getVoltaID());
-            volta.setFlagVolta(rotina.isFlagVolta());
-            volta.setHoraVolta(rotina.getHoraVolta());
-            volta.setValorVolta(rotina.getValorVolta());
-            volta.setDiasUso(rotina.getDiasUso());
+        rotinaUpdate.setId(rotina.getId());
+//        rotinaUpdate.setDiasUso(rotina.getDiasUso());
+        rotinaUpdate.setHoraIda(rotina.getHoraIda());
+        rotinaUpdate.setHoraVolta(rotina.getHoraVolta());
+        rotinaUpdate.setValorIda(rotina.getValorIda());
+        rotinaUpdate.setValorVolta(rotina.getValorVolta());
+        rotinaUpdate.setFlagIda(rotina.isFlagIda());
+        rotinaUpdate.setFlagVolta(rotina.isFlagVolta());
+        rotinaUpdate.setDomingo(rotina.getDomingo());
+        rotinaUpdate.setSegunda(rotina.getSegunda());
+        rotinaUpdate.setTerca(rotina.getTerca());
+        rotinaUpdate.setQuarta(rotina.getQuarta());
+        rotinaUpdate.setQuinta(rotina.getQuinta());
+        rotinaUpdate.setSexta(rotina.getSexta());
+        rotinaUpdate.setSabado(rotina.getSabado());
 
-            currentUser.getRotinas().add(volta);
-        }
+        currentUser.setRotina(rotinaUpdate);
+
+//        if(rotina.getTipoIda() == 0){
+//            Rotina ida = new Rotina();
+//            ida.setIdaID(rotina.getIdaID());
+//            ida.setFlagIda(rotina.isFlagIda());
+//            ida.setHoraIda(rotina.getHoraIda());
+//            ida.setValorIda(rotina.getValorIda());
+//            ida.setDiasUso(rotina.getDiasUso());
+//
+//            currentUser.getRotina().add(ida);
+//        }
+//
+//        if(rotina.getTipoVolta() == 1){
+//            Rotina volta = new Rotina();
+//            volta.setVoltaID(rotina.getVoltaID());
+//            volta.setFlagVolta(rotina.isFlagVolta());
+//            volta.setHoraVolta(rotina.getHoraVolta());
+//            volta.setValorVolta(rotina.getValorVolta());
+//            volta.setDiasUso(rotina.getDiasUso());
+//
+//            currentUser.getRotina().add(volta);
+//        }
     }
 
     public void setAPItoken(String token){

@@ -6,6 +6,8 @@ import br.com.consultai.model.Rotina;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.PATCH;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
@@ -15,8 +17,12 @@ import retrofit2.http.Path;
 
 public interface RotinaService {
 
-    @PUT("user/{user_id}/rotina")
+    @POST("usuarios/{user_id}/rotinas")
     Call<StatusRotinaResponse> rotina(@Path("user_id") String userID, @Body Rotina rotina);
+
+    @PATCH("usuarios/{user_id}/rotinas")
+    Call<StatusRotinaResponse> patchRotina(@Path("user_id") String userID, @Body Rotina rotina);
+
 
     @DELETE("user/{user_id}/rotina")
     Call<StatusResponse> delete(@Path("user_id") String userID);

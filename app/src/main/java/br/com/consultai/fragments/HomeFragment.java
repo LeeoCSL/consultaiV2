@@ -1,19 +1,16 @@
 package br.com.consultai.fragments;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,14 +21,13 @@ import android.widget.Toast;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
+import java.util.List;
 
 import br.com.consultai.LoginActivity;
 import br.com.consultai.R;
@@ -39,15 +35,16 @@ import br.com.consultai.activities.CadastroCartaoActivity;
 import br.com.consultai.activities.ComprarActivity;
 import br.com.consultai.activities.EditarCartaoActivity;
 import br.com.consultai.activities.MainActivity;
-import br.com.consultai.activities.RegisterActivity;
+import br.com.consultai.activities.RegisterActivity2;
 import br.com.consultai.application.CustomApplication;
+import br.com.consultai.dto.CadCompResponse;
 import br.com.consultai.dto.StatusResponse;
 import br.com.consultai.eventbus.events.UpdateUserSaldoEventt;
 import br.com.consultai.model.BilheteUnico;
 import br.com.consultai.model.Credencial;
+import br.com.consultai.model.Rotina;
 import br.com.consultai.model.Usuario;
 import br.com.consultai.retrofit.RetrofitInit;
-import br.com.consultai.retrofit.RetrofitInitCompra;
 import br.com.consultai.util.MonetaryUtil;
 import br.com.consultai.util.Utility;
 import info.hoang8f.widget.FButton;
@@ -55,8 +52,6 @@ import me.rishabhkhanna.customtogglebutton.CustomToggleButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.content.Context.TELEPHONY_SERVICE;
 
 
 public class HomeFragment extends Fragment {
@@ -91,6 +86,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         loadUI(view);
+        testeCadComp();
 //        String tk = FirebaseInstanceId.getInstance().getToken();;
 //
 //        Log.i("mandouagora", tk);
@@ -472,81 +468,61 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        mEditar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                if (!Utility.isNetworkAvailable(getContext())) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Você não está conectado a internet");
-                    builder.setMessage("Por favor conecte-se à internet para continuar");
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-
-                    builder.show();
-                } else {
-                    handlerToEditarCartaoActivity();
-                }
-            }
-        });
-        mExcluir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setIcon(R.drawable.ic_warning_black_24dp);
-                builder.setTitle("Atenção");
-                builder.setMessage("Você tem certeza que deseja apagar a sua rotina?");
-
-                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mProgressBar.setVisibility(View.VISIBLE);
-
-                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getRotinaService().delete(CustomApplication.currentUser.getId());
-                        call.enqueue(new Callback<StatusResponse>() {
-                            @Override
-                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
-                                StatusResponse res = response.body();
-
-                                if(res!=null){
-                                if (res.hasError()) {
-                                    Toast.makeText(getActivity(), res.getMessage(), Toast.LENGTH_SHORT).show();
-                                    mProgressBar.setVisibility(View.GONE);
-                                } else {
-                                    Toast.makeText(getActivity(), res.getMessage(), Toast.LENGTH_SHORT).show();
-                                    CustomApplication.currentUser.getRotinas().clear();
-                                    refreshUI();
-                                    mProgressBar.setVisibility(View.GONE);
-                                }
-                            }else{
-                                Toast.makeText(getContext(), "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
-
-                            }
-                            }
-
-                            @Override
-                            public void onFailure(Call<StatusResponse> call, Throwable t) {
-                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                                mProgressBar.setVisibility(View.GONE);
-                            }
-                        });
-                    }
-                });
-
-                builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                builder.show();
-            }
-        });
+//        mExcluir.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//                builder.setIcon(R.drawable.ic_warning_black_24dp);
+//                builder.setTitle("Atenção");
+//                builder.setMessage("Você tem certeza que deseja apagar a sua rotina?");
+//
+//                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        mProgressBar.setVisibility(View.VISIBLE);
+//
+//                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getRotinaService().delete(CustomApplication.currentUser.getId());
+//                        call.enqueue(new Callback<StatusResponse>() {
+//                            @Override
+//                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+//                                StatusResponse res = response.body();
+//
+//                                if(res!=null){
+//                                if (res.hasError()) {
+//                                    Toast.makeText(getActivity(), res.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    mProgressBar.setVisibility(View.GONE);
+//                                } else {
+//                                    Toast.makeText(getActivity(), res.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    CustomApplication.currentUser.getRotina().clear();
+//                                    refreshUI();
+//                                    mProgressBar.setVisibility(View.GONE);
+//                                }
+//                            }else{
+//                                Toast.makeText(getContext(), "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
+//
+//                            }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+//                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                                mProgressBar.setVisibility(View.GONE);
+//                            }
+//                        });
+//                    }
+//                });
+//
+//                builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//
+//                builder.show();
+//            }
+//        });
 
         mBtnRecarga.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -598,7 +574,7 @@ public class HomeFragment extends Fragment {
                         DecimalFormat formato = new DecimalFormat("#.##");
                         final double novoSaldo2 = Double.valueOf(formato.format(novoSaldo).replace(",", "."));
 
-                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().atualizarBilhete(CustomApplication.currentUser.getId(),bilheteUnico.getId(), bilheteUnico);
                         call.enqueue(new Callback<StatusResponse>() {
                             @Override
                             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
@@ -638,67 +614,181 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        btn_limpar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Limpar saldo?");
-
-                builder.setMessage("Deseja realmente limpar seu saldo?");
-
-                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialogInterface, int i) {
-                        BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
-
-
-                        bilheteUnico.setSaldoAnterior(bilheteUnico.getSaldo());
-                        bilheteUnico.setSaldo(0);
-                        bilheteUnico.setOperacao("0");
-                        bilheteUnico.setId_desconto(null);
-
-                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
-                        call.enqueue(new Callback<StatusResponse>() {
-                            @Override
-                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
-                                StatusResponse res = response.body();
-
-                                if(res!=null){
-                                if (res.hasError()) {
-                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
-                                    BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
-                                    bilheteUnico.setSaldo(0);
-                                    dialogInterface.dismiss();
-                                    refreshUI();
-                                }
-                            }else{
-                                Toast.makeText(getContext(), "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
-                            }
-                            }
-
-                            @Override
-                            public void onFailure(Call<StatusResponse> call, Throwable t) {
-                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                builder.show();
-            }
-        });
+//        btn_limpar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//                builder.setTitle("Limpar saldo?");
+//
+//                builder.setMessage("Deseja realmente limpar seu saldo?");
+//
+//                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(final DialogInterface dialogInterface, int i) {
+//                        BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+//
+//
+//                        bilheteUnico.setSaldoAnterior(bilheteUnico.getSaldo());
+//                        bilheteUnico.setSaldo(0);
+//                        bilheteUnico.setOperacao("0");
+//                        bilheteUnico.setId_desconto(null);
+//
+//                        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bilheteUnico);
+//                        call.enqueue(new Callback<StatusResponse>() {
+//                            @Override
+//                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+//                                StatusResponse res = response.body();
+//
+//                                if(res!=null){
+//                                if (res.hasError()) {
+//                                    Toast.makeText(getActivity(), "Ops, um erro ocorreu. Erro: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                                } else {
+//                                    Toast.makeText(getActivity(), "Pronto", Toast.LENGTH_SHORT).show();
+//                                    BilheteUnico bilheteUnico = CustomApplication.currentUser.getBilheteUnico();
+//                                    bilheteUnico.setSaldo(0);
+//                                    dialogInterface.dismiss();
+//                                    refreshUI();
+//                                }
+//                            }else{
+//                                Toast.makeText(getContext(), "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
+//                            }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+//                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                    }
+//                }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//
+//                builder.show();
+//            }
+//        });
 
         return view;
     }
 
+    public void testeCadComp() {
 
+
+        Usuario u = CustomApplication.currentUser;
+
+        if(u.getCPF() == null || u.getTelefone()== null || u.getDataNascimento()== null){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setTitle("Cadastro complementar");
+                            builder.setMessage("Você deseja cadastrar as informações complementares do cadastro?");
+
+                            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Intent intent = new Intent(getContext(), RegisterActivity2.class);
+                                    startActivity(intent);
+                                }
+                            }).setNegativeButton("Faço isso depois", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    dialogInterface.dismiss();
+                                }
+                            });
+
+                            builder.show();
+
+        }
+
+//        CustomApplication customApplication = (CustomApplication) getApplicationContext();
+//
+//        Usuario u = CustomApplication.currentUser;
+//
+//        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+//        String loginToken = sharedPref.getString("token", null);
+//
+//        Call<CadCompResponse> call = new RetrofitInit(this).getUsuarioService().getCad(CustomApplication.currentUser.getId());
+//        call.enqueue(new Callback<CadCompResponse>() {
+//            @Override
+//            public void onResponse(Call<CadCompResponse> call, Response<CadCompResponse> response) {
+//                CadCompResponse res = response.body();
+//
+//                if (res != null) {
+//                    if (res.hasError()) {
+//                        Toast.makeText(LoginActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                    } else {
+//
+//                        CustomApplication customApplication = (CustomApplication) getApplicationContext();
+//
+//                        Usuario u = CustomApplication.currentUser;
+//
+//                        String cpf = res.getCpf();
+//                        String telefone = res.getTelefone();
+//                        String dtn = res.getData_nascimento();
+//                        u.setCPF(cpf);
+//                        u.setTelefone(telefone);
+//                        u.setDataNascimento(dtn);
+//
+//
+//                        if (u.getCPF() == null || u.getDataNascimento() == null || u.getTelefone() == null) {
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+//                            builder.setTitle("Cadastro complementar");
+//                            builder.setMessage("Você deseja cadastrar as informações complementares do cadastro?");
+//
+//                            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                    Intent intent = new Intent(LoginActivity.this, RegisterActivity2.class);
+//                                    startActivity(intent);
+//                                }
+//                            }).setNegativeButton("Faço isso depois", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                    Usuario us = CustomApplication.currentUser;
+//                                    if (us.getBilheteUnico() == null) {
+//                                        Intent intent = new Intent(LoginActivity.this, CadastroCartaoActivity.class);
+//                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                        startActivity(intent);
+//                                        dialogInterface.dismiss();
+//                                    } else {
+//                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                        startActivity(intent);
+//                                    }
+//                                    dialogInterface.dismiss();
+//                                }
+//                            });
+//
+//                            builder.show();
+//                        } else {
+//
+//                            if (u.getBilheteUnico() == null) {
+//                                Intent intent = new Intent(LoginActivity.this, CadastroCartaoActivity.class);
+//                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                startActivity(intent);
+//                            } else {
+//                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                startActivity(intent);
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    Toast.makeText(LoginActivity.this, "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
+//
+//                }
+//            }
+//
+//
+//            @Override
+//            public void onFailure(Call<CadCompResponse> call, Throwable t) {
+//                Toast.makeText(LoginActivity.this, "Falha na comunicação com o servidor. Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+    }
     private void loadUI(View v) {
 
         mProgressBar = v.findViewById(R.id.progress_bar);
@@ -709,7 +799,6 @@ public class HomeFragment extends Fragment {
         btn_limpar = v.findViewById(R.id.btn_limpar);
         btn_comprar = v.findViewById(R.id.btn_comprar);
 
-        mExcluir = v.findViewById(R.id.btn_excluir);
 
         mBtnRecarga = v.findViewById(R.id.btn_recarga);
 
@@ -728,6 +817,35 @@ public class HomeFragment extends Fragment {
         mWeekDays[4] = mQuinta;
         mWeekDays[5] = mSexta;
         mWeekDays[6] = mSabado;
+
+        Usuario usuario = CustomApplication.currentUser;
+
+        if (usuario.getRotina() !=null) {
+            Rotina rotina = usuario.getRotina();
+            Rotina r = rotina;
+
+            if (r.getDomingo() == true) {
+                mDomingo.setChecked(true);
+            }
+            if (r.getSegunda() == true) {
+                mSegunda.setChecked(true);
+            }
+            if (r.getTerca() == true) {
+                mTerca.setChecked(true);
+            }
+            if (r.getQuarta() == true) {
+                mQuarta.setChecked(true);
+            }
+            if (r.getQuinta() == true) {
+                mQuinta.setChecked(true);
+            }
+            if (r.getSexta() == true) {
+                mSexta.setChecked(true);
+            }
+            if (r.getSabado() == true) {
+                mSabado.setChecked(true);
+            }
+        }
 
         Log.i("token_firebase", FirebaseInstanceId.getInstance().getToken());
     }
@@ -749,16 +867,61 @@ public class HomeFragment extends Fragment {
     public void refreshUI() {
         Usuario usuario = CustomApplication.currentUser;
 
-        if (usuario.getRotinas().size() > 0) {
-            boolean[] diasUso = usuario.getRotinas().get(0).getDiasUso().getDiasUso();
+        if (usuario.getRotina() !=null) {
+            Rotina rotina = usuario.getRotina();
+            Rotina r = rotina;
 
-            for (int i = 0; i < diasUso.length; i++) {
-                mWeekDays[i].setChecked(diasUso[i]);
+            if(r.getDomingo()== true){
+                mDomingo.setChecked(true);
+            }else{
+                mDomingo.setChecked(false);
             }
-        } else {
-            for (int i = 0; i < mWeekDays.length; i++) {
-                mWeekDays[i].setChecked(false);
+            if(r.getSegunda()== true){
+                mSegunda.setChecked(true);
             }
+            else{
+                mSegunda.setChecked(false);
+            }
+            if(r.getTerca()== true){
+                mTerca.setChecked(true);
+            }
+            else{
+                mTerca.setChecked(false);
+            }
+            if(r.getQuarta() == true){
+                mQuarta.setChecked(true);
+            }
+            else{
+                mQuarta.setChecked(false);
+            }
+            if(r.getQuinta()== true){
+                mQuinta.setChecked(true);
+            }
+            else{
+                mQuinta.setChecked(false);
+            }
+            if(r.getSexta()== true){
+                mSexta.setChecked(true);
+            }
+            else{
+                mSexta.setChecked(false);
+            }
+            if(r.getSabado()== true){
+                mSabado.setChecked(true);
+            }
+            else{
+                mSabado.setChecked(false);
+            }
+
+//            boolean[] diasUso = usuario.getRotina().get(0).getDiasUso().getDiasUso();
+//
+//            for (int i = 0; i < diasUso.length; i++) {
+//                mWeekDays[i].setChecked(diasUso[i]);
+//            }
+//        } else {
+//            for (int i = 0; i < mWeekDays.length; i++) {
+//                mWeekDays[i].setChecked(false);
+//            }
         }
 
         mApelidoBilhete.setText(usuario.getBilheteUnico().getApelido());
@@ -772,7 +935,7 @@ public class HomeFragment extends Fragment {
 
     private void comunicacaoViagens(String id, final BilheteUnico bUnico, final double value, final double novoSaldo, final AlertDialog dialog1) {
 
-        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().update(CustomApplication.currentUser.getId(), bUnico);
+        Call<StatusResponse> call = new RetrofitInit(getActivity()).getBilheteService().atualizarBilhete(CustomApplication.currentUser.getId(), bUnico.getId(), bUnico);
         call.enqueue(new Callback<StatusResponse>() {
             @Override
             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {

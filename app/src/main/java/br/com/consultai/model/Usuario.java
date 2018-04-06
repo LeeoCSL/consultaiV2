@@ -40,13 +40,13 @@ public class Usuario {
     @JsonProperty("bilhete_unico")
     private BilheteUnico bilheteUnico;
 
-    private List<Rotina> rotinas = new ArrayList<>();
+    private Rotina rotina;
 
     private String versao_app;
 
     public Usuario() {}
 
-    public Usuario(String id, String nome, String sobrenome, String dataNascimento, String sexo, String CPF, String telefone, String email, String senha, boolean overlap, String notificationToken, String dataCriacao, BilheteUnico bilheteUnico, List<Rotina> rotinas, String versao_app) {
+    public Usuario(String id, String nome, String sobrenome, String dataNascimento, String sexo, String CPF, String telefone, String email, String senha, boolean overlap, String notificationToken, String dataCriacao, BilheteUnico bilheteUnico, Rotina rotina, String versao_app) {
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -60,7 +60,7 @@ public class Usuario {
         this.notificationToken = notificationToken;
         this.dataCriacao = dataCriacao;
         this.bilheteUnico = bilheteUnico;
-        this.rotinas = rotinas;
+        this.rotina = rotina;
         this.versao_app = versao_app;
     }
 
@@ -168,12 +168,12 @@ public class Usuario {
         this.bilheteUnico = bilheteUnico;
     }
 
-    public List<Rotina> getRotinas() {
-        return rotinas;
+    public Rotina getRotina() {
+        return rotina;
     }
 
-    public void setRotinas(List<Rotina> rotinas) {
-        this.rotinas = rotinas;
+    public void setRotina(Rotina rotina) {
+        this.rotina = rotina;
     }
 
     public boolean isOverlap() {
@@ -200,7 +200,7 @@ public class Usuario {
                 ", notificationToken='" + notificationToken + '\'' +
                 ", dataCriacao='" + dataCriacao + '\'' +
                 ", bilheteUnico=" + bilheteUnico +
-                ", rotinas=" + rotinas +
+                ", rotina=" + rotina +
                 ", versao_app='" + versao_app + '\'' +
                 '}';
     }

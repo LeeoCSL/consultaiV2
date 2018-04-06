@@ -39,6 +39,14 @@
             android:inputType="textEmailAddress"
             android:textColorHint="@color/hintColor" />
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            fancy:passwordToggleTint="@color/hintColor"
+            fancy:hintEnabled="false"
+            android:layout_marginTop="8dp"
+            >
         <EditText
             android:id="@+id/et_senha"
             android:layout_width="match_parent"
@@ -49,6 +57,7 @@
             android:inputType="textPassword"
             android:textColorHint="@color/hintColor" />
 
+        </android.support.design.widget.TextInputLayout>
         <com.rey.material.widget.CheckBox
             android:id="@+id/cb_remember_me"
             android:text="Manter conectado"
@@ -111,6 +120,7 @@
             fancy:fb_textColor="#FFFFFF" />
 
         <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/btn_google"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -125,7 +135,8 @@
             fancy:fb_iconPosition="left"
             fancy:fb_radius="30dp"
             fancy:fb_text="Entrar com Google"
-            fancy:fb_textColor="#FFFFFF" />
+            fancy:fb_textColor="#FFFFFF"
+/>
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:layout_width="match_parent"

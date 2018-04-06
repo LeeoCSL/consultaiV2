@@ -34,14 +34,14 @@ public interface UsuarioService {
     @PUT("user")
     Call<StatusResponse> update(@Body Usuario usuario);
 
-    @GET("user/{user_id}/cadastro")
-    Call<CadCompResponse> getCad(@Path("user_id") String userID);
+//    @GET("user/{user_id}/cadastro")
+//    Call<CadCompResponse> getCad(@Path("user_id") String userID);
 
-    @PUT("user/{user_id}/completar")
-    Call<StatusResponse> put(@Path("user_id") String userID, @Body Usuario usuario);
+//    @PATCH("user/{user_id}/completar")
+//    Call<StatusResponse> patchUser(@Path("user_id") String userID, @Body Usuario usuario);
 
-    @GET("teste/{email}")
-    Call<StatusResponse> getEmail(@Path ("email") String email);
+//    @GET("teste/{email}")
+//    Call<StatusResponse> getEmail(@Path ("email") String email);
 
     @PATCH("user/{user_id}")
     Call<StatusResponse> setToken(@Path("user_id") String userID, @Body HashMap map);

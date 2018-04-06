@@ -125,8 +125,8 @@ public class PedidosFragment extends Fragment {
     public void refreshUI() {
 //        Usuario usuario = CustomApplication.currentUser;
 //
-//        if (usuario.getRotinas().size() > 0) {
-//            boolean[] diasUso = usuario.getRotinas().get(0).getDiasUso().getDiasUso();
+//        if (usuario.getRotina().size() > 0) {
+//            boolean[] diasUso = usuario.getRotina().get(0).getDiasUso().getDiasUso();
 //
 //            for (int i = 0; i < diasUso.length; i++) {
 //                mWeekDays[i].setChecked(diasUso[i]);

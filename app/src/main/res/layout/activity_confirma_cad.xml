@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context=".activities.RegisterActivity">
-
-    <RelativeLayout
-        android:id="@+id/rel1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
+    tools:context=".activities.ConfirmaCadActivity">
 
     <ImageView
         android:id="@+id/img_logo"
@@ -35,16 +27,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Preencha os campos abaixo \npara realizar seu cadastro!"
+            android:text="Por favor, apenas confirme seus dados para cadastro!"
             android:textAlignment="center"
             android:backgroundTint="@color/colorPrimaryDark"
             android:textSize="20sp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="30dp"/>
 
         <ScrollView
             android:layout_margin="8dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,48 +81,7 @@
                     app:met_primaryColor="@color/colorPrimary"
                     app:met_singleLineEllipsis="true"/>
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/hintColor">
 
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/et_senha"
-                    android:inputType="textPassword"
-                    android:hint="Crie uma senha"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="@color/colorPrimary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:met_baseColor="@android:color/black"
-
-                    app:met_primaryColor="@color/colorPrimary"
-                    app:met_singleLineEllipsis="true"
-                    />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/hintColor">
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/et_confirmar_senha"
-                    android:inputType="textPassword"
-                    android:hint="Repita a senha"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="@color/colorPrimary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:met_baseColor="@android:color/black"
-                    app:met_primaryColor="@color/colorPrimary"
-                    app:met_singleLineEllipsis="true"
-                    />
-
-                    <!--app:met_floatingLabel="highlight"-->
-
-                </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
         </ScrollView>
@@ -141,16 +93,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="8dp"
-        android:onClick="handlerToRegister"
-        android:text="Continuar"
+
+        android:text="Confirmar"
         android:textColor="#FFFFFF"
         app:fButtonColor="@color/colorPrimary"
         android:shadowColor="@android:color/black"
         app:shadowEnabled="true"
         app:cornerRadius="28dp"/>
-</RelativeLayout>
-
-
-
 
 </RelativeLayout>

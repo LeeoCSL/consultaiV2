@@ -56,7 +56,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     compile 'com.mobsandgeeks:android-saripaar:1.0.0'
     compile 'br.com.jansenfelipe:androidmask:1.0.1'
-
+    compile 'com.google.android.gms:play-services-auth:10.2.1'
     compile 'com.wefika:horizontal-picker:1.1.1'
 
     compile 'com.githang:stepview:0.1'

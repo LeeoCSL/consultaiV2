@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".activities.SplashScreen">
+        <activity android:name=".activities.SplashScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -70,11 +71,14 @@
 
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/title_activity_main" />
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.RegisterActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activities.EditarCartaoActivity" />
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.EditarCartaoActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".firebase.ConsultaiInstanceIDService">
             <intent-filter>
@@ -89,20 +93,29 @@
 
         <activity
             android:name=".activities.CadastroCartaoActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activities.ComprarActivity" />
-        <activity android:name=".LoginActivity" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.ComprarActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.RegisterActivity2"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".activities.EditPerfilActivity" />
-        <activity android:name=".activities.EditBilheteActivity" />
-        <activity android:name=".activities.ComoUsarActivity"></activity>
+        <activity android:name=".activities.EditPerfilActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.EditBilheteActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.ComoUsarActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.ConfirmaCadActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

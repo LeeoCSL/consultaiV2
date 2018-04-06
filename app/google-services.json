@@ -15,6 +15,10 @@
       },
       "oauth_client": [
         {
+          "client_id": "620150922859-e6dsrfcfi8o43scg448fcglgc5112kn4.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
           "client_id": "620150922859-p7949df56ap0rin44607er0i2iuu3022.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -64,14 +68,14 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "620150922859-scqfg56fn7kvdqip2r1773vcif5dlksq.apps.googleusercontent.com",
+              "client_id": "620150922859-159qad87cb0gm8lp5rh8uk9agconukll.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "br.com.redepontocerto.ConsultaIZazzy"
+                "bundle_id": "br.com.zazzytec.consultaI"
               }
             },
             {
-              "client_id": "620150922859-v0tll9vd06kr1rjsgnb180i432sg92on.apps.googleusercontent.com",
+              "client_id": "620150922859-e6dsrfcfi8o43scg448fcglgc5112kn4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -89,6 +93,10 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "620150922859-e6dsrfcfi8o43scg448fcglgc5112kn4.apps.googleusercontent.com",
+          "client_type": 3
+        },
         {
           "client_id": "620150922859-v0tll9vd06kr1rjsgnb180i432sg92on.apps.googleusercontent.com",
           "client_type": 3

@@ -279,54 +279,54 @@ public class CadastroCartaoActivity extends AppCompatActivity {
 
     }
 
-    public void validarEmail() {
-//        Call<StatusResponse> call = new RetrofitInitTestes(this).getUsuarioService().postEmail(CustomApplication.currentUser.getEmail());
+//    public void validarEmail() {
+////        Call<StatusResponse> call = new RetrofitInitTestes(this).getUsuarioService().postEmail(CustomApplication.currentUser.getEmail());
+////        call.enqueue(new Callback<StatusResponse>() {
+////            @Override
+////            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+////                StatusResponse res = response.body();
+////
+////                if (res.hasError()) {
+////                    Toast.makeText(CadastroCartaoActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+////                } else {
+////
+////                    Toast.makeText(CadastroCartaoActivity.this, "foi :D", Toast.LENGTH_SHORT).show();
+////                }
+////            }
+////
+////            @Override
+////            public void onFailure(Call<StatusResponse> call, Throwable t) {
+////                mDialog.dismiss();
+////                Toast.makeText(CadastroCartaoActivity.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
+////
+////            }
+////
+////        });
+//        Call<StatusResponse> call = new RetrofitInitTestes(this).getUsuarioService() .getEmail(CustomApplication.currentUser.getEmail());
 //        call.enqueue(new Callback<StatusResponse>() {
 //            @Override
 //            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
 //                StatusResponse res = response.body();
+//                if (res != null) {
+//                    if (res.hasError()) {
+//                        Toast.makeText(CadastroCartaoActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(CadastroCartaoActivity.this, "foi :D", Toast.LENGTH_SHORT).show();
 //
-//                if (res.hasError()) {
-//                    Toast.makeText(CadastroCartaoActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                    }
 //                } else {
-//
-//                    Toast.makeText(CadastroCartaoActivity.this, "foi :D", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CadastroCartaoActivity.this, "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
 //                }
 //            }
+//                @Override
+//                public void onFailure (Call < StatusResponse > call, Throwable t){
+//                    mDialog.dismiss();
+//                    Toast.makeText(CadastroCartaoActivity.this, "Falha na comunicação com o servidor. Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
 //
-//            @Override
-//            public void onFailure(Call<StatusResponse> call, Throwable t) {
-//                mDialog.dismiss();
-//                Toast.makeText(CadastroCartaoActivity.this, "Falha na comunicação com o servidor. Erro: " +t.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
 //
-//            }
-//
-//        });
-        Call<StatusResponse> call = new RetrofitInitTestes(this).getUsuarioService().getEmail(CustomApplication.currentUser.getEmail());
-        call.enqueue(new Callback<StatusResponse>() {
-            @Override
-            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
-                StatusResponse res = response.body();
-                if (res != null) {
-                    if (res.hasError()) {
-                        Toast.makeText(CadastroCartaoActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(CadastroCartaoActivity.this, "foi :D", Toast.LENGTH_SHORT).show();
-
-
-                    }
-                } else {
-                    Toast.makeText(CadastroCartaoActivity.this, "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
-                }
-            }
-                @Override
-                public void onFailure (Call < StatusResponse > call, Throwable t){
-                    mDialog.dismiss();
-                    Toast.makeText(CadastroCartaoActivity.this, "Falha na comunicação com o servidor. Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-
-                }
-
-            });
-        }
+//            });
+//        }
 
     }

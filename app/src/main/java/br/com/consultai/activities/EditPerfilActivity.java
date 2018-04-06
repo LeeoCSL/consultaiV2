@@ -17,6 +17,7 @@ import br.com.consultai.dto.StatusResponse;
 import br.com.consultai.model.BilheteUnico;
 import br.com.consultai.model.Usuario;
 import br.com.consultai.retrofit.RetrofitInit;
+import br.com.consultai.util.InputValidator;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +48,7 @@ public class EditPerfilActivity extends AppCompatActivity {
     @BindView(R.id.edt_cpf)
     MaterialEditText mCpf;
 
+    String nome;
 
     public String config;
 
@@ -96,6 +98,20 @@ public class EditPerfilActivity extends AppCompatActivity {
                 envioTel = envioTel.replace("-", "");
 
 
+                testeNome();
+
+                if (nome.length() > 32) {
+                    mNome.setError("Seu nome deve ter no máximo 32 caracteres.");
+                    return;
+                }
+
+                if (!InputValidator.isValidName(nome)) {
+                    mNome.setError("Nome em branco ou com formato inválido.");
+                    return;
+                }
+
+
+
                 user.setNome(mNome.getText().toString());
                 user.setTelefone(envioTel);
                 user.setDataNascimento(mNascimento.getText().toString());
@@ -106,24 +122,23 @@ public class EditPerfilActivity extends AppCompatActivity {
                     public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
                         StatusResponse res = response.body();
 
-                        if(res!=null){
-                        if (res.hasError()) {
-                            Toast.makeText(EditPerfilActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
-                            mDialog.dismiss();
+                        if (res != null) {
+                            if (res.hasError()) {
+                                Toast.makeText(EditPerfilActivity.this, "Desculpe, o seguinte erro ocorreu: " + res.getMessage(), Toast.LENGTH_SHORT).show();
+                                mDialog.dismiss();
+                            } else {
+
+                                CustomApplication.currentUser.setNome(user.getNome());
+                                CustomApplication.currentUser.setTelefone(user.getTelefone());
+                                CustomApplication.currentUser.setDataNascimento(user.getDataNascimento());
+                                Toast.makeText(EditPerfilActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
+                                mDialog.dismiss();
+                                onBackPressed();
+
+                            }
                         } else {
-
-                            CustomApplication.currentUser.setNome(user.getNome());
-                            CustomApplication.currentUser.setTelefone(user.getTelefone());
-                            CustomApplication.currentUser.setDataNascimento(user.getDataNascimento());
-                            Toast.makeText(EditPerfilActivity.this, res.getMessage(), Toast.LENGTH_SHORT).show();
-                            mDialog.dismiss();
-                            onBackPressed();
-
+                            Toast.makeText(EditPerfilActivity.this, "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else{
-                        Toast.makeText(EditPerfilActivity.this, "Erro de comunicação com o servidor", Toast.LENGTH_SHORT).show();
-                    }
                     }
 
                     @Override
@@ -134,7 +149,19 @@ public class EditPerfilActivity extends AppCompatActivity {
                 });
             }
         });
-
-
     }
-}
+
+        private void testeNome(){
+            nome = mNome.getText().toString();
+            Character char1 = nome.charAt(nome.length()-1);
+            String str1 =  " ";
+            Character char2 = str1.charAt(0);
+            if(char1.equals(char2)){
+                nome = nome.substring(0, nome.length()-1);
+                mNome.setText(nome);
+                testeNome();
+            }
+            return;
+        }
+    }
+
